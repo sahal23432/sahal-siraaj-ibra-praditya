@@ -31,7 +31,7 @@ export const SEED_PROFILE = {
       proof: "Project-Based Learning · skanilan.tech",
     },
   ],
-  avatar_url: "/images/sahal-avatar.png",
+  avatar_url: "/images/sahal-avatar.jpg",
   cv_url: "/files/CV_Sahal_Siraaj_Ibra_Praditya.pdf",
   email: "sahalsiraaj44@gmail.com",
   phone_or_whatsapp: "+62 856-4044-4923",

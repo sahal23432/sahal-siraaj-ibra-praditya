@@ -100,21 +100,22 @@ export default function InteractiveProfileCard({ profile }: InteractiveProfileCa
 
         {/* If user has an avatar image and it loads, show it. Otherwise render procedural 3D terminal portrait */}
         {profile.avatar_url && !imgError ? (
-          <div className="relative w-full h-full rounded-lg overflow-hidden">
+          <div className="relative w-full h-full rounded-lg overflow-hidden border border-white/[0.08]">
             <Image
               src={profile.avatar_url}
               alt={profile.full_name}
               fill
-              className="object-cover"
+              className="object-cover object-center group-hover:scale-105 transition-transform duration-500 ease-out"
               onError={() => setImgError(true)}
               priority
             />
-            {/* Fine scanline overlay */}
+            {/* Subtle Vignette & telemetry sheen */}
+            <div className="absolute inset-0 bg-gradient-to-t from-[#0D0E12]/70 via-transparent to-transparent pointer-events-none" />
             <div
-              className="absolute inset-0 pointer-events-none opacity-20"
+              className="absolute inset-0 pointer-events-none opacity-15"
               style={{
                 backgroundImage:
-                  'repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.5) 2px, rgba(0,0,0,0.5) 4px)',
+                  'repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.4) 2px, rgba(0,0,0,0.4) 4px)',
               }}
             />
           </div>

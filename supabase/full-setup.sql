@@ -193,7 +193,7 @@ Terbiasa merancang alur sistem terintegrasi dan aplikasi berbasis web, saya sena
       "proof": "Project-Based Learning · skanilan.tech"
     }
   ]$$::jsonb,
-  '/images/sahal-avatar.png',
+  '/images/sahal-avatar.jpg',
   '/files/CV_Sahal_Siraaj_Ibra_Praditya.pdf',
   'sahalsiraaj44@gmail.com',
   '+62 856-4044-4923',
