@@ -1,6 +1,6 @@
 'use client';
 
-import { ReactNode, useState, useEffect } from 'react';
+import { ReactNode, useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import {
@@ -10,12 +10,10 @@ import {
   Mail,
   Sparkles,
   Milestone,
-  Lock,
   LogOut,
   KeyRound,
   ShieldCheck,
 } from 'lucide-react';
-import { changeAdminPin } from '@/lib/services/auth';
 
 export default function AdminLayout({ children }: { children: ReactNode }) {
   const pathname = usePathname();
@@ -25,36 +23,82 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
   const [oldPin, setOldPin] = useState('');
   const [newPin, setNewPin] = useState('');
   const [pinStatus, setPinStatus] = useState<{ success: boolean; message: string } | null>(null);
+  const [isUpdatingPin, setIsUpdatingPin] = useState(false);
 
-  // Check session in admin area
-  useEffect(() => {
-    if (!isLoginPage && typeof window !== 'undefined') {
-      const session = localStorage.getItem('admin-session');
-      if (!session) {
-        router.push('/admin/login');
-      }
+  const handleLogout = useCallback(async () => {
+    try {
+      await fetch('/api/admin/auth/logout', { method: 'POST' });
+    } catch {
+      // Ignore network errors on logout
     }
-  }, [isLoginPage, router]);
 
-  const handleLogout = () => {
     if (typeof window !== 'undefined') {
       localStorage.removeItem('admin-session');
       localStorage.removeItem('admin-unlocked-at');
     }
+
     router.push('/admin/login');
-  };
+    router.refresh();
+  }, [router]);
+
+  // Client Session check & Auto Inactivity Lock (30 minutes)
+  useEffect(() => {
+    if (isLoginPage) return;
+
+    let lastActive = Date.now();
+    const INACTIVITY_TIMEOUT = 30 * 60 * 1000; // 30 minutes
+
+    const resetTimer = () => {
+      lastActive = Date.now();
+    };
+
+    const interval = setInterval(() => {
+      if (Date.now() - lastActive > INACTIVITY_TIMEOUT) {
+        handleLogout();
+      }
+    }, 60 * 1000);
+
+    window.addEventListener('mousemove', resetTimer);
+    window.addEventListener('keydown', resetTimer);
+    window.addEventListener('click', resetTimer);
+
+    return () => {
+      clearInterval(interval);
+      window.removeEventListener('mousemove', resetTimer);
+      window.removeEventListener('keydown', resetTimer);
+      window.removeEventListener('click', resetTimer);
+    };
+  }, [isLoginPage, handleLogout]);
 
   const handlePinChangeSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const res = await changeAdminPin(oldPin, newPin);
-    setPinStatus(res);
-    if (res.success) {
-      setTimeout(() => {
-        setShowPinModal(false);
-        setOldPin('');
-        setNewPin('');
-        setPinStatus(null);
-      }, 1800);
+    setIsUpdatingPin(true);
+    setPinStatus(null);
+
+    try {
+      const res = await fetch('/api/admin/auth/change-pin', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ oldPin, newPin }),
+      });
+
+      const data = await res.json();
+
+      if (res.ok && data.success) {
+        setPinStatus({ success: true, message: data.message || 'PIN berhasil diubah.' });
+        setTimeout(() => {
+          setShowPinModal(false);
+          setOldPin('');
+          setNewPin('');
+          setPinStatus(null);
+        }, 1600);
+      } else {
+        setPinStatus({ success: false, message: data.error || 'Gagal mengubah PIN.' });
+      }
+    } catch {
+      setPinStatus({ success: false, message: 'Gangguan koneksi jaringan.' });
+    } finally {
+      setIsUpdatingPin(false);
     }
   };
 
@@ -226,6 +270,7 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
               <div className="flex justify-end gap-2 pt-2">
                 <button
                   type="button"
+                  disabled={isUpdatingPin}
                   onClick={() => {
                     setShowPinModal(false);
                     setPinStatus(null);
@@ -236,9 +281,10 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
                 </button>
                 <button
                   type="submit"
-                  className="px-4 py-1.5 rounded bg-[#EDEDEF] text-[#070709] text-xs font-mono font-medium hover:bg-white"
+                  disabled={isUpdatingPin}
+                  className="px-4 py-1.5 rounded bg-[#EDEDEF] text-[#070709] text-xs font-mono font-medium hover:bg-white disabled:opacity-50"
                 >
-                  Perbarui PIN
+                  {isUpdatingPin ? 'Menyimpan...' : 'Perbarui PIN'}
                 </button>
               </div>
             </form>

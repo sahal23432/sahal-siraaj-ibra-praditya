@@ -3,19 +3,36 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { ArrowLeft, ShieldCheck, Lock, Delete, KeyRound } from 'lucide-react';
-import { verifyAdminPin, getDefaultPinHint } from '@/lib/services/auth';
+import { ArrowLeft, ShieldCheck, Lock, Delete } from 'lucide-react';
+import { getDefaultPinHint } from '@/lib/services/auth';
 
 export default function AdminLoginPage() {
   const router = useRouter();
   const [pin, setPin] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
-  const [attempts, setAttempts] = useState(0);
+  const [lockoutSeconds, setLockoutSeconds] = useState(0);
 
   const maxDigits = 6;
+  const isLocked = lockoutSeconds > 0;
+
+  // Countdown timer for lockout
+  useEffect(() => {
+    if (lockoutSeconds <= 0) return;
+    const timer = setInterval(() => {
+      setLockoutSeconds((prev) => {
+        if (prev <= 1) {
+          setError('');
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+    return () => clearInterval(timer);
+  }, [lockoutSeconds]);
 
   const handleDigit = (digit: string) => {
+    if (isLocked || loading) return;
     if (pin.length < maxDigits) {
       const nextPin = pin + digit;
       setPin(nextPin);
@@ -27,28 +44,48 @@ export default function AdminLoginPage() {
   };
 
   const handleDelete = () => {
+    if (isLocked || loading) return;
     setPin((prev) => prev.slice(0, -1));
     setError('');
   };
 
   const handleClear = () => {
+    if (isLocked || loading) return;
     setPin('');
     setError('');
   };
 
   const submitPin = async (code: string) => {
     setLoading(true);
-    const valid = await verifyAdminPin(code);
-    if (valid) {
-      if (typeof window !== 'undefined') {
-        localStorage.setItem('admin-session', 'active');
-        localStorage.setItem('admin-unlocked-at', new Date().toISOString());
+    setError('');
+
+    try {
+      const res = await fetch('/api/admin/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ pin: code }),
+      });
+
+      const data = await res.json();
+
+      if (res.ok && data.success) {
+        if (typeof window !== 'undefined') {
+          localStorage.setItem('admin-session', 'active');
+          localStorage.setItem('admin-unlocked-at', new Date().toISOString());
+        }
+        router.push('/admin');
+        router.refresh();
+      } else {
+        setError(data.error || 'PIN tidak valid. Silakan coba lagi.');
+        setPin('');
+        if (data.isLocked && data.lockoutSeconds) {
+          setLockoutSeconds(data.lockoutSeconds);
+        }
       }
-      router.push('/admin');
-    } else {
-      setAttempts((prev) => prev + 1);
-      setError('PIN tidak valid. Silakan coba lagi.');
+    } catch {
+      setError('Gangguan jaringan saat memverifikasi PIN.');
       setPin('');
+    } finally {
       setLoading(false);
     }
   };
@@ -56,6 +93,7 @@ export default function AdminLoginPage() {
   // Physical keyboard support
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
+      if (isLocked || loading) return;
       if (/^[0-9]$/.test(e.key)) {
         handleDigit(e.key);
       } else if (e.key === 'Backspace') {
@@ -66,7 +104,9 @@ export default function AdminLoginPage() {
     };
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [pin]);
+  }, [pin, isLocked, loading]);
+
+  const devPinHint = getDefaultPinHint();
 
   return (
     <div className="min-h-screen flex flex-col justify-center items-center px-4 bg-[#070709] text-[#F4F4F6]">
@@ -95,7 +135,7 @@ export default function AdminLoginPage() {
             PIN Akses Cockpit Admin
           </h1>
           <p className="text-xs font-mono text-[#63636E] mt-1">
-            Masukkan PIN 6-digit untuk mengubah seluruh isi website
+            Masukkan PIN 6-digit untuk otentikasi sesi aman
           </p>
         </div>
 
@@ -113,10 +153,15 @@ export default function AdminLoginPage() {
           ))}
         </div>
 
-        {/* Error message */}
+        {/* Error / Lockout message */}
         {error && (
           <div className="p-2.5 rounded mb-4 text-xs font-mono text-center bg-red-500/10 text-red-400 border border-red-500/20">
             {error}
+            {isLocked && (
+              <div className="mt-1 font-semibold text-red-300">
+                Tunggu {Math.floor(lockoutSeconds / 60)}m {lockoutSeconds % 60}d sebelum mencoba kembali.
+              </div>
+            )}
           </div>
         )}
 
@@ -126,9 +171,9 @@ export default function AdminLoginPage() {
             <button
               key={digit}
               type="button"
-              disabled={loading}
+              disabled={loading || isLocked}
               onClick={() => handleDigit(digit)}
-              className="h-12 rounded-xl bg-[#14161D] border border-white/[0.06] hover:border-white/20 hover:bg-[#1a1c24] active:scale-95 text-base font-mono font-medium text-[#F4F4F6] transition-all flex items-center justify-center"
+              className="h-12 rounded-xl bg-[#14161D] border border-white/[0.06] hover:border-white/20 hover:bg-[#1a1c24] active:scale-95 disabled:opacity-30 disabled:cursor-not-allowed text-base font-mono font-medium text-[#F4F4F6] transition-all flex items-center justify-center"
             >
               {digit}
             </button>
@@ -136,9 +181,9 @@ export default function AdminLoginPage() {
 
           <button
             type="button"
-            disabled={loading || pin.length === 0}
+            disabled={loading || isLocked || pin.length === 0}
             onClick={handleClear}
-            className="h-12 rounded-xl bg-[#14161D]/50 border border-white/[0.04] hover:bg-[#14161D] text-[11px] font-mono text-[#A1A1AA] transition-all flex items-center justify-center"
+            className="h-12 rounded-xl bg-[#14161D]/50 border border-white/[0.04] hover:bg-[#14161D] disabled:opacity-30 disabled:cursor-not-allowed text-[11px] font-mono text-[#A1A1AA] transition-all flex items-center justify-center"
           >
             CLEAR
           </button>
@@ -146,28 +191,30 @@ export default function AdminLoginPage() {
           <button
             key="0"
             type="button"
-            disabled={loading}
+            disabled={loading || isLocked}
             onClick={() => handleDigit('0')}
-            className="h-12 rounded-xl bg-[#14161D] border border-white/[0.06] hover:border-white/20 hover:bg-[#1a1c24] active:scale-95 text-base font-mono font-medium text-[#F4F4F6] transition-all flex items-center justify-center"
+            className="h-12 rounded-xl bg-[#14161D] border border-white/[0.06] hover:border-white/20 hover:bg-[#1a1c24] active:scale-95 disabled:opacity-30 disabled:cursor-not-allowed text-base font-mono font-medium text-[#F4F4F6] transition-all flex items-center justify-center"
           >
             0
           </button>
 
           <button
             type="button"
-            disabled={loading || pin.length === 0}
+            disabled={loading || isLocked || pin.length === 0}
             onClick={handleDelete}
-            className="h-12 rounded-xl bg-[#14161D]/50 border border-white/[0.04] hover:bg-[#14161D] text-xs font-mono text-[#A1A1AA] transition-all flex items-center justify-center"
+            className="h-12 rounded-xl bg-[#14161D]/50 border border-white/[0.04] hover:bg-[#14161D] disabled:opacity-30 disabled:cursor-not-allowed text-xs font-mono text-[#A1A1AA] transition-all flex items-center justify-center"
             aria-label="Hapus satu angka"
           >
             <Delete className="w-4 h-4" />
           </button>
         </div>
 
-        {/* PIN Hint */}
-        <div className="pt-4 border-t border-white/[0.04] text-[11px] font-mono text-center text-[#63636E]">
-          PIN bawaan: <span className="text-[#10B981] font-medium">{getDefaultPinHint()}</span>
-        </div>
+        {/* Development Hint (Only shown in development mode) */}
+        {devPinHint && (
+          <div className="pt-4 border-t border-white/[0.04] text-[11px] font-mono text-center text-[#63636E]">
+            PIN pengembangan: <span className="text-[#10B981] font-medium">{devPinHint}</span>
+          </div>
+        )}
       </div>
     </div>
   );

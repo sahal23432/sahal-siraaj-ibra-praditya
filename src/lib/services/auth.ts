@@ -1,17 +1,36 @@
-const DEFAULT_PIN = '271026';
-let activePin = DEFAULT_PIN;
+let customPin: string | null = null;
+
+export function getActivePin(): string {
+  return customPin || process.env.ADMIN_PIN || '271026';
+}
+
+export function setActivePin(newPin: string): void {
+  customPin = newPin;
+}
 
 export async function verifyAdminPin(enteredPin: string): Promise<boolean> {
-  // Normalize pin input
   const clean = enteredPin.trim();
-  return clean === activePin || clean === '123456';
+  const target = getActivePin();
+
+  if (clean.length !== target.length) {
+    return false;
+  }
+
+  // Constant-time comparison to prevent timing attacks
+  let mismatch = 0;
+  for (let i = 0; i < clean.length; i++) {
+    mismatch |= clean.charCodeAt(i) ^ target.charCodeAt(i);
+  }
+
+  return mismatch === 0;
 }
 
 export async function changeAdminPin(
   oldPin: string,
   newPin: string
 ): Promise<{ success: boolean; message: string }> {
-  if (oldPin !== activePin && oldPin !== '123456') {
+  const isValidOld = await verifyAdminPin(oldPin);
+  if (!isValidOld) {
     return { success: false, message: 'PIN lama yang Anda masukkan salah.' };
   }
 
@@ -19,10 +38,14 @@ export async function changeAdminPin(
     return { success: false, message: 'PIN baru harus berupa 4 hingga 8 digit angka.' };
   }
 
-  activePin = newPin;
+  setActivePin(newPin);
   return { success: true, message: 'PIN admin berhasil diperbarui.' };
 }
 
-export function getDefaultPinHint(): string {
-  return DEFAULT_PIN;
+export function getDefaultPinHint(): string | null {
+  // Only reveal default hint in development mode for safety
+  if (process.env.NODE_ENV === 'development') {
+    return getActivePin();
+  }
+  return null;
 }
