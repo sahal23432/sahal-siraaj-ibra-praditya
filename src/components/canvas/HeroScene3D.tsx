@@ -1,11 +1,9 @@
 'use client';
 
 import { useRef, useMemo, useEffect } from 'react';
-import { useFrame, useThree } from '@react-three/fiber';
+import { useFrame } from '@react-three/fiber';
 import {
   AdaptiveDpr,
-  Sphere,
-  MeshTransmissionMaterial,
   MeshReflectorMaterial,
   OrbitControls,
 } from '@react-three/drei';
@@ -16,106 +14,7 @@ interface HeroScene3DProps {
   freeCameraMode?: boolean;
 }
 
-// 1. Interactive 3D Iridescent Magnifying Glass Sphere
-function IridescentMagnifyingGlassSphere() {
-  const sphereRef = useRef<THREE.Mesh>(null);
-  const ringRef = useRef<THREE.Mesh>(null);
-  const { isEcoMode, prefersReducedMotion } = usePerformanceMode();
-
-  // Resting position at the right side of the Hero text
-  const restingPos = useMemo(() => new THREE.Vector3(2.2, 0.35, 0.6), []);
-  const targetPos = useRef(new THREE.Vector3(2.2, 0.35, 0.6));
-
-  useFrame((state) => {
-    if (!sphereRef.current) return;
-    const t = state.clock.getElapsedTime();
-
-    // Check if cursor is over/near the Hero title area
-    // Normalized pointer: x in [-0.75, 0.75], y in [-0.45, 0.65]
-    const px = state.pointer.x;
-    const py = state.pointer.y;
-    const isNearTitle = Math.abs(px) < 0.75 && py > -0.45 && py < 0.65;
-
-    if (isNearTitle && !isEcoMode && !prefersReducedMotion) {
-      // Map pointer to 3D space near text
-      targetPos.current.set(px * 3.2, py * 1.8 + 0.2, 1.4);
-    } else {
-      // Return to resting position with gentle harmonic floating
-      targetPos.current.set(
-        restingPos.x + Math.sin(t * 0.8) * 0.12,
-        restingPos.y + Math.cos(t * 1.4) * 0.15,
-        restingPos.z
-      );
-    }
-
-    // Smooth linear interpolation (lerp factor: 0.07)
-    sphereRef.current.position.x = THREE.MathUtils.lerp(
-      sphereRef.current.position.x,
-      targetPos.current.x,
-      0.07
-    );
-    sphereRef.current.position.y = THREE.MathUtils.lerp(
-      sphereRef.current.position.y,
-      targetPos.current.y,
-      0.07
-    );
-    sphereRef.current.position.z = THREE.MathUtils.lerp(
-      sphereRef.current.position.z,
-      targetPos.current.z,
-      0.07
-    );
-
-    // Subtle axial rotation
-    sphereRef.current.rotation.y = t * 0.4;
-    sphereRef.current.rotation.x = Math.sin(t * 0.5) * 0.2;
-
-    if (ringRef.current) {
-      ringRef.current.position.copy(sphereRef.current.position);
-      ringRef.current.rotation.z = -t * 0.6;
-      ringRef.current.rotation.x = Math.PI / 2.3 + Math.sin(t * 0.4) * 0.15;
-    }
-  });
-
-  return (
-    <group>
-      {/* 3D Iridescent Magnifying Sphere */}
-      <Sphere ref={sphereRef} args={[0.72, 48, 48]} position={[2.2, 0.35, 0.6]}>
-        {!isEcoMode && !prefersReducedMotion ? (
-          <MeshTransmissionMaterial
-            transmission={1}
-            thickness={1.2}
-            roughness={0.05}
-            chromaticAberration={0.08}
-            anisotropicBlur={0.1}
-            distortion={0.16}
-            temporalDistortion={0.1}
-            ior={1.24}
-            color="#ffffff"
-            background={new THREE.Color('#05070B')}
-          />
-        ) : (
-          <meshStandardMaterial
-            color={0x22d3ee}
-            metalness={0.9}
-            roughness={0.1}
-            emissive={0x0e74e9}
-            emissiveIntensity={0.3}
-            transparent
-            opacity={0.65}
-          />
-        )}
-      </Sphere>
-
-      {/* Orbiting Equatorial Gimbal Ring */}
-      <mesh ref={ringRef} position={[2.2, 0.35, 0.6]}>
-        <torusGeometry args={[1.08, 0.012, 16, 80]} />
-        <meshBasicMaterial color={0x22d3ee} transparent opacity={0.65} />
-      </mesh>
-    </group>
-  );
-}
-
-// 2. 3D Camera Mouse Parallax Controller
+// 1. 3D Camera Mouse Parallax Controller
 function CameraParallaxController({ freeCameraMode }: { freeCameraMode: boolean }) {
   const { isEcoMode, prefersReducedMotion } = usePerformanceMode();
 
@@ -522,10 +421,7 @@ export default function HeroScene3D({ freeCameraMode = false }: HeroScene3DProps
         <CameraParallaxController freeCameraMode={freeCameraMode} />
       )}
 
-      {/* Item 1: Interactive Iridescent Glass Sphere */}
-      <IridescentMagnifyingGlassSphere />
-
-      {/* Item 1: Reflective Ground Floor */}
+      {/* Reflective Ground Floor */}
       <ReflectiveWaterFloor />
 
       {/* Main 3D Model Nexus */}

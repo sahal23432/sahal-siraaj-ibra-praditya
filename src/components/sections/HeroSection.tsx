@@ -57,7 +57,7 @@ export default function HeroSection({ profile }: HeroSectionProps) {
 
         {/* Hero Foreground Content */}
         <div className="relative z-10 max-w-5xl mx-auto px-5 sm:px-8 flex flex-col items-center my-auto pointer-events-none w-full">
-          {/* Interactive Liquid Water Headline ala Unseen Studio */}
+          {/* Hero Headline Display */}
           <ScrollReveal delay={0.05} duration={0.6} className="pointer-events-auto w-full">
             <LiquidWaterHeadline
               firstName="SAHAL SIRAAJ"
