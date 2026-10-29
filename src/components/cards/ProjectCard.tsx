@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useRef } from 'react';
+import { useRef, useEffect } from 'react';
 import Link from 'next/link';
 import { Project } from '@/types/portfolio';
 import { usePerformanceMode } from '@/lib/hooks/usePerformanceMode';
@@ -12,33 +12,81 @@ interface ProjectCardProps {
 }
 
 export default function ProjectCard({ project, isFeaturedSpan = false }: ProjectCardProps) {
-  const { isEcoMode } = usePerformanceMode();
+  const { isEcoMode, prefersReducedMotion } = usePerformanceMode();
   const cardRef = useRef<HTMLDivElement>(null);
-  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
-  const [isHovered, setIsHovered] = useState(false);
-  const [transformStyle, setTransformStyle] = useState('');
+  const glareRef = useRef<HTMLDivElement>(null);
+  const rectRef = useRef<DOMRect | null>(null);
+  const rafId = useRef<number | null>(null);
 
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (isEcoMode || !cardRef.current) return;
+  // Clean up RAF on unmount
+  useEffect(() => {
+    return () => {
+      if (rafId.current) cancelAnimationFrame(rafId.current);
+    };
+  }, []);
+
+  const handleMouseEnter = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (isEcoMode || prefersReducedMotion || !cardRef.current) return;
+    // Cache bounding rect on enter so tilting doesn't shift coordinates (fixes oscillation/jitter bug)
     const rect = cardRef.current.getBoundingClientRect();
+    rectRef.current = rect;
+
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
-    setMousePos({ x, y });
 
-    // Subtle 3D tilt calculation (max 2.5 degrees)
-    const centerX = rect.width / 2;
-    const centerY = rect.height / 2;
-    const rotateX = ((y - centerY) / centerY) * -2.5;
-    const rotateY = ((x - centerX) / centerX) * 2.5;
-    setTransformStyle(
-      `perspective(1000px) rotateX(${rotateX.toFixed(2)}deg) rotateY(${rotateY.toFixed(2)}deg)`
-    );
+    if (glareRef.current) {
+      glareRef.current.style.background = `radial-gradient(550px circle at ${x}px ${y}px, rgba(34,211,238,0.15), transparent 75%)`;
+      glareRef.current.style.opacity = '1';
+    }
+
+    // Set responsive transition while hovering
+    cardRef.current.style.transition = 'transform 0.08s ease-out, border-color 0.2s ease, box-shadow 0.3s ease';
   };
 
-  const handleMouseEnter = () => setIsHovered(true);
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (isEcoMode || prefersReducedMotion || !cardRef.current) return;
+
+    if (!rectRef.current) {
+      rectRef.current = cardRef.current.getBoundingClientRect();
+    }
+
+    const rect = rectRef.current;
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+
+    if (rafId.current) cancelAnimationFrame(rafId.current);
+
+    rafId.current = requestAnimationFrame(() => {
+      if (!cardRef.current) return;
+
+      const centerX = rect.width / 2;
+      const centerY = rect.height / 2;
+      // Smooth tilt limits: max 3.5 degrees
+      const rotateX = ((y - centerY) / centerY) * -3.5;
+      const rotateY = ((x - centerX) / centerX) * 3.5;
+
+      cardRef.current.style.transform = `perspective(1000px) translateY(-5px) rotateX(${rotateX.toFixed(2)}deg) rotateY(${rotateY.toFixed(2)}deg)`;
+
+      if (glareRef.current) {
+        glareRef.current.style.background = `radial-gradient(550px circle at ${x}px ${y}px, rgba(34,211,238,0.15), transparent 75%)`;
+        glareRef.current.style.opacity = '1';
+      }
+    });
+  };
+
   const handleMouseLeave = () => {
-    setIsHovered(false);
-    setTransformStyle('perspective(1000px) rotateX(0deg) rotateY(0deg)');
+    if (rafId.current) cancelAnimationFrame(rafId.current);
+    rectRef.current = null;
+
+    if (!cardRef.current) return;
+
+    // Smooth return to neutral without snapping
+    cardRef.current.style.transition = 'transform 0.5s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.25s ease, box-shadow 0.3s ease';
+    cardRef.current.style.transform = 'perspective(1000px) translateY(0px) rotateX(0deg) rotateY(0deg)';
+
+    if (glareRef.current) {
+      glareRef.current.style.opacity = '0';
+    }
   };
 
   // Determine icon based on category
@@ -55,30 +103,27 @@ export default function ProjectCard({ project, isFeaturedSpan = false }: Project
   return (
     <div
       ref={cardRef}
-      onMouseMove={handleMouseMove}
       onMouseEnter={handleMouseEnter}
+      onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
       style={{
-        transform: isEcoMode ? 'none' : transformStyle,
-        transition: isHovered
-          ? 'border-color 0.15s ease'
-          : 'transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.2s ease',
+        transform: 'perspective(1000px) translateY(0px) rotateX(0deg) rotateY(0deg)',
+        willChange: isEcoMode || prefersReducedMotion ? 'auto' : 'transform',
       }}
-      className={`relative group rounded-2xl bg-[#082F49] border border-[#22D3EE]/22 hover:border-[#22D3EE]/60 p-6 sm:p-8 flex flex-col justify-between overflow-hidden shadow-xl hover:-translate-y-1 transition-all duration-300 text-left ${
+      className={`relative group rounded-2xl bg-[#082F49] border border-[#22D3EE]/22 hover:border-[#22D3EE]/60 p-6 sm:p-8 flex flex-col justify-between overflow-hidden shadow-xl text-left select-none ${
         isFeaturedSpan ? 'lg:col-span-2' : 'col-span-1'
       }`}
     >
-      {/* Radial Hover Spotlight */}
-      {!isEcoMode && isHovered && (
+      {/* Radial Hover Spotlight (Hardware Telemetry Glare) */}
+      {!isEcoMode && !prefersReducedMotion && (
         <div
-          className="pointer-events-none absolute -inset-px rounded-2xl opacity-100 transition-opacity duration-300"
-          style={{
-            background: `radial-gradient(550px circle at ${mousePos.x}px ${mousePos.y}px, rgba(34,211,238,0.12), transparent 75%)`,
-          }}
+          ref={glareRef}
+          aria-hidden="true"
+          className="pointer-events-none absolute -inset-px rounded-2xl opacity-0 transition-opacity duration-300 z-0"
         />
       )}
 
-      <div>
+      <div className="relative z-10">
         {/* Top Header Row: Index + Year + Category on left, Live Status Pill on right */}
         <div className="flex flex-wrap items-center justify-between gap-3 mb-6">
           <div className="flex items-center gap-2 font-mono text-xs text-[#94A3B8]">
@@ -146,7 +191,7 @@ export default function ProjectCard({ project, isFeaturedSpan = false }: Project
         </div>
       </div>
 
-      <div>
+      <div className="relative z-10">
         {/* Tools Badges (rounded: 8px control) */}
         <div className="text-xs font-mono mb-6 flex flex-wrap gap-2">
           {project.tools.map((tool, idx) => (

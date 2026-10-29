@@ -34,7 +34,7 @@ export default function GallerySection({ projects }: GallerySectionProps) {
   const toSuperscript = (num: number) => {
     const supers: Record<string, string> = {
       '0': '⁰', '1': '¹', '2': '²', '3': '³', '4': '⁴',
-      '5': '⁵', '6': '⁶', '7': '⁷', '8': '⁸', '9': '⁹'
+      '5': '⁵', '6': '⁶', '7': '⁷', '8': '⁸', '9': '⁹',
     };
     return num.toString().split('').map((ch) => supers[ch] || ch).join('');
   };
@@ -56,24 +56,27 @@ export default function GallerySection({ projects }: GallerySectionProps) {
   }, [projects, activeCategory, searchQuery]);
 
   return (
-    <section id="karya" className="py-20 sm:py-28 bg-[#FFFFFF] border-t border-[#E5E7EB]">
+    <section id="karya" className="py-24 sm:py-32 bg-[#05070B] border-t border-white/[0.08] relative">
+      {/* Background Subtle Ambience */}
+      <div className="absolute top-1/2 left-0 w-96 h-96 bg-[#0E74E9]/10 blur-[130px] rounded-full pointer-events-none -z-10" />
+
       <div className="max-w-6xl mx-auto px-5 sm:px-8">
         {/* Section Header */}
         <ScrollReveal>
-          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-12">
+          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-14">
             <div>
-              <div className="flex items-center gap-2 font-mono text-xs text-[#0E74E9] uppercase tracking-wider mb-3">
+              <div className="flex items-center gap-2 font-mono text-xs text-[#22D3EE] uppercase tracking-widest mb-3">
                 <span className="font-bold">02</span>
-                <span className="text-[#D1D5DB]">·</span>
+                <span className="text-white/20">·</span>
                 <span className="font-semibold">GALERI KARYA SISTEM BENTO</span>
               </div>
-              <h2 className="text-3xl sm:text-5xl font-medium tracking-tight text-[#111827] leading-[1.04]">
+              <h2 className="text-3xl sm:text-5xl md:text-6xl font-medium tracking-tight text-[#F8FAFC] leading-[1.04]">
                 Sistem Terintegrasi & Rekayasa Perangkat
               </h2>
             </div>
-            <div className="font-mono text-xs text-[#64748B] flex items-center gap-2">
-              <span className="px-2.5 py-1 rounded-full bg-[#F1F5F9] border border-[#E2E8F0] font-semibold text-[#111827]">
-                {filteredProjects.length.toString().padStart(2, '0')} DOKUMENTASI
+            <div className="font-mono text-xs flex items-center gap-2">
+              <span className="px-3 py-1.5 rounded-full bg-[#090E17] border border-white/[0.08] font-semibold text-[#22D3EE]">
+                {filteredProjects.length.toString().padStart(2, '0')} DOKUMENTASI SISTEM
               </span>
             </div>
           </div>
@@ -81,7 +84,7 @@ export default function GallerySection({ projects }: GallerySectionProps) {
 
         {/* Unseen Category Filter & Search Bar */}
         <ScrollReveal delay={0.1}>
-          <div className="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4 mb-10">
+          <div className="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4 mb-12">
             {/* Category Pills with Superscript count */}
             <div className="flex flex-wrap items-center gap-2">
               {categoriesWithCount.map((cat) => (
@@ -91,12 +94,12 @@ export default function GallerySection({ projects }: GallerySectionProps) {
                   onClick={() => setActiveCategory(cat.name)}
                   className={`px-4 py-2 rounded-full text-xs font-mono transition-all flex items-baseline gap-1.5 ${
                     activeCategory === cat.name
-                      ? 'bg-[#0E74E9] text-white font-semibold shadow-[0_4px_12px_rgba(14,116,233,0.3)]'
-                      : 'bg-[#F8FAFC] text-[#4B5563] border border-[#E2E8F0] hover:text-[#0E74E9] hover:border-[#0E74E9]/30'
+                      ? 'bg-[#22D3EE] text-[#05070B] font-bold shadow-[0_0_20px_rgba(34,211,238,0.35)]'
+                      : 'bg-[#090E17] text-[#94A3B8] border border-white/[0.08] hover:text-[#F8FAFC] hover:border-[#22D3EE]/40'
                   }`}
                 >
                   <span>{cat.name}</span>
-                  <span className={`text-[10px] font-mono ${activeCategory === cat.name ? 'text-white/80' : 'text-[#94A3B8]'}`}>
+                  <span className={`text-[10px] font-mono ${activeCategory === cat.name ? 'text-[#05070B]/80' : 'text-[#64748B]'}`}>
                     {toSuperscript(cat.count)}
                   </span>
                 </button>
@@ -105,19 +108,19 @@ export default function GallerySection({ projects }: GallerySectionProps) {
 
             {/* Quick Search */}
             <div className="relative min-w-[260px]">
-              <Search className="w-3.5 h-3.5 text-[#94A3B8] absolute left-3.5 top-1/2 -translate-y-1/2" />
+              <Search className="w-3.5 h-3.5 text-[#64748B] absolute left-3.5 top-1/2 -translate-y-1/2" />
               <input
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Cari alat, peran, atau kata kunci..."
-                className="w-full bg-[#F8FAFC] border border-[#E2E8F0] focus:border-[#0E74E9] focus:bg-white rounded-full pl-9 pr-8 py-2 text-xs font-mono text-[#111827] placeholder-[#94A3B8] outline-none transition-colors"
+                className="w-full bg-[#090E17] border border-white/[0.08] focus:border-[#22D3EE] rounded-full pl-9 pr-8 py-2 text-xs font-mono text-[#F8FAFC] placeholder-[#64748B] outline-none transition-colors"
               />
               {searchQuery && (
                 <button
                   onClick={() => setSearchQuery('')}
                   type="button"
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-[#94A3B8] hover:text-[#111827]"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-[#94A3B8] hover:text-white"
                   aria-label="Hapus pencarian"
                 >
                   <X className="w-3.5 h-3.5" />
@@ -129,21 +132,23 @@ export default function GallerySection({ projects }: GallerySectionProps) {
 
         {/* Asymmetrical Bento Grid Layout */}
         {filteredProjects.length > 0 ? (
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 sm:gap-6">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8">
             {filteredProjects.map((project, idx) => {
-              // The first flagship project (Console Box RFID) spans 2 columns in the Bento Grid when showing "Semua" or multiple
               const isFlagship = project.index_code === '01' && activeCategory === 'Semua';
+              const isConsoleBox = project.slug === 'console-box-rfid-presensi-smkn9';
               return (
                 <ScrollReveal key={project.id} delay={idx * 0.1}>
-                  <ProjectCard project={project} isFeaturedSpan={isFlagship} />
+                  <div id={isConsoleBox ? 'console-box' : undefined} className="scroll-mt-28">
+                    <ProjectCard project={project} isFeaturedSpan={isFlagship} />
+                  </div>
                 </ScrollReveal>
               );
             })}
           </div>
         ) : (
           /* Empty State */
-          <div className="p-12 text-center rounded-2xl bg-[#F8FAFC] border border-[#E2E8F0]">
-            <p className="text-sm font-mono text-[#4B5563] mb-3">
+          <div className="p-12 text-center rounded-2xl bg-[#090E17] border border-white/[0.08]">
+            <p className="text-sm font-mono text-[#94A3B8] mb-3">
               Tidak ada karya yang sesuai dengan kriteria pencarian &quot;{searchQuery}&quot;
             </p>
             <button
@@ -152,7 +157,7 @@ export default function GallerySection({ projects }: GallerySectionProps) {
                 setActiveCategory('Semua');
                 setSearchQuery('');
               }}
-              className="text-xs font-mono text-[#0E74E9] font-semibold underline underline-offset-4 hover:text-[#0256B4]"
+              className="text-xs font-mono text-[#22D3EE] font-semibold underline underline-offset-4 hover:text-white"
             >
               Reset filter dan pencarian ⮡
             </button>

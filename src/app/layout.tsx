@@ -1,7 +1,9 @@
 import type { Metadata } from 'next';
-import { Inter, JetBrains_Mono } from 'next/font/google';
+import { Inter, JetBrains_Mono, Instrument_Serif } from 'next/font/google';
 import './globals.css';
 import { PerformanceProvider } from '@/lib/hooks/usePerformanceMode';
+import SmoothScrollProvider from '@/components/ui/SmoothScrollProvider';
+import InteractiveCursor from '@/components/ui/InteractiveCursor';
 
 const inter = Inter({
   variable: '--font-sans',
@@ -11,6 +13,13 @@ const inter = Inter({
 const jetbrainsMono = JetBrains_Mono({
   variable: '--font-mono',
   subsets: ['latin'],
+});
+
+const instrumentSerif = Instrument_Serif({
+  variable: '--font-serif',
+  subsets: ['latin'],
+  weight: '400',
+  style: ['normal', 'italic'],
 });
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://sahal-siraaj-ibra-praditya.vercel.app';
@@ -134,15 +143,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="id" className={`${inter.variable} ${jetbrainsMono.variable} scroll-smooth`}>
+    <html lang="id" className={`${inter.variable} ${jetbrainsMono.variable} ${instrumentSerif.variable} scroll-smooth`}>
       <head>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
-      <body className="bg-[#FFFFFF] text-[#111827] min-h-screen antialiased selection:bg-[#22D3EE]/25 selection:text-[#082F49]">
-        <PerformanceProvider>{children}</PerformanceProvider>
+      <body className="bg-[#05070B] text-[#F8FAFC] min-h-screen antialiased selection:bg-[#22D3EE]/30 selection:text-white">
+        <PerformanceProvider><SmoothScrollProvider><InteractiveCursor />{children}</SmoothScrollProvider></PerformanceProvider>
       </body>
     </html>
   );

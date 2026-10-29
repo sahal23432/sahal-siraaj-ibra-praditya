@@ -1,19 +1,23 @@
 'use client';
 
+import { useState } from 'react';
 import Canvas3DWrapper from '@/components/canvas/Canvas3DWrapper';
-import { ArrowDown, Download, Sparkles } from 'lucide-react';
+import { Download, Eye, Globe, Radio, Sparkles } from 'lucide-react';
+import { motion, AnimatePresence } from 'motion/react';
 import { Profile } from '@/types/portfolio';
-import { motion } from 'motion/react';
 import { usePerformanceMode } from '@/lib/hooks/usePerformanceMode';
 import ScrollReveal from '@/components/ui/ScrollReveal';
+import LiquidWaterHeadline from '@/components/ui/LiquidWaterHeadline';
+import Preloader from '@/components/ui/Preloader';
 
 interface HeroSectionProps {
   profile: Profile;
 }
 
 export default function HeroSection({ profile }: HeroSectionProps) {
-  const { isEcoMode, prefersReducedMotion } = usePerformanceMode();
-  const headlineWords = profile.hero_display_title.split(' ');
+  const { isEcoMode, toggleEcoMode } = usePerformanceMode();
+  const [freeCameraMode, setFreeCameraMode] = useState(false);
+  const [portalHovered, setPortalHovered] = useState(false);
 
   const handleDownloadCV = () => {
     const link = document.createElement('a');
@@ -26,127 +30,197 @@ export default function HeroSection({ profile }: HeroSectionProps) {
     document.body.removeChild(link);
   };
 
+  const handleScrollToConsoleBox = () => {
+    const el = document.getElementById('karya') || document.getElementById('console-box');
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
-    <section id="hero" className="relative bg-[#FFFFFF] pt-28 sm:pt-36 pb-20 sm:pb-28 overflow-hidden">
-      <div className="max-w-6xl mx-auto px-5 sm:px-8 flex flex-col items-center text-center">
-        {/* Nimbus Pill Hook: JetBrains Mono 12px, rounded-full */}
-        <ScrollReveal duration={0.4}>
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#E0F2FE] border border-[#BAE6FD] text-xs font-mono font-semibold text-[#0369A1] uppercase tracking-wide mb-8">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#0E74E9]" />
-            <span>NEW · PORTOFOLIO SISTEM TERINTEGRASI</span>
-          </div>
-        </ScrollReveal>
+    <>
+      {/* Item 7: Lightweight Preloader Curtain with [00%] -> [100%] counter */}
+      <Preloader />
 
-        {/* Display Headline: Inter 64px, 500 weight, line-height 1.04 */}
-        <h1 className="text-4xl sm:text-6xl lg:text-7xl font-medium tracking-tight text-[#111827] max-w-4xl leading-[1.04] mb-6">
-          {isEcoMode || prefersReducedMotion ? (
-            headlineWords.join(' ')
-          ) : (
-            headlineWords.map((word, i) => (
-              <motion.span
-                key={i}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{
-                  duration: 0.55,
-                  delay: 0.08 + i * 0.035,
-                  ease: [0.22, 1, 0.36, 1],
-                }}
-                className="inline-block mr-2.5 sm:mr-3.5"
+      <section
+        id="hero"
+        className="relative min-h-[96vh] sm:min-h-screen bg-[#05070B] pt-28 sm:pt-36 pb-10 flex flex-col justify-between overflow-hidden text-center bg-radial-telemetry bg-noise"
+      >
+        {/* Item 1 & 5: Immersive Full-Bleed 3D WebGL Canvas Layer */}
+        <div className="absolute inset-0 z-0">
+          <Canvas3DWrapper freeCameraMode={freeCameraMode} />
+        </div>
+
+        {/* Ambient Atmospheric Glow Halos */}
+        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[350px] bg-[#0E74E9]/20 blur-[130px] rounded-full pointer-events-none -z-10" />
+        <div className="absolute bottom-16 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-[#22D3EE]/15 blur-[120px] rounded-full pointer-events-none -z-10" />
+
+        {/* Hero Foreground Content */}
+        <div className="relative z-10 max-w-5xl mx-auto px-5 sm:px-8 flex flex-col items-center my-auto pointer-events-none w-full">
+          {/* Interactive Liquid Water Headline ala Unseen Studio */}
+          <ScrollReveal delay={0.05} duration={0.6} className="pointer-events-auto w-full">
+            <LiquidWaterHeadline
+              firstName="SAHAL SIRAAJ"
+              lastName="IBRA PRADITYA"
+              roleBadge="A BRAND, WEB 3D & IOT SYSTEMS ARCHITECT · SMKN 9"
+              tagline={profile.short_bio}
+            />
+          </ScrollReveal>
+
+          {/* Item 6: Inverted Fill Pill CTA Button dengan Panah Diagonal */}
+          <ScrollReveal delay={0.2} duration={0.45}>
+            <div className="pointer-events-auto flex flex-wrap items-center justify-center gap-4 mt-2 sm:mt-3">
+              {/* Inverted Fill Pill Button: Lihat Karya Saya ↘ */}
+              <a
+                href="#karya"
+                className="group relative inline-flex items-center gap-2.5 px-7 py-3.5 rounded-full bg-white/95 text-slate-900 font-mono text-xs font-bold tracking-wide overflow-hidden shadow-[0_0_25px_rgba(255,255,255,0.25)] hover:shadow-[0_0_30px_rgba(34,211,238,0.45)] transition-all duration-300 active:scale-[0.98]"
               >
-                {word}
-              </motion.span>
-            ))
-          )}
-        </h1>
+                {/* Dark Inverted Fill Slide-up Layer */}
+                <span className="absolute inset-0 bg-[#082F49] translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out" />
 
-        {/* Body Narrative: Inter 16px, 400 weight, line-height 1.6 */}
-        <ScrollReveal delay={0.25}>
-          <p className="text-base sm:text-lg text-[#4B5563] max-w-2xl leading-[1.6] mb-10 font-normal">
-            Halo, saya <strong className="text-[#111827] font-semibold">{profile.full_name}</strong>,{' '}
-            pengembang perangkat lunak dan eksplorator perangkat keras dari Semarang. Saya
-            merancang alur sistem terintegrasi, mulai dari perakitan terminal fisik berbasis RFID
-            hingga aplikasi web Front-End dan Back-End.
-          </p>
-        </ScrollReveal>
+                <span className="relative z-10 group-hover:text-white transition-colors duration-300">
+                  Lihat Karya Saya
+                </span>
 
-        {/* Pill Action Buttons (Nimbus 9999px pill) */}
-        <ScrollReveal delay={0.35}>
-          <div className="flex flex-wrap items-center justify-center gap-4 mb-16">
-            <a
-              href="#karya"
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[#0E74E9] text-white text-xs font-mono font-semibold hover:bg-[#0256B4] hover:shadow-[0_4px_16px_rgba(14,116,233,0.35)] transition-all active:scale-[0.98]"
-            >
-              <span>Lihat Karya Sistem</span>
-              <span>⮡</span>
-            </a>
+                <span className="relative z-10 text-sm font-bold group-hover:text-[#22D3EE] group-hover:translate-x-0.5 group-hover:translate-y-0.5 transition-all duration-300">
+                  ↘
+                </span>
+              </a>
 
+              {/* Secondary CTA: Unduh CV Resmi */}
+              <button
+                onClick={handleDownloadCV}
+                type="button"
+                className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-[#090E17]/85 backdrop-blur-md border border-white/[0.14] hover:border-[#22D3EE]/50 text-[#F8FAFC] hover:text-[#22D3EE] text-xs font-mono font-semibold transition-all active:scale-[0.98] shadow-xl"
+              >
+                <Download className="w-3.5 h-3.5 text-[#22D3EE]" />
+                <span>Unduh CV Resmi (.PDF)</span>
+                <span>⮡</span>
+              </button>
+            </div>
+          </ScrollReveal>
+        </div>
+
+        {/* Item 5 & 7: Floating Bottom Dock ala Unseen Studio */}
+        <div className="relative z-20 max-w-6xl mx-auto px-5 sm:px-8 w-full mt-6 pt-4 flex flex-col md:flex-row items-center justify-between gap-4 text-xs font-mono text-[#94A3B8]">
+          {/* Item 7: Bottom-Left Controls (Signal wave/Eco Toggle ((•)) & Proyek Unggulan 2026 Pill) */}
+          <div className="flex items-center gap-3">
+            {/* Round signal wave / eco button ((•)) */}
             <button
-              onClick={handleDownloadCV}
+              onClick={toggleEcoMode}
               type="button"
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-white border border-[#E5E7EB] text-[#111827] text-xs font-mono font-semibold hover:border-[#0E74E9]/40 hover:text-[#0E74E9] hover:bg-[#F8FAFC] transition-all active:scale-[0.98] shadow-xs"
+              title={isEcoMode ? 'Beralih ke 60 FPS Penuh' : 'Beralih ke Mode Hemat Animasi (ECO)'}
+              className={`w-10 h-10 rounded-full flex items-center justify-center transition-all shadow-lg backdrop-blur-md ${
+                isEcoMode
+                  ? 'bg-[#0E74E9]/25 border border-[#22D3EE]/50 text-[#22D3EE]'
+                  : 'bg-[#090E17]/85 border border-white/[0.12] hover:border-[#22D3EE]/60 text-[#22D3EE] hover:scale-105'
+              }`}
             >
-              <Download className="w-3.5 h-3.5" />
-              <span>Unduh CV Resmi (.PDF)</span>
-              <span>⮡</span>
+              <Radio className="w-4 h-4 animate-pulse" />
+            </button>
+
+            {/* Pill button: Proyek Unggulan 2026 (Inverted dark hover, smooth scroll to Bento Console Box) */}
+            <button
+              onClick={handleScrollToConsoleBox}
+              type="button"
+              className="group relative inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/95 text-slate-900 font-mono text-[11px] font-semibold overflow-hidden shadow-md transition-all active:scale-95"
+            >
+              {/* Inverted dark fill */}
+              <span className="absolute inset-0 bg-[#082F49] translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out" />
+
+              <span className="relative z-10 w-1.5 h-1.5 rounded-full bg-[#0E74E9] group-hover:bg-[#22D3EE] transition-colors" />
+              <span className="relative z-10 group-hover:text-white transition-colors duration-300">
+                Proyek Unggulan 2026
+              </span>
+              <span className="relative z-10 group-hover:text-[#22D3EE] transition-colors">↘</span>
             </button>
           </div>
-        </ScrollReveal>
 
-        {/* Bento Hero 3D Card: Surface #082F49 with Unseen "Drag to explore" & Cyan RFID Signals */}
-        <ScrollReveal delay={0.4} className="w-full">
-          <div className="w-full relative rounded-2xl bg-[#082F49] border border-[#22D3EE]/25 shadow-2xl p-6 sm:p-8 min-h-[460px] sm:min-h-[540px] flex flex-col justify-between overflow-hidden text-left group">
-            {/* 3D WebGL Canvas Layer */}
-            <Canvas3DWrapper />
+          {/* Item 5: Bottom-Center "Portal / Mode" Eye-to-Globe Button (SAHAL 🌐 SYSTEM) */}
+          <div
+            onMouseEnter={() => setPortalHovered(true)}
+            onMouseLeave={() => setPortalHovered(false)}
+            className="flex items-center justify-center my-2 md:my-0"
+          >
+            <div className="relative flex items-center">
+              {/* Symmetrical Left Text: SAHAL */}
+              <motion.span
+                animate={{
+                  x: portalHovered ? -10 : 25,
+                  opacity: portalHovered ? 1 : 0,
+                }}
+                transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+                className="font-mono text-xs font-bold text-white tracking-widest mr-2 select-none pointer-events-none"
+              >
+                SAHAL
+              </motion.span>
 
-            {/* Top Bar inside Bento 3D Card */}
-            <div className="relative z-10 flex flex-wrap items-center justify-between gap-3 pb-4 border-b border-white/[0.08]">
-              <div className="flex items-center gap-2 font-mono text-xs text-[#94A3B8]">
-                <span className="w-2 h-2 rounded-full bg-[#22D3EE] animate-pulse" />
-                <span className="text-[#F8FAFC] font-semibold">TELEMETRY STAGE · 3D HARDWARE / RFID</span>
-              </div>
-              <div className="flex items-center gap-2 font-mono text-xs">
-                <span className="px-2.5 py-0.5 rounded-full bg-[#22D3EE]/15 border border-[#22D3EE]/30 text-[#22D3EE] text-[11px] font-semibold">
-                  [ LIVE 4.0 ]
-                </span>
-                <span className="text-[#94A3B8] hidden sm:inline">SMKN 9 SEMARANG</span>
-              </div>
-            </div>
+              {/* Center Eye-to-Globe Button */}
+              <button
+                onClick={() => setFreeCameraMode(!freeCameraMode)}
+                type="button"
+                title={
+                  freeCameraMode
+                    ? 'Nonaktifkan Kamera Bebas (Kembali ke Parallax)'
+                    : 'Aktifkan Mode Eksplorasi Kamera Bebas 3D (OrbitControls)'
+                }
+                className={`relative z-10 w-11 h-11 rounded-full flex items-center justify-center shadow-[0_0_25px_rgba(255,255,255,0.35)] transition-all ${
+                  freeCameraMode
+                    ? 'bg-[#22D3EE] text-[#05070B] ring-4 ring-[#22D3EE]/30 scale-105'
+                    : 'bg-white text-slate-900 hover:scale-110 active:scale-95'
+                }`}
+              >
+                <AnimatePresence mode="wait">
+                  {portalHovered || freeCameraMode ? (
+                    <motion.div
+                      key="globe-icon"
+                      initial={{ rotate: -90, scale: 0.5, opacity: 0 }}
+                      animate={{ rotate: 0, scale: 1, opacity: 1 }}
+                      exit={{ rotate: 90, scale: 0.5, opacity: 0 }}
+                      transition={{ duration: 0.25 }}
+                    >
+                      <Globe className="w-5 h-5 animate-spin" style={{ animationDuration: '8s' }} />
+                    </motion.div>
+                  ) : (
+                    <motion.div
+                      key="eye-icon"
+                      initial={{ scale: 0.5, opacity: 0 }}
+                      animate={{ scale: 1, opacity: 1 }}
+                      exit={{ scale: 0.5, opacity: 0 }}
+                      transition={{ duration: 0.2 }}
+                    >
+                      <Eye className="w-5 h-5 text-slate-900" />
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </button>
 
-            {/* Center "Drag to Explore" Unseen Studio cue */}
-            <div className="relative z-10 pointer-events-none flex flex-col items-center justify-center my-auto py-8">
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#041624]/80 backdrop-blur-md border border-[#22D3EE]/30 text-xs font-mono text-[#22D3EE] shadow-lg tracking-wider">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#22D3EE]" />
-                <span>[ DRAG UNTUK MENJELAJAHI SISTEM ]</span>
-              </div>
-            </div>
-
-            {/* Bottom Bar inside Bento 3D Card */}
-            <div className="relative z-10 flex flex-wrap items-center justify-between gap-3 pt-4 border-t border-white/[0.08] text-xs font-mono text-[#94A3B8]">
-              <div className="flex items-center gap-2">
-                <span className="text-[#F8FAFC]">CONSOLE CORE:</span>
-                <span className="text-[#22D3EE]">AKTIF</span>
-                <span className="text-white/20">·</span>
-                <span>MIKROKONTROLER TERHUBUNG</span>
-              </div>
-              <div className="text-[11px] text-[#22D3EE] bg-[#041624]/60 px-2.5 py-1 rounded-md border border-white/[0.06]">
-                RESPONSIF KURSOR · 60 FPS
-              </div>
+              {/* Symmetrical Right Text: SYSTEM */}
+              <motion.span
+                animate={{
+                  x: portalHovered ? 10 : -25,
+                  opacity: portalHovered ? 1 : 0,
+                }}
+                transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+                className="font-mono text-xs font-bold text-[#22D3EE] tracking-widest ml-2 select-none pointer-events-none"
+              >
+                SYSTEM
+              </motion.span>
             </div>
           </div>
-        </ScrollReveal>
-      </div>
 
-      {/* Scroll Down Indicator */}
-      <div className="flex justify-center mt-12">
-        <a
-          href="#karya"
-          className="inline-flex items-center gap-2 text-xs font-mono text-[#64748B] hover:text-[#0E74E9] transition-colors"
-        >
-          <span>Jelajahi Galeri Karya</span>
-          <ArrowDown className="w-3.5 h-3.5 animate-bounce" />
-        </a>
-      </div>
-    </section>
+          {/* Bottom-Right: Telemetry Copyright */}
+          <div className="flex items-center gap-2 text-[11px] text-[#64748B] tracking-wider">
+            {freeCameraMode ? (
+              <span className="text-[#22D3EE] font-mono font-semibold animate-pulse">
+                [ 3D ORBIT FREE CAM ON ]
+              </span>
+            ) : (
+              <span>©2026 SAHAL SIRAAJ</span>
+            )}
+          </div>
+        </div>
+      </section>
+    </>
   );
 }

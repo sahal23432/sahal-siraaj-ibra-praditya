@@ -9,7 +9,11 @@ import { usePerformanceMode } from '@/lib/hooks/usePerformanceMode';
 
 const HeroScene3D = dynamic(() => import('./HeroScene3D'), { ssr: false });
 
-export default function Canvas3DWrapper() {
+interface Canvas3DWrapperProps {
+  freeCameraMode?: boolean;
+}
+
+export default function Canvas3DWrapper({ freeCameraMode = false }: Canvas3DWrapperProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [isVisible, setIsVisible] = useState(true);
   const { isEcoMode } = usePerformanceMode();
@@ -54,7 +58,7 @@ export default function Canvas3DWrapper() {
             style={{ background: 'transparent' }}
           >
             <Suspense fallback={null}>
-              <HeroScene3D />
+              <HeroScene3D freeCameraMode={freeCameraMode} />
             </Suspense>
           </Canvas>
         </WebGLErrorBoundary>
