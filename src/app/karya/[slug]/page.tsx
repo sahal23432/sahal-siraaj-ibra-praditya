@@ -3,7 +3,6 @@ import Link from 'next/link';
 import { Metadata } from 'next';
 import { getProjectBySlug, getAllProjects } from '@/lib/services/projects';
 import { ArrowLeft, ArrowUpRight, CheckCircle2, Cpu, Wrench } from 'lucide-react';
-
 import ScrollProgressBar from '@/components/ui/ScrollProgressBar';
 
 interface PageProps {
@@ -52,83 +51,84 @@ export default async function ProjectDetailPage({ params }: PageProps) {
     });
 
   return (
-    <main className="min-h-screen bg-[#070709] text-[#F4F4F6] pt-12 pb-24">
+    <main className="min-h-screen bg-[#FFFFFF] text-[#111827] pt-12 pb-24">
       <ScrollProgressBar />
-      {/* Top Navigation */}
+
+      {/* Top Navigation Back */}
       <div className="max-w-5xl mx-auto px-5 sm:px-8 mb-10">
         <Link
           href="/#karya"
-          className="inline-flex items-center gap-2 text-xs font-mono text-[#A1A1AA] hover:text-[#F4F4F6] transition-colors py-1"
+          className="inline-flex items-center gap-2 text-xs font-mono font-semibold text-[#0E74E9] hover:text-[#0256B4] transition-colors py-1"
         >
           <ArrowLeft className="w-3.5 h-3.5" />
-          <span>KEMBALI KE GALERI KARYA</span>
+          <span>⮡ KEMBALI KE GALERI KARYA</span>
         </Link>
       </div>
 
-      {/* Case Study Header */}
-      <header className="max-w-5xl mx-auto px-5 sm:px-8 mb-14">
-        <div className="flex items-center gap-3 font-mono text-xs text-[#63636E] mb-4">
-          <span className="text-[#A1A1AA] font-semibold">{project.index_code}</span>
+      {/* Case Study Header on Light Background */}
+      <header className="max-w-5xl mx-auto px-5 sm:px-8 mb-14 text-left">
+        <div className="flex flex-wrap items-center gap-3 font-mono text-xs text-[#64748B] mb-4">
+          <span className="text-[#0E74E9] font-bold text-sm">{project.index_code}</span>
           <span>·</span>
           <span>{project.year}</span>
           <span>·</span>
-          <span className="uppercase text-[#A1A1AA]">{project.category}</span>
+          <span className="uppercase text-[#111827] font-semibold">{project.category}</span>
           <span>·</span>
-          <span className="text-[#38BDF8] inline-flex items-center gap-1">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#38BDF8]" />
+          <span className="px-2.5 py-0.5 rounded-full bg-[#E0F2FE] border border-[#BAE6FD] text-[#0369A1] font-semibold inline-flex items-center gap-1.5">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#0E74E9]" />
             {project.status_badge}
           </span>
         </div>
 
-        <h1 className="text-3xl sm:text-5xl font-medium tracking-tight text-[#F4F4F6] mb-4 leading-tight">
+        <h1 className="text-3xl sm:text-5xl font-medium tracking-tight text-[#111827] mb-5 leading-[1.08]">
           {project.title}
         </h1>
 
-        <p className="text-base sm:text-lg text-[#A1A1AA] leading-relaxed max-w-3xl mb-8">
+        <p className="text-base sm:text-lg text-[#4B5563] leading-relaxed max-w-3xl mb-8 font-normal">
           {project.summary}
         </p>
 
-        {/* Live URL Link */}
+        {/* Live URL Link Button */}
         {project.live_url && (
           <a
             href={project.live_url}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-4 py-2 rounded bg-[#2563EB] text-[#F4F4F6] text-xs font-mono font-medium hover:bg-[#3B82F6] transition-colors"
+            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#0E74E9] text-white text-xs font-mono font-semibold hover:bg-[#0256B4] transition-all shadow-[0_4px_12px_rgba(14,116,233,0.3)]"
           >
             <span>KUNJUNGI WEBSITE LANGSUNG</span>
-            <ArrowUpRight className="w-3.5 h-3.5" />
+            <span>⮡</span>
           </a>
         )}
       </header>
 
-      {/* Architecture & Pipeline Telemetry Block */}
+      {/* Architecture & Pipeline Telemetry Block: Surface #082F49 */}
       {project.pipeline_steps && project.pipeline_steps.length > 0 && (
-        <section className="max-w-5xl mx-auto px-5 sm:px-8 mb-16">
-          <div className="bg-[#0D0E12] border border-white/[0.08] rounded-xl p-6 sm:p-8">
-            <div className="flex items-center justify-between text-xs font-mono text-[#63636E] uppercase tracking-wider mb-6 pb-3 border-b border-white/[0.06]">
-              <span className="flex items-center gap-2 text-[#F4F4F6]">
-                <Cpu className="w-4 h-4 text-[#38BDF8]" />
+        <section className="max-w-5xl mx-auto px-5 sm:px-8 mb-16 text-left">
+          <div className="bg-[#082F49] border border-[#22D3EE]/25 rounded-2xl p-6 sm:p-8 shadow-xl">
+            <div className="flex items-center justify-between text-xs font-mono text-[#94A3B8] uppercase tracking-wider mb-6 pb-3 border-b border-white/[0.08]">
+              <span className="flex items-center gap-2 text-[#22D3EE] font-semibold">
+                <Cpu className="w-4 h-4 text-[#22D3EE]" />
                 DIAGRAM ALUR SISTEM (TELEMETRY PIPELINE)
               </span>
-              <span>4 TAHAPAN KERJA</span>
+              <span className="text-white/40">4 TAHAPAN KERJA</span>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
               {project.pipeline_steps.map((st, i) => (
                 <div
                   key={i}
-                  className="bg-[#14161D] rounded-lg p-4 border border-white/[0.06] flex flex-col justify-between"
+                  className="bg-[#041624] rounded-xl p-4 border border-white/[0.06] flex flex-col justify-between hover:border-[#22D3EE]/40 transition-colors"
                 >
-                  <div className="flex items-center justify-between text-xs font-mono text-[#63636E] mb-2">
-                    <span className="text-[#A1A1AA] font-semibold">{st.step}</span>
-                    <CheckCircle2 className="w-3.5 h-3.5 text-[#38BDF8]" />
+                  <div className="flex items-center justify-between text-xs font-mono text-[#94A3B8] mb-2">
+                    <span className="text-[#22D3EE] font-bold">{st.step}</span>
+                    <CheckCircle2 className="w-3.5 h-3.5 text-[#22D3EE]" />
                   </div>
                   <div>
-                    <h4 className="text-sm font-mono font-semibold text-[#F4F4F6] mb-1">
+                    <h4 className="text-sm font-mono font-semibold text-[#F8FAFC] mb-1">
                       {st.label}
                     </h4>
-                    <p className="text-xs text-[#A1A1AA] leading-snug">{st.detail}</p>
+                    <p className="text-xs text-[#94A3B8] leading-snug">{st.detail}</p>
                   </div>
                 </div>
               ))}
@@ -138,15 +138,16 @@ export default async function ProjectDetailPage({ params }: PageProps) {
       )}
 
       {/* Main Content Layout: Story narrative + Sticky Sidebar */}
-      <div className="max-w-5xl mx-auto px-5 sm:px-8 grid grid-cols-1 lg:grid-cols-12 gap-12 items-start mb-20">
-        {/* Left Column: Structured Narrative */}
-        <div className="lg:col-span-8 space-y-12">
+      <div className="max-w-5xl mx-auto px-5 sm:px-8 grid grid-cols-1 lg:grid-cols-12 gap-8 items-start mb-20 text-left">
+        {/* Left Column: Structured Narrative Bento Cards */}
+        <div className="lg:col-span-8 space-y-6">
           {storySections.map((sec, i) => (
-            <div key={i} className="bg-[#0D0E12] border border-white/[0.08] rounded-xl p-6 sm:p-8">
-              <h3 className="text-base sm:text-lg font-medium text-[#F4F4F6] mb-4 pb-3 border-b border-white/[0.06] font-mono">
-                {sec.title}
+            <div key={i} className="bg-[#082F49] border border-[#22D3EE]/22 rounded-2xl p-6 sm:p-8 shadow-lg">
+              <h3 className="text-base sm:text-lg font-medium text-[#F8FAFC] mb-4 pb-3 border-b border-white/[0.08] font-mono flex items-center gap-2">
+                <span className="text-[#22D3EE]">0{i + 1} //</span>
+                <span>{sec.title}</span>
               </h3>
-              <div className="text-sm sm:text-base text-[#A1A1AA] leading-relaxed whitespace-pre-line space-y-4">
+              <div className="text-sm sm:text-base text-[#94A3B8] leading-relaxed whitespace-pre-line space-y-4 font-normal">
                 {sec.content}
               </div>
             </div>
@@ -156,26 +157,26 @@ export default async function ProjectDetailPage({ params }: PageProps) {
         {/* Right Column: Sticky Sidebar (Peran & Alat) */}
         <div className="lg:col-span-4 sticky top-24 space-y-6">
           {/* Role Box */}
-          <div className="bg-[#0D0E12] border border-white/[0.08] rounded-xl p-6">
-            <div className="text-xs font-mono uppercase tracking-widest text-[#63636E] mb-2">
+          <div className="bg-[#082F49] border border-[#22D3EE]/22 rounded-2xl p-6 shadow-md">
+            <div className="text-xs font-mono uppercase tracking-widest text-[#22D3EE] mb-2 font-semibold">
               PERAN SAYA DALAM SISTEM
             </div>
-            <div className="text-sm font-medium text-[#F4F4F6] leading-snug">
+            <div className="text-sm font-medium text-[#F8FAFC] leading-snug">
               {project.role}
             </div>
           </div>
 
-          {/* Tools & Stack Box */}
-          <div className="bg-[#0D0E12] border border-white/[0.08] rounded-xl p-6">
-            <div className="flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-[#63636E] mb-4">
-              <Wrench className="w-3.5 h-3.5 text-[#EDEDEF]" />
+          {/* Tools & Stack Box (rounded: 8px control) */}
+          <div className="bg-[#082F49] border border-[#22D3EE]/22 rounded-2xl p-6 shadow-md">
+            <div className="flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-[#94A3B8] mb-4">
+              <Wrench className="w-3.5 h-3.5 text-[#22D3EE]" />
               <span>ALAT & TEKNOLOGI</span>
             </div>
             <div className="flex flex-wrap gap-2">
               {project.tools.map((tool, idx) => (
                 <span
                   key={idx}
-                  className="px-2.5 py-1 rounded bg-[#14161D] border border-white/[0.06] text-xs font-mono text-[#F4F4F6]"
+                  className="px-2.5 py-1 rounded-lg bg-[#041624] border border-white/[0.06] text-xs font-mono text-[#F8FAFC]"
                 >
                   {tool}
                 </span>
@@ -184,10 +185,10 @@ export default async function ProjectDetailPage({ params }: PageProps) {
           </div>
 
           {/* Verification Badge */}
-          <div className="bg-[#0D0E12] border border-white/[0.08] rounded-xl p-6">
-            <div className="text-xs font-mono text-[#63636E] mb-1">STATUS VALIDASI</div>
-            <div className="text-xs font-mono text-[#38BDF8] flex items-center gap-1.5">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#38BDF8]" />
+          <div className="bg-[#082F49] border border-[#22D3EE]/22 rounded-2xl p-6 shadow-md">
+            <div className="text-xs font-mono text-[#94A3B8] mb-1.5">STATUS VALIDASI</div>
+            <div className="text-xs font-mono text-[#22D3EE] font-semibold flex items-center gap-2">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#22D3EE] animate-pulse" />
               <span>TERVERIFIKASI & AKTIF</span>
             </div>
           </div>
@@ -195,14 +196,14 @@ export default async function ProjectDetailPage({ params }: PageProps) {
       </div>
 
       {/* Bottom Navigation between Projects */}
-      <footer className="max-w-5xl mx-auto px-5 sm:px-8 pt-10 border-t border-white/[0.08] flex items-center justify-between">
+      <footer className="max-w-5xl mx-auto px-5 sm:px-8 pt-10 border-t border-[#E5E7EB] flex items-center justify-between text-left">
         {prevProject ? (
           <Link
             href={`/karya/${prevProject.slug}`}
-            className="flex flex-col items-start gap-1 text-xs font-mono text-[#A1A1AA] hover:text-[#F4F4F6]"
+            className="flex flex-col items-start gap-1 text-xs font-mono text-[#64748B] hover:text-[#0E74E9]"
           >
-            <span className="text-[#63636E]">← KARYA SEBELUMNYA</span>
-            <span className="text-sm font-medium text-[#F4F4F6]">{prevProject.title}</span>
+            <span className="text-[#94A3B8]">← KARYA SEBELUMNYA</span>
+            <span className="text-sm font-medium text-[#111827]">{prevProject.title}</span>
           </Link>
         ) : (
           <div />
@@ -211,10 +212,10 @@ export default async function ProjectDetailPage({ params }: PageProps) {
         {nextProject && (
           <Link
             href={`/karya/${nextProject.slug}`}
-            className="flex flex-col items-end gap-1 text-xs font-mono text-[#A1A1AA] hover:text-[#F4F4F6]"
+            className="flex flex-col items-end gap-1 text-xs font-mono text-[#64748B] hover:text-[#0E74E9]"
           >
-            <span className="text-[#63636E]">KARYA BERIKUTNYA →</span>
-            <span className="text-sm font-medium text-[#F4F4F6]">{nextProject.title}</span>
+            <span className="text-[#94A3B8]">KARYA BERIKUTNYA →</span>
+            <span className="text-sm font-medium text-[#111827]">{nextProject.title}</span>
           </Link>
         )}
       </footer>

@@ -109,32 +109,32 @@ export default function AdminLoginPage() {
   const devPinHint = getDefaultPinHint();
 
   return (
-    <div className="min-h-screen flex flex-col justify-center items-center px-4 bg-[#070709] text-[#F4F4F6]">
-      <div className="w-full max-w-sm bg-[#0D0E12] border border-white/[0.08] rounded-2xl p-6 sm:p-8">
+    <div className="min-h-screen flex flex-col justify-center items-center px-4 bg-[#041624] text-[#F8FAFC]">
+      <div className="w-full max-w-sm bg-[#082F49] border border-[#22D3EE]/25 rounded-2xl p-6 sm:p-8 shadow-2xl">
         {/* Header Bar */}
-        <div className="flex items-center justify-between mb-8 pb-4 border-b border-white/[0.06]">
+        <div className="flex items-center justify-between mb-8 pb-4 border-b border-white/[0.08]">
           <Link
             href="/"
-            className="inline-flex items-center gap-1.5 text-xs font-mono text-[#A1A1AA] hover:text-[#F4F4F6] transition-colors"
+            className="inline-flex items-center gap-1.5 text-xs font-mono text-[#94A3B8] hover:text-[#22D3EE] transition-colors"
           >
             <ArrowLeft className="w-3.5 h-3.5" />
-            <span>Beranda</span>
+            <span>⮡ Beranda</span>
           </Link>
-          <span className="text-[10px] font-mono text-[#38BDF8] flex items-center gap-1 bg-[#14161D] px-2 py-0.5 rounded border border-[#38BDF8]/20">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#38BDF8]" />
+          <span className="text-[10px] font-mono text-[#22D3EE] flex items-center gap-1 bg-[#041624] px-2.5 py-0.5 rounded-full border border-[#22D3EE]/30">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#22D3EE] animate-pulse" />
             SECURE PIN LOCK
           </span>
         </div>
 
         {/* Title and Icon */}
         <div className="text-center mb-6">
-          <div className="w-12 h-12 rounded-xl bg-[#14161D] border border-white/[0.08] flex items-center justify-center mx-auto mb-3 text-[#EDEDEF]">
-            <Lock className="w-5 h-5 text-[#38BDF8]" />
+          <div className="w-12 h-12 rounded-xl bg-[#041624] border border-[#22D3EE]/25 flex items-center justify-center mx-auto mb-3 text-[#22D3EE]">
+            <Lock className="w-5 h-5 text-[#22D3EE]" />
           </div>
-          <h1 className="text-lg font-medium tracking-tight text-[#F4F4F6]">
+          <h1 className="text-lg font-medium tracking-tight text-[#F8FAFC]">
             PIN Akses Cockpit Admin
           </h1>
-          <p className="text-xs font-mono text-[#63636E] mt-1">
+          <p className="text-xs font-mono text-[#94A3B8] mt-1">
             Masukkan PIN 6-digit untuk otentikasi sesi aman
           </p>
         </div>
@@ -146,8 +146,8 @@ export default function AdminLoginPage() {
               key={i}
               className={`w-3.5 h-3.5 rounded-full transition-all duration-150 border ${
                 i < pin.length
-                  ? 'bg-[#38BDF8] border-[#38BDF8] scale-110 shadow-sm shadow-[#38BDF8]/40'
-                  : 'bg-[#14161D] border-white/[0.15]'
+                  ? 'bg-[#22D3EE] border-[#22D3EE] scale-110 shadow-sm shadow-[#22D3EE]/50'
+                  : 'bg-[#041624] border-white/[0.15]'
               }`}
             />
           ))}
@@ -173,7 +173,7 @@ export default function AdminLoginPage() {
               type="button"
               disabled={loading || isLocked}
               onClick={() => handleDigit(digit)}
-              className="h-12 rounded-xl bg-[#14161D] border border-white/[0.06] hover:border-white/20 hover:bg-[#1a1c24] active:scale-95 disabled:opacity-30 disabled:cursor-not-allowed text-base font-mono font-medium text-[#F4F4F6] transition-all flex items-center justify-center"
+              className="h-12 rounded-xl bg-[#041624] border border-white/[0.08] hover:border-[#22D3EE]/40 hover:bg-[#062438] active:scale-95 disabled:opacity-30 disabled:cursor-not-allowed text-base font-mono font-medium text-[#F8FAFC] transition-all flex items-center justify-center"
             >
               {digit}
             </button>
@@ -183,7 +183,7 @@ export default function AdminLoginPage() {
             type="button"
             disabled={loading || isLocked || pin.length === 0}
             onClick={handleClear}
-            className="h-12 rounded-xl bg-[#14161D]/50 border border-white/[0.04] hover:bg-[#14161D] disabled:opacity-30 disabled:cursor-not-allowed text-[11px] font-mono text-[#A1A1AA] transition-all flex items-center justify-center"
+            className="h-12 rounded-xl bg-[#041624]/60 border border-white/[0.04] hover:bg-[#041624] disabled:opacity-30 disabled:cursor-not-allowed text-[11px] font-mono text-[#94A3B8] transition-all flex items-center justify-center"
           >
             CLEAR
           </button>
@@ -193,7 +193,7 @@ export default function AdminLoginPage() {
             type="button"
             disabled={loading || isLocked}
             onClick={() => handleDigit('0')}
-            className="h-12 rounded-xl bg-[#14161D] border border-white/[0.06] hover:border-white/20 hover:bg-[#1a1c24] active:scale-95 disabled:opacity-30 disabled:cursor-not-allowed text-base font-mono font-medium text-[#F4F4F6] transition-all flex items-center justify-center"
+            className="h-12 rounded-xl bg-[#041624] border border-white/[0.08] hover:border-[#22D3EE]/40 hover:bg-[#062438] active:scale-95 disabled:opacity-30 disabled:cursor-not-allowed text-base font-mono font-medium text-[#F8FAFC] transition-all flex items-center justify-center"
           >
             0
           </button>
@@ -202,7 +202,7 @@ export default function AdminLoginPage() {
             type="button"
             disabled={loading || isLocked || pin.length === 0}
             onClick={handleDelete}
-            className="h-12 rounded-xl bg-[#14161D]/50 border border-white/[0.04] hover:bg-[#14161D] disabled:opacity-30 disabled:cursor-not-allowed text-xs font-mono text-[#A1A1AA] transition-all flex items-center justify-center"
+            className="h-12 rounded-xl bg-[#041624]/60 border border-white/[0.04] hover:bg-[#041624] disabled:opacity-30 disabled:cursor-not-allowed text-xs font-mono text-[#94A3B8] transition-all flex items-center justify-center"
             aria-label="Hapus satu angka"
           >
             <Delete className="w-4 h-4" />
@@ -211,8 +211,8 @@ export default function AdminLoginPage() {
 
         {/* Development Hint (Only shown in development mode) */}
         {devPinHint && (
-          <div className="pt-4 border-t border-white/[0.04] text-[11px] font-mono text-center text-[#63636E]">
-            PIN pengembangan: <span className="text-[#38BDF8] font-medium">{devPinHint}</span>
+          <div className="pt-4 border-t border-white/[0.06] text-[11px] font-mono text-center text-[#94A3B8]">
+            PIN pengembangan: <span className="text-[#22D3EE] font-medium">{devPinHint}</span>
           </div>
         )}
       </div>

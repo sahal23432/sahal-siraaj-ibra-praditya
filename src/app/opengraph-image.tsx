@@ -12,7 +12,7 @@ export default async function Image() {
     (
       <div
         style={{
-          background: '#070709',
+          background: '#082F49',
           width: '100%',
           height: '100%',
           display: 'flex',
@@ -20,8 +20,8 @@ export default async function Image() {
           justifyContent: 'space-between',
           padding: '60px 80px',
           fontFamily: 'sans-serif',
-          color: '#F4F4F6',
-          border: '1px solid rgba(255, 255, 255, 0.1)',
+          color: '#F8FAFC',
+          border: '2px solid rgba(34, 211, 238, 0.25)',
         }}
       >
         {/* Top bar */}
@@ -30,7 +30,7 @@ export default async function Image() {
             style={{
               fontSize: '20px',
               fontFamily: 'monospace',
-              color: '#A1A1AA',
+              color: '#94A3B8',
               display: 'flex',
               alignItems: 'center',
             }}
@@ -40,27 +40,28 @@ export default async function Image() {
                 width: '12px',
                 height: '12px',
                 borderRadius: '50%',
-                background: '#38BDF8',
+                background: '#22D3EE',
                 marginRight: '12px',
+                boxShadow: '0 0 12px #22D3EE',
               }}
             />
             SYS ONLINE · SMKN 9 SEMARANG
           </div>
-          <div style={{ fontSize: '18px', fontFamily: 'monospace', color: '#63636E' }}>
+          <div style={{ fontSize: '18px', fontFamily: 'monospace', color: '#22D3EE' }}>
             2026 REKAYASA SISTEM
           </div>
         </div>
 
         {/* Center content */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-          <div style={{ fontSize: '22px', fontFamily: 'monospace', color: '#38BDF8' }}>
-            PENGEMBANGAN PERANGKAT LUNAK DAN GIM
+          <div style={{ fontSize: '20px', fontFamily: 'monospace', color: '#22D3EE', letterSpacing: '0.05em' }}>
+            PENGEMBANGAN PERANGKAT LUNAK DAN GIM · PPLG
           </div>
-          <div style={{ fontSize: '56px', fontWeight: 600, letterSpacing: '-0.02em', lineHeight: 1.1 }}>
+          <div style={{ fontSize: '60px', fontWeight: 600, letterSpacing: '-0.02em', lineHeight: 1.08, color: '#FFFFFF' }}>
             Sahal Siraaj Ibra Praditya
           </div>
-          <div style={{ fontSize: '26px', color: '#A1A1AA', maxWidth: '900px' }}>
-            Merancang sistem yang menghubungkan perangkat keras fisik (RFID) dengan antarmuka web modern.
+          <div style={{ fontSize: '24px', color: '#94A3B8', maxWidth: '920px', lineHeight: 1.5 }}>
+            Merancang sistem yang menghubungkan perangkat keras fisik (RFID) dengan antarmuka web modern & 3D WebGL.
           </div>
         </div>
 
@@ -69,14 +70,14 @@ export default async function Image() {
           style={{
             display: 'flex',
             justifyContent: 'space-between',
-            borderTop: '1px solid rgba(255, 255, 255, 0.08)',
+            borderTop: '1px solid rgba(34, 211, 238, 0.2)',
             paddingTop: '24px',
             fontSize: '18px',
             fontFamily: 'monospace',
-            color: '#63636E',
+            color: '#94A3B8',
           }}
         >
-          <div>Console Box RFID · skanilan.tech · 3D WebGL</div>
+          <div>Console Box RFID · skanilan.tech · Next.js 15</div>
           <div>sahalsiraaj44@gmail.com</div>
         </div>
       </div>

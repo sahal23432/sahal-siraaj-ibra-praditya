@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, useMemo } from 'react';
+import { useRef, useMemo, useEffect } from 'react';
 import { useFrame, useThree } from '@react-three/fiber';
 import { AdaptiveDpr } from '@react-three/drei';
 import * as THREE from 'three';
@@ -12,11 +12,12 @@ function RFIDSignalRings() {
 
   const rings = useMemo(() => {
     return [0.9, 1.5, 2.2, 2.9].map((radius, i) => {
-      const geo = new THREE.TorusGeometry(radius, 0.015, 8, 90);
+      const geo = new THREE.TorusGeometry(radius, 0.018, 8, 90);
+      const color = i % 2 === 0 ? 0x22d3ee : 0x0e74e9; // Cyan & Royal Blue
       const mat = new THREE.MeshBasicMaterial({
-        color: new THREE.Color(0xf4f4f6),
+        color: new THREE.Color(color),
         transparent: true,
-        opacity: 0.16 - i * 0.03,
+        opacity: 0.35 - i * 0.06,
       });
       return { geo, mat, index: i };
     });
@@ -28,9 +29,9 @@ function RFIDSignalRings() {
     groupRef.current.children.forEach((child, i) => {
       const mesh = child as THREE.Mesh;
       const mat = mesh.material as THREE.MeshBasicMaterial;
-      mat.opacity = 0.08 + Math.sin(t * 1.0 + i * 0.8) * 0.06;
-      mesh.rotation.x = Math.sin(t * 0.2 + i * 0.4) * 0.12;
-      mesh.rotation.z = t * 0.06 * (i % 2 === 0 ? 1 : -1);
+      mat.opacity = 0.2 + Math.sin(t * 1.2 + i * 0.8) * 0.15;
+      mesh.rotation.x = Math.sin(t * 0.25 + i * 0.4) * 0.15;
+      mesh.rotation.z = t * 0.08 * (i % 2 === 0 ? 1 : -1);
     });
   });
 
@@ -67,7 +68,7 @@ function CircuitNodes() {
     groupRef.current.children.forEach((child, i) => {
       const mesh = child as THREE.Mesh;
       const mat = mesh.material as THREE.MeshBasicMaterial;
-      mat.opacity = 0.3 + Math.sin(t * 1.5 + i * 0.9) * 0.25;
+      mat.opacity = 0.45 + Math.sin(t * 1.8 + i * 0.9) * 0.35;
     });
   });
 
@@ -75,8 +76,8 @@ function CircuitNodes() {
     <group ref={groupRef}>
       {nodes.map((pos, i) => (
         <mesh key={i} position={pos}>
-          <sphereGeometry args={[0.045, 10, 10]} />
-          <meshBasicMaterial color={0x38bdf8} transparent opacity={0.6} />
+          <sphereGeometry args={[0.05, 10, 10]} />
+          <meshBasicMaterial color={i % 2 === 0 ? 0x22d3ee : 0x0e74e9} transparent opacity={0.7} />
         </mesh>
       ))}
     </group>
@@ -93,27 +94,27 @@ function CenterConsoleCore() {
     const t = clock.getElapsedTime();
     if (meshRef.current) {
       meshRef.current.rotation.y = t * 0.35;
-      meshRef.current.rotation.x = Math.sin(t * 0.25) * 0.2;
+      meshRef.current.rotation.x = Math.sin(t * 0.25) * 0.25;
       const mat = meshRef.current.material as THREE.MeshBasicMaterial;
-      mat.opacity = 0.45 + Math.sin(t * 1.8) * 0.2;
+      mat.opacity = 0.5 + Math.sin(t * 1.8) * 0.2;
     }
     if (innerRef.current) {
-      innerRef.current.rotation.y = -t * 0.5;
+      innerRef.current.rotation.y = -t * 0.55;
       innerRef.current.rotation.z = Math.cos(t * 0.3) * 0.25;
     }
   });
 
   return (
     <group>
-      {/* Outer Console Node Wireframe */}
+      {/* Outer Console Node Wireframe in Cyan */}
       <mesh ref={meshRef}>
-        <icosahedronGeometry args={[0.38, 1]} />
-        <meshBasicMaterial color={0xf4f4f6} wireframe transparent opacity={0.55} />
+        <icosahedronGeometry args={[0.42, 1]} />
+        <meshBasicMaterial color={0x22d3ee} wireframe transparent opacity={0.65} />
       </mesh>
-      {/* Inner Circuit Chip Node */}
+      {/* Inner Circuit Chip Node in Royal Blue */}
       <mesh ref={innerRef}>
-        <boxGeometry args={[0.16, 0.16, 0.16]} />
-        <meshBasicMaterial color={0x38bdf8} wireframe transparent opacity={0.85} />
+        <boxGeometry args={[0.18, 0.18, 0.18]} />
+        <meshBasicMaterial color={0x0e74e9} wireframe transparent opacity={0.9} />
       </mesh>
     </group>
   );
@@ -124,7 +125,7 @@ function ParticleField() {
   const { isEcoMode } = usePerformanceMode();
 
   const { positions, velocities } = useMemo(() => {
-    const count = 100;
+    const count = 90;
     const pos = new Float32Array(count * 3);
     const vel = new Float32Array(count * 3);
     for (let i = 0; i < count; i++) {
@@ -153,18 +154,9 @@ function ParticleField() {
   return (
     <points ref={pointsRef}>
       <bufferGeometry>
-        <bufferAttribute
-          attach="attributes-position"
-          args={[positions, 3]}
-        />
+        <bufferAttribute attach="attributes-position" args={[positions, 3]} />
       </bufferGeometry>
-      <pointsMaterial
-        color={0xf4f4f6}
-        size={0.025}
-        transparent
-        opacity={0.3}
-        sizeAttenuation
-      />
+      <pointsMaterial color={0x22d3ee} size={0.03} transparent opacity={0.4} sizeAttenuation />
     </points>
   );
 }
@@ -173,6 +165,8 @@ function SceneController() {
   const groupRef = useRef<THREE.Group>(null);
   const { isEcoMode } = usePerformanceMode();
   const targetRotation = useRef({ x: 0, y: 0 });
+  const isDragging = useRef(false);
+  const previousPointerPosition = useRef({ x: 0, y: 0 });
   const { gl } = useThree();
 
   useFrame(() => {
@@ -180,30 +174,54 @@ function SceneController() {
     groupRef.current.rotation.y = THREE.MathUtils.lerp(
       groupRef.current.rotation.y,
       targetRotation.current.y,
-      0.05
+      0.06
     );
     groupRef.current.rotation.x = THREE.MathUtils.lerp(
       groupRef.current.rotation.x,
       targetRotation.current.x,
-      0.05
+      0.06
     );
   });
 
-  const handlePointerMove = (e: MouseEvent) => {
-    if (isEcoMode) return;
+  useEffect(() => {
     const canvas = gl.domElement;
-    const rect = canvas.getBoundingClientRect();
-    const x = ((e.clientX - rect.left) / rect.width - 0.5) * 2;
-    const y = ((e.clientY - rect.top) / rect.height - 0.5) * 2;
-    targetRotation.current.y = x * 0.35;
-    targetRotation.current.x = -y * 0.25;
-  };
 
-  useMemo(() => {
-    if (typeof window !== 'undefined') {
-      window.addEventListener('mousemove', handlePointerMove);
-    }
-  }, [isEcoMode, gl]);
+    const handlePointerDown = (e: PointerEvent) => {
+      isDragging.current = true;
+      previousPointerPosition.current = { x: e.clientX, y: e.clientY };
+    };
+
+    const handlePointerMove = (e: PointerEvent) => {
+      if (isEcoMode) return;
+      if (isDragging.current) {
+        const deltaX = e.clientX - previousPointerPosition.current.x;
+        const deltaY = e.clientY - previousPointerPosition.current.y;
+        targetRotation.current.y += deltaX * 0.008;
+        targetRotation.current.x += deltaY * 0.008;
+        previousPointerPosition.current = { x: e.clientX, y: e.clientY };
+      } else {
+        const rect = canvas.getBoundingClientRect();
+        const x = ((e.clientX - rect.left) / rect.width - 0.5) * 2;
+        const y = ((e.clientY - rect.top) / rect.height - 0.5) * 2;
+        targetRotation.current.y = x * 0.35;
+        targetRotation.current.x = -y * 0.25;
+      }
+    };
+
+    const handlePointerUp = () => {
+      isDragging.current = false;
+    };
+
+    canvas.addEventListener('pointerdown', handlePointerDown);
+    window.addEventListener('pointermove', handlePointerMove);
+    window.addEventListener('pointerup', handlePointerUp);
+
+    return () => {
+      canvas.removeEventListener('pointerdown', handlePointerDown);
+      window.removeEventListener('pointermove', handlePointerMove);
+      window.removeEventListener('pointerup', handlePointerUp);
+    };
+  }, [gl, isEcoMode]);
 
   return (
     <group ref={groupRef}>
@@ -219,7 +237,7 @@ export default function HeroScene3D() {
   return (
     <>
       <AdaptiveDpr pixelated />
-      <ambientLight intensity={0.2} />
+      <ambientLight intensity={0.4} />
       <SceneController />
     </>
   );

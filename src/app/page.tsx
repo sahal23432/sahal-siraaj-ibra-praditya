@@ -16,7 +16,7 @@ export default async function HomePage() {
   ]);
 
   return (
-    <div className="min-h-screen bg-[#070709] text-[#F4F4F6] selection:bg-white/15">
+    <div className="min-h-screen bg-[#FFFFFF] text-[#111827] selection:bg-[#22D3EE]/25 selection:text-[#082F49]">
       {/* Top Navbar with Scroll Progress Bar */}
       <Navbar />
 
@@ -35,12 +35,12 @@ export default async function HomePage() {
       {/* Contact Section */}
       <ContactSection profile={profile} />
 
-      {/* Minimal Editorial Footer */}
-      <footer className="border-t border-white/[0.08] py-12 bg-[#070709]">
-        <div className="max-w-6xl mx-auto px-5 sm:px-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono text-[#63636E]">
-          <div className="flex items-center gap-2">
+      {/* Minimal Editorial Footer (Unseen Studio & Nimbus Style) */}
+      <footer className="border-t border-[#E5E7EB] py-12 bg-white text-left">
+        <div className="max-w-6xl mx-auto px-5 sm:px-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono text-[#64748B]">
+          <div className="flex flex-wrap items-center gap-2">
             <span>© 2026</span>
-            <span className="text-[#A1A1AA]">Sahal Siraaj Ibra Praditya</span>
+            <span className="text-[#111827] font-semibold">Sahal Siraaj Ibra Praditya</span>
             <span>·</span>
             <span>SMKN 9 SEMARANG (PPLG)</span>
           </div>
@@ -50,16 +50,16 @@ export default async function HomePage() {
               href="https://skanilan.tech"
               target="_blank"
               rel="noopener noreferrer"
-              className="hover:text-[#F4F4F6] transition-colors"
+              className="text-[#0E74E9] hover:underline transition-colors"
             >
-              skanilan.tech ↗
+              ⮡ skanilan.tech
             </a>
-            <span>·</span>
+            <span className="text-[#D1D5DB]">·</span>
             <a
               href="/admin"
-              className="hover:text-[#F4F4F6] transition-colors text-[#A1A1AA]"
+              className="hover:text-[#111827] transition-colors text-[#64748B]"
             >
-              Panel Admin
+              Cockpit Admin ⮡
             </a>
           </div>
         </div>

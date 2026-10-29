@@ -1,74 +1,48 @@
 'use client';
 
-import { ReactNode, useState, useEffect, useCallback } from 'react';
+import { useState } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import {
-  ArrowLeft,
   Layers,
   User,
-  Mail,
   Sparkles,
   Milestone,
   LogOut,
+  ArrowLeft,
   KeyRound,
   ShieldCheck,
+  LayoutDashboard,
 } from 'lucide-react';
 
-export default function AdminLayout({ children }: { children: ReactNode }) {
+interface AdminLayoutProps {
+  children: React.ReactNode;
+}
+
+export default function AdminLayout({ children }: AdminLayoutProps) {
   const pathname = usePathname();
   const router = useRouter();
-  const isLoginPage = pathname === '/admin/login';
+
+  // Change PIN modal state
   const [showPinModal, setShowPinModal] = useState(false);
   const [oldPin, setOldPin] = useState('');
   const [newPin, setNewPin] = useState('');
   const [pinStatus, setPinStatus] = useState<{ success: boolean; message: string } | null>(null);
   const [isUpdatingPin, setIsUpdatingPin] = useState(false);
 
-  const handleLogout = useCallback(async () => {
+  // Skip chrome on login page
+  if (pathname === '/admin/login') {
+    return <>{children}</>;
+  }
+
+  const handleLogout = async () => {
     try {
       await fetch('/api/admin/auth/logout', { method: 'POST' });
     } catch {
       // Ignore network errors on logout
     }
-
-    if (typeof window !== 'undefined') {
-      localStorage.removeItem('admin-session');
-      localStorage.removeItem('admin-unlocked-at');
-    }
-
     router.push('/admin/login');
-    router.refresh();
-  }, [router]);
-
-  // Client Session check & Auto Inactivity Lock (30 minutes)
-  useEffect(() => {
-    if (isLoginPage) return;
-
-    let lastActive = Date.now();
-    const INACTIVITY_TIMEOUT = 30 * 60 * 1000; // 30 minutes
-
-    const resetTimer = () => {
-      lastActive = Date.now();
-    };
-
-    const interval = setInterval(() => {
-      if (Date.now() - lastActive > INACTIVITY_TIMEOUT) {
-        handleLogout();
-      }
-    }, 60 * 1000);
-
-    window.addEventListener('mousemove', resetTimer);
-    window.addEventListener('keydown', resetTimer);
-    window.addEventListener('click', resetTimer);
-
-    return () => {
-      clearInterval(interval);
-      window.removeEventListener('mousemove', resetTimer);
-      window.removeEventListener('keydown', resetTimer);
-      window.removeEventListener('click', resetTimer);
-    };
-  }, [isLoginPage, handleLogout]);
+  };
 
   const handlePinChangeSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -81,57 +55,57 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ oldPin, newPin }),
       });
-
       const data = await res.json();
-
       if (res.ok && data.success) {
-        setPinStatus({ success: true, message: data.message || 'PIN berhasil diubah.' });
+        setPinStatus({ success: true, message: 'PIN berhasil diperbarui.' });
+        setOldPin('');
+        setNewPin('');
         setTimeout(() => {
           setShowPinModal(false);
-          setOldPin('');
-          setNewPin('');
           setPinStatus(null);
-        }, 1600);
+        }, 1500);
       } else {
-        setPinStatus({ success: false, message: data.error || 'Gagal mengubah PIN.' });
+        setPinStatus({
+          success: false,
+          message: data.error?.message || 'Gagal mengubah PIN.',
+        });
       }
     } catch {
-      setPinStatus({ success: false, message: 'Gangguan koneksi jaringan.' });
+      setPinStatus({
+        success: false,
+        message: 'Terjadi gangguan jaringan.',
+      });
     } finally {
       setIsUpdatingPin(false);
     }
   };
 
-  if (isLoginPage) {
-    return <div className="min-h-screen bg-[#070709] text-[#F4F4F6]">{children}</div>;
-  }
-
   const navItems = [
-    { label: 'Pesan & Metrik', href: '/admin', icon: Mail },
-    { label: 'Kelola Karya', href: '/admin/karya', icon: Layers },
-    { label: 'Profil & Bio', href: '/admin/profil', icon: User },
-    { label: 'Keahlian (Skills)', href: '/admin/skills', icon: Sparkles },
+    { label: 'Ringkasan', href: '/admin', icon: LayoutDashboard },
+    { label: 'Karya', href: '/admin/karya', icon: Layers },
+    { label: 'Profil', href: '/admin/profil', icon: User },
+    { label: 'Skills', href: '/admin/skills', icon: Sparkles },
     { label: 'Lini Masa', href: '/admin/journeys', icon: Milestone },
   ];
 
   return (
-    <div className="min-h-screen bg-[#070709] text-[#F4F4F6] flex flex-col">
+    <div className="min-h-screen bg-[#041624] text-[#F8FAFC] flex flex-col">
       {/* Top Admin Telemetry Bar */}
-      <header className="h-16 border-b border-white/[0.08] bg-[#0D0E12] px-6 flex items-center justify-between sticky top-0 z-30">
+      <header className="h-16 border-b border-white/[0.08] bg-[#082F49] px-6 flex items-center justify-between sticky top-0 z-30 shadow-md">
         <div className="flex items-center gap-4">
           <Link
             href="/"
-            className="flex items-center gap-1.5 text-xs font-mono text-[#A1A1AA] hover:text-[#F4F4F6] transition-colors"
+            className="flex items-center gap-1.5 text-xs font-mono text-[#94A3B8] hover:text-[#22D3EE] transition-colors"
           >
             <ArrowLeft className="w-3.5 h-3.5" />
-            <span className="hidden sm:inline">SITUS PUBLIK</span>
+            <span className="hidden sm:inline">⮡ SITUS PUBLIK</span>
           </Link>
-          <span className="text-[#63636E]">|</span>
+          <span className="text-white/20">|</span>
           <div className="flex items-center gap-2 text-xs font-mono">
-            <span className="w-2 h-2 rounded-full bg-[#38BDF8]" />
-            <span className="font-semibold text-[#F4F4F6]">TELEMETRY COCKPIT</span>
-            <span className="text-[#63636E] hidden md:inline">·</span>
-            <span className="text-[#A1A1AA] hidden md:inline">SAHAL SIRAAJ</span>
+            <span className="w-2 h-2 rounded-full bg-[#22D3EE] animate-pulse" />
+            <span className="font-semibold text-[#F8FAFC]">TELEMETRY COCKPIT</span>
+            <span className="text-[#94A3B8] hidden md:inline">·</span>
+            <span className="text-[#22D3EE] hidden md:inline">SAHAL SIRAAJ</span>
           </div>
         </div>
 
@@ -144,10 +118,10 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
               <Link
                 key={item.href}
                 href={item.href}
-                className={`flex items-center gap-1.5 px-3 py-1.5 rounded text-xs font-mono transition-colors ${
+                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-mono transition-colors ${
                   isActive
-                    ? 'bg-[#14161D] text-[#F4F4F6] border border-white/[0.12]'
-                    : 'text-[#A1A1AA] hover:text-[#F4F4F6]'
+                    ? 'bg-[#041624] text-[#22D3EE] border border-[#22D3EE]/30 font-semibold'
+                    : 'text-[#94A3B8] hover:text-[#F8FAFC] hover:bg-white/[0.04]'
                 }`}
               >
                 <Icon className="w-3.5 h-3.5" />
@@ -163,7 +137,7 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
             onClick={() => setShowPinModal(true)}
             type="button"
             title="Ubah PIN Admin"
-            className="flex items-center gap-1 px-2.5 py-1.5 rounded bg-[#14161D] hover:bg-[#1a1c24] border border-white/[0.06] text-xs font-mono text-[#A1A1AA] hover:text-[#F4F4F6] transition-colors"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#041624] hover:bg-[#062438] border border-white/[0.08] text-xs font-mono text-[#94A3B8] hover:text-[#22D3EE] transition-colors"
           >
             <KeyRound className="w-3.5 h-3.5" />
             <span className="hidden sm:inline">GANTI PIN</span>
@@ -173,7 +147,7 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
             onClick={handleLogout}
             type="button"
             title="Kunci sesi admin"
-            className="flex items-center gap-1 px-2.5 py-1.5 rounded bg-[#14161D] hover:bg-red-500/10 border border-white/[0.06] hover:border-red-500/20 text-xs font-mono text-[#A1A1AA] hover:text-red-400 transition-colors"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#041624] hover:bg-red-500/20 border border-white/[0.08] hover:border-red-500/30 text-xs font-mono text-[#94A3B8] hover:text-red-300 transition-colors"
           >
             <LogOut className="w-3.5 h-3.5" />
             <span className="hidden sm:inline">KUNCI</span>
@@ -182,7 +156,7 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
       </header>
 
       {/* Mobile Subnav Row */}
-      <div className="lg:hidden bg-[#0D0E12] border-b border-white/[0.06] px-4 py-2 flex items-center gap-1 overflow-x-auto">
+      <div className="lg:hidden bg-[#082F49] border-b border-white/[0.08] px-4 py-2 flex items-center gap-1 overflow-x-auto">
         {navItems.map((item) => {
           const Icon = item.icon;
           const isActive = pathname === item.href;
@@ -190,10 +164,10 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
             <Link
               key={item.href}
               href={item.href}
-              className={`flex items-center gap-1.5 px-2.5 py-1 rounded text-xs font-mono whitespace-nowrap transition-colors ${
+              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-mono whitespace-nowrap transition-colors ${
                 isActive
-                  ? 'bg-[#14161D] text-[#F4F4F6] border border-white/[0.1]'
-                  : 'text-[#A1A1AA]'
+                  ? 'bg-[#041624] text-[#22D3EE] border border-[#22D3EE]/30 font-semibold'
+                  : 'text-[#94A3B8]'
               }`}
             >
               <Icon className="w-3 h-3" />
@@ -205,11 +179,11 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
 
       {/* Modal Change PIN */}
       {showPinModal && (
-        <div className="fixed inset-0 z-50 bg-[#070709]/80 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="w-full max-w-sm bg-[#0D0E12] border border-white/[0.12] rounded-2xl p-6">
-            <div className="flex items-center justify-between pb-3 border-b border-white/[0.06] mb-4">
-              <h3 className="text-sm font-mono font-medium text-[#F4F4F6] flex items-center gap-2">
-                <ShieldCheck className="w-4 h-4 text-[#38BDF8]" />
+        <div className="fixed inset-0 z-50 bg-[#041624]/85 backdrop-blur-md flex items-center justify-center p-4">
+          <div className="w-full max-w-sm bg-[#082F49] border border-[#22D3EE]/30 rounded-2xl p-6 shadow-2xl">
+            <div className="flex items-center justify-between pb-3 border-b border-white/[0.08] mb-4">
+              <h3 className="text-sm font-mono font-medium text-[#F8FAFC] flex items-center gap-2">
+                <ShieldCheck className="w-4 h-4 text-[#22D3EE]" />
                 <span>GANTI PIN KEAMANAN ADMIN</span>
               </h3>
               <button
@@ -218,7 +192,7 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
                   setShowPinModal(false);
                   setPinStatus(null);
                 }}
-                className="text-[#63636E] hover:text-[#F4F4F6]"
+                className="text-[#94A3B8] hover:text-[#F8FAFC]"
               >
                 ✕
               </button>
@@ -226,10 +200,10 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
 
             {pinStatus && (
               <div
-                className={`p-2.5 rounded text-xs font-mono mb-4 ${
+                className={`p-2.5 rounded-xl text-xs font-mono mb-4 ${
                   pinStatus.success
-                    ? 'bg-[#38BDF8]/10 text-[#38BDF8] border border-[#38BDF8]/20'
-                    : 'bg-red-500/10 text-red-400 border border-red-500/20'
+                    ? 'bg-[#22D3EE]/15 text-[#22D3EE] border border-[#22D3EE]/30'
+                    : 'bg-red-500/15 text-red-300 border border-red-500/30'
                 }`}
               >
                 {pinStatus.message}
@@ -238,7 +212,7 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
 
             <form onSubmit={handlePinChangeSubmit} className="space-y-4">
               <div>
-                <label className="block text-xs font-mono text-[#A1A1AA] uppercase mb-1">
+                <label className="block text-xs font-mono text-[#94A3B8] uppercase mb-1">
                   PIN Lama *
                 </label>
                 <input
@@ -248,12 +222,12 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
                   value={oldPin}
                   onChange={(e) => setOldPin(e.target.value)}
                   placeholder="Masukkan PIN lama"
-                  className="w-full bg-[#14161D] border border-white/[0.08] rounded px-3 py-2 text-xs font-mono text-[#F4F4F6] outline-none"
+                  className="w-full bg-[#041624] border border-white/[0.08] focus:border-[#22D3EE] rounded-lg px-3 py-2 text-xs font-mono text-[#F8FAFC] outline-none"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-mono text-[#A1A1AA] uppercase mb-1">
+                <label className="block text-xs font-mono text-[#94A3B8] uppercase mb-1">
                   PIN Baru (4-8 Digit Angka) *
                 </label>
                 <input
@@ -263,7 +237,7 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
                   value={newPin}
                   onChange={(e) => setNewPin(e.target.value)}
                   placeholder="Masukkan PIN baru"
-                  className="w-full bg-[#14161D] border border-white/[0.08] rounded px-3 py-2 text-xs font-mono text-[#F4F4F6] outline-none"
+                  className="w-full bg-[#041624] border border-white/[0.08] focus:border-[#22D3EE] rounded-lg px-3 py-2 text-xs font-mono text-[#F8FAFC] outline-none"
                 />
               </div>
 
@@ -275,16 +249,16 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
                     setShowPinModal(false);
                     setPinStatus(null);
                   }}
-                  className="px-3.5 py-1.5 rounded bg-[#14161D] text-xs font-mono text-[#A1A1AA]"
+                  className="px-3.5 py-1.5 rounded-lg bg-[#041624] text-xs font-mono text-[#94A3B8] hover:text-white"
                 >
                   Batal
                 </button>
                 <button
                   type="submit"
                   disabled={isUpdatingPin}
-                  className="px-4 py-1.5 rounded bg-[#2563EB] text-[#F4F4F6] text-xs font-mono font-medium hover:bg-[#3B82F6] disabled:opacity-50"
+                  className="px-4 py-1.5 rounded-full bg-[#0E74E9] text-white text-xs font-mono font-semibold hover:bg-[#0256B4] disabled:opacity-50"
                 >
-                  {isUpdatingPin ? 'Menyimpan...' : 'Perbarui PIN'}
+                  {isUpdatingPin ? 'Menyimpan...' : 'Perbarui PIN ⮡'}
                 </button>
               </div>
             </form>

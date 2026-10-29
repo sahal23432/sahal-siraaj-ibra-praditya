@@ -104,10 +104,10 @@ export default function AdminJourneysPage() {
             });
           }}
           type="button"
-          className="inline-flex items-center gap-2 px-4 py-2 rounded bg-[#2563EB] hover:bg-[#3B82F6] text-[#F4F4F6] text-xs font-mono font-medium transition-colors shadow-sm shadow-[#2563EB]/20"
+          className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#0E74E9] hover:bg-[#0256B4] text-white text-xs font-mono font-semibold transition-all shadow-[0_4px_12px_rgba(14,116,233,0.3)]"
         >
           <Plus className="w-3.5 h-3.5" />
-          <span>TAMBAH RIWAYAT BARU</span>
+          <span>TAMBAH RIWAYAT BARU ⮡</span>
         </button>
       </div>
 
@@ -116,10 +116,10 @@ export default function AdminJourneysPage() {
         <button
           type="button"
           onClick={() => setFilterType('all')}
-          className={`px-3 py-1.5 rounded text-xs font-mono transition-colors ${
+          className={`px-3.5 py-1.5 rounded-full text-xs font-mono transition-colors ${
             filterType === 'all'
-              ? 'bg-[#F4F4F6] text-[#070709] font-medium'
-              : 'bg-[#14161D] text-[#A1A1AA] border border-white/[0.06] hover:text-[#F4F4F6]'
+              ? 'bg-[#0E74E9] text-white font-semibold'
+              : 'bg-[#041624] text-[#94A3B8] border border-white/[0.08] hover:text-white'
           }`}
         >
           Semua Riwayat ({journeys.length})
@@ -127,10 +127,10 @@ export default function AdminJourneysPage() {
         <button
           type="button"
           onClick={() => setFilterType('experience')}
-          className={`px-3 py-1.5 rounded text-xs font-mono transition-colors ${
+          className={`px-3.5 py-1.5 rounded-full text-xs font-mono transition-colors ${
             filterType === 'experience'
-              ? 'bg-[#F4F4F6] text-[#070709] font-medium'
-              : 'bg-[#14161D] text-[#A1A1AA] border border-white/[0.06] hover:text-[#F4F4F6]'
+              ? 'bg-[#0E74E9] text-white font-semibold'
+              : 'bg-[#041624] text-[#94A3B8] border border-white/[0.08] hover:text-white'
           }`}
         >
           Pengalaman Kerja & Proyek
@@ -138,10 +138,10 @@ export default function AdminJourneysPage() {
         <button
           type="button"
           onClick={() => setFilterType('education')}
-          className={`px-3 py-1.5 rounded text-xs font-mono transition-colors ${
+          className={`px-3.5 py-1.5 rounded-full text-xs font-mono transition-colors ${
             filterType === 'education'
-              ? 'bg-[#F4F4F6] text-[#070709] font-medium'
-              : 'bg-[#14161D] text-[#A1A1AA] border border-white/[0.06] hover:text-[#F4F4F6]'
+              ? 'bg-[#0E74E9] text-white font-semibold'
+              : 'bg-[#041624] text-[#94A3B8] border border-white/[0.08] hover:text-white'
           }`}
         >
           Pendidikan
@@ -150,10 +150,10 @@ export default function AdminJourneysPage() {
 
       {/* Editor Modal / Card */}
       {editingJourney && (
-        <div className="bg-[#0D0E12] border border-white/[0.15] rounded-xl p-6 sm:p-7 space-y-4">
+        <div className="bg-[#082F49] border border-[#22D3EE]/25 rounded-2xl p-6 sm:p-7 space-y-4 shadow-2xl">
           <div className="flex items-center justify-between pb-3 border-b border-white/[0.08]">
-            <h3 className="text-sm font-mono font-medium text-[#F4F4F6] flex items-center gap-2">
-              <Milestone className="w-4 h-4 text-[#38BDF8]" />
+            <h3 className="text-sm font-mono font-medium text-[#F8FAFC] flex items-center gap-2">
+              <Milestone className="w-4 h-4 text-[#22D3EE]" />
               <span>{isCreating ? 'TAMBAH RIWAYAT' : 'EDIT RIWAYAT'}</span>
             </h3>
             <button
@@ -294,9 +294,9 @@ export default function AdminJourneysPage() {
               </button>
               <button
                 type="submit"
-                className="px-4 py-1.5 rounded bg-[#2563EB] text-[#F4F4F6] text-xs font-mono font-medium hover:bg-[#3B82F6]"
+                className="px-5 py-2 rounded-full bg-[#0E74E9] hover:bg-[#0256B4] text-white text-xs font-mono font-semibold transition-all shadow-md"
               >
-                Simpan Riwayat
+                Simpan Riwayat ⮡
               </button>
             </div>
           </form>
@@ -308,31 +308,31 @@ export default function AdminJourneysPage() {
         {visibleJourneys.map((j) => (
           <div
             key={j.id}
-            className="p-5 rounded-xl bg-[#0D0E12] border border-white/[0.08] hover:border-white/[0.15] transition-colors flex flex-col sm:flex-row sm:items-start justify-between gap-4"
+            className="p-5 rounded-2xl bg-[#082F49] border border-[#22D3EE]/25 hover:border-[#22D3EE]/50 transition-colors flex flex-col sm:flex-row sm:items-start justify-between gap-4 shadow-lg"
           >
             <div className="flex items-start gap-3">
-              <div className="w-9 h-9 rounded-lg bg-[#14161D] border border-white/[0.08] flex items-center justify-center shrink-0 text-[#38BDF8]">
+              <div className="w-9 h-9 rounded-xl bg-[#041624] border border-[#22D3EE]/30 flex items-center justify-center shrink-0 text-[#22D3EE]">
                 {j.type === 'experience' ? (
-                  <Briefcase className="w-4 h-4 text-[#38BDF8]" />
+                  <Briefcase className="w-4 h-4 text-[#22D3EE]" />
                 ) : (
                   <GraduationCap className="w-4 h-4 text-[#F59E0B]" />
                 )}
               </div>
               <div>
                 <div className="flex items-center gap-2">
-                  <h4 className="text-sm font-mono font-medium text-[#F4F4F6]">{j.title}</h4>
-                  <span className="text-[10px] font-mono uppercase px-2 py-0.5 rounded bg-[#14161D] text-[#A1A1AA]">
+                  <h4 className="text-sm font-mono font-medium text-[#F8FAFC]">{j.title}</h4>
+                  <span className="text-[10px] font-mono uppercase px-2 py-0.5 rounded-full bg-[#041624] text-[#22D3EE] border border-[#22D3EE]/20">
                     {j.type}
                   </span>
                 </div>
-                <div className="text-xs font-mono text-[#38BDF8] mt-0.5">
+                <div className="text-xs font-mono text-[#22D3EE] mt-0.5">
                   {j.organization} {j.location ? `· ${j.location}` : ''}
                 </div>
-                <div className="text-[11px] font-mono text-[#63636E] mt-0.5">
+                <div className="text-[11px] font-mono text-[#94A3B8] mt-0.5">
                   {j.start_date} {j.end_date ? `· ${j.end_date}` : ''}
                 </div>
                 {j.description && (
-                  <p className="text-xs text-[#A1A1AA] mt-2 leading-relaxed max-w-2xl">
+                  <p className="text-xs text-[#94A3B8] mt-2 leading-relaxed max-w-2xl">
                     {j.description}
                   </p>
                 )}

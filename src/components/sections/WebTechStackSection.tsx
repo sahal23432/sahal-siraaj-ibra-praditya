@@ -4,14 +4,9 @@ import { useState } from 'react';
 import ScrollReveal from '@/components/ui/ScrollReveal';
 import {
   Code2,
-  Layers,
   Database,
   Cpu,
   Boxes,
-  Sparkles,
-  GitBranch,
-  CheckCircle2,
-  ArrowUpRight,
 } from 'lucide-react';
 
 interface TechItem {
@@ -63,10 +58,10 @@ export default function WebTechStackSection() {
         {
           name: 'Tailwind CSS v4',
           category: 'Styling Engine',
-          role: 'Desain Responsif & Token Warna Obsidian',
+          role: 'Desain Responsif & Sistem Token Bento',
           badge: 'UTILITY FIRST',
           description:
-            'Membangun sistem desain bertema gelap obsidian yang ringan, konsisten, dan fleksibel pada layar HP 375px hingga monitor desktop lebar.',
+            'Membangun sistem desain bertema Nimbus Bento yang ringan, konsisten, dan fleksibel pada layar ponsel 375px hingga monitor desktop lebar.',
         },
         {
           name: 'HTML5 Semantik & CSS3',
@@ -203,116 +198,118 @@ export default function WebTechStackSection() {
       : techDomains.filter((d) => d.id === activeTab);
 
   return (
-    <section id="tech-stack" className="py-24 max-w-6xl mx-auto px-5 sm:px-8 border-t border-white/[0.08]">
-      {/* Header with Monospace Telemetry */}
-      <ScrollReveal>
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-12">
-          <div>
-            <div className="flex items-center gap-2 font-mono text-xs text-[#63636E] uppercase tracking-wider mb-2">
-              <span>02</span>
-              <span>·</span>
-              <span>WEB ENGINEERING STACK</span>
+    <section id="tech-stack" className="py-20 sm:py-28 bg-[#FFFFFF] border-t border-[#E5E7EB]">
+      <div className="max-w-6xl mx-auto px-5 sm:px-8">
+        {/* Header with Monospace Telemetry */}
+        <ScrollReveal>
+          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-12">
+            <div>
+              <div className="flex items-center gap-2 font-mono text-xs text-[#0E74E9] uppercase tracking-wider mb-3">
+                <span className="font-bold">02.5</span>
+                <span className="text-[#D1D5DB]">·</span>
+                <span className="font-semibold">WEB ENGINEERING STACK</span>
+              </div>
+              <h2 className="text-3xl sm:text-5xl font-medium tracking-tight text-[#111827] leading-[1.04]">
+                Teknologi Pembangun Sistem & Aplikasi Web
+              </h2>
             </div>
-            <h2 className="text-2xl sm:text-4xl font-medium tracking-tight text-[#F4F4F6]">
-              Teknologi yang Saya Gunakan untuk Membangun Website
-            </h2>
+            <div className="font-mono text-xs text-[#64748B]">
+              <span className="px-3 py-1 rounded-full bg-[#E0F2FE] text-[#0369A1] font-semibold">
+                17 TEKNOLOGI TERPADU
+              </span>
+            </div>
           </div>
-          <div className="font-mono text-xs text-[#63636E]">
-            <span>ARSITEKTUR LENGKAP</span>
-            <span className="mx-2">·</span>
-            <span className="text-[#38BDF8]">17 TEKNOLOGI TERPADU</span>
-          </div>
-        </div>
-      </ScrollReveal>
+        </ScrollReveal>
 
-      {/* Filter Tabs */}
-      <ScrollReveal delay={0.1}>
-        <div className="flex flex-wrap items-center gap-2 mb-12">
-          <button
-            type="button"
-            onClick={() => setActiveTab('semua')}
-            className={`px-3.5 py-1.5 rounded text-xs font-mono transition-all ${
-              activeTab === 'semua'
-                ? 'bg-[#2563EB] text-[#F4F4F6] font-medium shadow-[0_0_12px_rgba(37,99,235,0.35)]'
-                : 'bg-[#14161D] text-[#A1A1AA] border border-white/[0.06] hover:text-[#38BDF8] hover:border-[#38BDF8]/30'
-            }`}
-          >
-            Semua Domain (17)
-          </button>
-          {techDomains.map((dom) => (
+        {/* Filter Tabs */}
+        <ScrollReveal delay={0.1}>
+          <div className="flex flex-wrap items-center gap-2 mb-10">
             <button
-              key={dom.id}
               type="button"
-              onClick={() => setActiveTab(dom.id)}
-              className={`px-3.5 py-1.5 rounded text-xs font-mono transition-all ${
-                activeTab === dom.id
-                  ? 'bg-[#2563EB] text-[#F4F4F6] font-medium shadow-[0_0_12px_rgba(37,99,235,0.35)]'
-                  : 'bg-[#14161D] text-[#A1A1AA] border border-white/[0.06] hover:text-[#38BDF8] hover:border-[#38BDF8]/30'
+              onClick={() => setActiveTab('semua')}
+              className={`px-4 py-2 rounded-full text-xs font-mono transition-all ${
+                activeTab === 'semua'
+                  ? 'bg-[#0E74E9] text-white font-semibold shadow-[0_4px_12px_rgba(14,116,233,0.3)]'
+                  : 'bg-[#F8FAFC] text-[#4B5563] border border-[#E2E8F0] hover:text-[#0E74E9] hover:border-[#0E74E9]/30'
               }`}
             >
-              {dom.label}
+              Semua Domain (17)
             </button>
-          ))}
-        </div>
-      </ScrollReveal>
+            {techDomains.map((dom) => (
+              <button
+                key={dom.id}
+                type="button"
+                onClick={() => setActiveTab(dom.id)}
+                className={`px-4 py-2 rounded-full text-xs font-mono transition-all ${
+                  activeTab === dom.id
+                    ? 'bg-[#0E74E9] text-white font-semibold shadow-[0_4px_12px_rgba(14,116,233,0.3)]'
+                    : 'bg-[#F8FAFC] text-[#4B5563] border border-[#E2E8F0] hover:text-[#0E74E9] hover:border-[#0E74E9]/30'
+                }`}
+              >
+                {dom.label}
+              </button>
+            ))}
+          </div>
+        </ScrollReveal>
 
-      {/* Domain Groups Grid */}
-      <div className="space-y-12">
-        {visibleDomains.map((dom, domIdx) => {
-          const Icon = dom.icon;
-          return (
-            <ScrollReveal key={dom.id} delay={domIdx * 0.1}>
-              <div className="bg-[#0D0E12] border border-white/[0.08] rounded-2xl p-6 sm:p-8">
-                {/* Domain Header */}
-                <div className="flex items-center justify-between pb-4 border-b border-white/[0.06] mb-6">
-                  <div className="flex items-center gap-2.5">
-                    <div className="w-8 h-8 rounded-lg bg-[#14161D] border border-white/[0.08] flex items-center justify-center text-[#F4F4F6]">
-                      <Icon className="w-4 h-4 text-[#38BDF8]" />
-                    </div>
-                    <div>
-                      <h3 className="text-base font-medium text-[#F4F4F6]">
-                        {dom.label}
-                      </h3>
-                      <p className="text-[11px] font-mono text-[#63636E]">
-                        {dom.items.length} INSTRUMEN REKAYASA
-                      </p>
-                    </div>
-                  </div>
-                  <span className="hidden sm:inline-block text-[11px] font-mono text-[#63636E]">
-                    0{domIdx + 1} // DOMAIN
-                  </span>
-                </div>
-
-                {/* Items in this domain */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  {dom.items.map((item, itemIdx) => (
-                    <div
-                      key={itemIdx}
-                      className="p-4 rounded-xl bg-[#14161D]/50 border border-white/[0.04] hover:border-[#38BDF8]/30 hover:bg-[#14161D] transition-colors flex flex-col justify-between"
-                    >
+        {/* Domain Groups Grid: Bento Cards in Surface #082F49 */}
+        <div className="space-y-8">
+          {visibleDomains.map((dom, domIdx) => {
+            const Icon = dom.icon;
+            return (
+              <ScrollReveal key={dom.id} delay={domIdx * 0.1}>
+                <div className="bg-[#082F49] border border-[#22D3EE]/22 rounded-2xl p-6 sm:p-8 shadow-xl">
+                  {/* Domain Header */}
+                  <div className="flex items-center justify-between pb-4 border-b border-white/[0.08] mb-6">
+                    <div className="flex items-center gap-3">
+                      <div className="w-9 h-9 rounded-xl bg-[#041624] border border-[#22D3EE]/25 flex items-center justify-center text-[#22D3EE]">
+                        <Icon className="w-4 h-4 text-[#22D3EE]" />
+                      </div>
                       <div>
-                        <div className="flex items-center justify-between gap-2 mb-2">
-                          <h4 className="text-sm font-mono font-semibold text-[#F4F4F6]">
-                            {item.name}
-                          </h4>
-                          <span className="text-[9px] font-mono text-[#38BDF8] bg-[#38BDF8]/10 px-2 py-0.5 rounded border border-[#38BDF8]/20">
-                            {item.badge}
-                          </span>
-                        </div>
-                        <div className="text-xs font-mono text-[#A1A1AA] mb-2 font-medium">
-                          {item.role}
-                        </div>
-                        <p className="text-xs text-[#63636E] leading-relaxed">
-                          {item.description}
+                        <h3 className="text-base sm:text-lg font-medium text-[#F8FAFC]">
+                          {dom.label}
+                        </h3>
+                        <p className="text-[11px] font-mono text-[#94A3B8]">
+                          {dom.items.length} INSTRUMEN REKAYASA
                         </p>
                       </div>
                     </div>
-                  ))}
+                    <span className="hidden sm:inline-block text-[11px] font-mono text-[#22D3EE]">
+                      0{domIdx + 1} // DOMAIN
+                    </span>
+                  </div>
+
+                  {/* Items in this domain */}
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {dom.items.map((item, itemIdx) => (
+                      <div
+                        key={itemIdx}
+                        className="p-4 rounded-xl bg-[#041624]/75 border border-white/[0.06] hover:border-[#22D3EE]/40 transition-colors flex flex-col justify-between"
+                      >
+                        <div>
+                          <div className="flex items-center justify-between gap-2 mb-2">
+                            <h4 className="text-sm font-mono font-semibold text-[#F8FAFC]">
+                              {item.name}
+                            </h4>
+                            <span className="text-[10px] font-mono text-[#22D3EE] bg-[#22D3EE]/15 px-2 py-0.5 rounded-full border border-[#22D3EE]/30">
+                              {item.badge}
+                            </span>
+                          </div>
+                          <div className="text-xs font-mono text-[#94A3B8] mb-2 font-medium">
+                            {item.role}
+                          </div>
+                          <p className="text-xs text-[#94A3B8]/90 leading-relaxed font-normal">
+                            {item.description}
+                          </p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
                 </div>
-              </div>
-            </ScrollReveal>
-          );
-        })}
+              </ScrollReveal>
+            );
+          })}
+        </div>
       </div>
     </section>
   );

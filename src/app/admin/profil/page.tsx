@@ -92,7 +92,7 @@ export default function AdminProfilPage() {
         </div>
 
         {savedSuccess && (
-          <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded bg-[#38BDF8]/10 text-[#38BDF8] border border-[#38BDF8]/30 text-xs font-mono">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#22D3EE]/15 text-[#22D3EE] border border-[#22D3EE]/30 text-xs font-mono font-semibold">
             <Check className="w-3.5 h-3.5" />
             <span>Seluruh Perubahan Berhasil Disimpan</span>
           </div>
@@ -101,15 +101,15 @@ export default function AdminProfilPage() {
 
       <form onSubmit={handleSave} className="space-y-8">
         {/* Section 1: Identitas & Teks Beranda */}
-        <div className="bg-[#0D0E12] border border-white/[0.08] rounded-2xl p-6 sm:p-8 space-y-5">
-          <div className="flex items-center gap-2 pb-3 border-b border-white/[0.06] text-xs font-mono uppercase tracking-wider text-[#F4F4F6]">
-            <User className="w-4 h-4 text-[#38BDF8]" />
+        <div className="bg-[#082F49] border border-[#22D3EE]/25 rounded-2xl p-6 sm:p-8 space-y-5 shadow-xl">
+          <div className="flex items-center gap-2 pb-3 border-b border-white/[0.08] text-xs font-mono uppercase tracking-wider text-[#F8FAFC]">
+            <User className="w-4 h-4 text-[#22D3EE]" />
             <span>1. IDENTITAS UTAMA & SAPAAN HERO</span>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
             <div>
-              <label className="block text-xs font-mono text-[#A1A1AA] uppercase mb-1.5">
+              <label className="block text-xs font-mono text-[#94A3B8] uppercase mb-1.5">
                 Nama Lengkap *
               </label>
               <input
@@ -117,12 +117,12 @@ export default function AdminProfilPage() {
                 required
                 value={profile.full_name}
                 onChange={(e) => setProfile({ ...profile, full_name: e.target.value })}
-                className="w-full bg-[#14161D] border border-white/[0.08] rounded px-3.5 py-2 text-xs font-mono text-[#F4F4F6] outline-none"
+                className="w-full bg-[#041624] border border-white/[0.08] focus:border-[#22D3EE] rounded-lg px-3.5 py-2 text-xs font-mono text-[#F8FAFC] outline-none"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-mono text-[#A1A1AA] uppercase mb-1.5">
+              <label className="block text-xs font-mono text-[#94A3B8] uppercase mb-1.5">
                 Status Ketersediaan Kolaborasi *
               </label>
               <input
@@ -132,7 +132,7 @@ export default function AdminProfilPage() {
                 onChange={(e) =>
                   setProfile({ ...profile, availability_status: e.target.value })
                 }
-                className="w-full bg-[#14161D] border border-white/[0.08] rounded px-3.5 py-2 text-xs font-mono text-[#38BDF8] outline-none"
+                className="w-full bg-[#041624] border border-white/[0.08] focus:border-[#22D3EE] rounded-lg px-3.5 py-2 text-xs font-mono text-[#22D3EE] outline-none font-semibold"
               />
             </div>
 
@@ -395,13 +395,13 @@ export default function AdminProfilPage() {
         </div>
 
         {/* Submit Bar */}
-        <div className="sticky bottom-6 flex justify-end p-4 rounded-xl bg-[#0D0E12]/90 backdrop-blur-md border border-white/[0.12] shadow-2xl">
+        <div className="sticky bottom-6 flex justify-end p-4 rounded-2xl bg-[#082F49]/95 backdrop-blur-md border border-[#22D3EE]/30 shadow-2xl">
           <button
             type="submit"
-            className="inline-flex items-center gap-2 px-6 py-2.5 rounded bg-[#2563EB] hover:bg-[#3B82F6] text-[#F4F4F6] text-xs font-mono font-medium transition-colors"
+            className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-[#0E74E9] hover:bg-[#0256B4] text-white text-xs font-mono font-semibold transition-all shadow-[0_4px_16px_rgba(14,116,233,0.35)]"
           >
             <Save className="w-3.5 h-3.5" />
-            <span>SIMPAN SEMUA PERUBAHAN PROFIL</span>
+            <span>SIMPAN SEMUA PERUBAHAN PROFIL ⮡</span>
           </button>
         </div>
       </form>

@@ -68,16 +68,16 @@ export default function AdminSkillsPage() {
   return (
     <div className="space-y-8">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-white/[0.08]">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-[#22D3EE]/15">
         <div>
-          <div className="flex items-center gap-2 font-mono text-xs text-[#63636E] uppercase mb-1">
-            <Link href="/admin" className="hover:text-[#F4F4F6]">
-              PANEL ADMIN
+          <div className="flex items-center gap-2 font-mono text-[11px] text-[#94A3B8] uppercase tracking-wider mb-1">
+            <Link href="/admin" className="hover:text-[#22D3EE] transition-colors">
+              COCKPIT ADMIN
             </Link>
-            <span>/</span>
-            <span>KELOLA KEAHLIAN (SKILLS)</span>
+            <span className="text-[#22D3EE]/40">/</span>
+            <span className="text-[#22D3EE]">KELOLA KEAHLIAN (SKILLS)</span>
           </div>
-          <h1 className="text-2xl font-medium tracking-tight text-[#F4F4F6]">
+          <h1 className="text-2xl font-medium tracking-tight text-[#F8FAFC]">
             Matriks Keahlian & Teknologi
           </h1>
         </div>
@@ -92,7 +92,7 @@ export default function AdminSkillsPage() {
             });
           }}
           type="button"
-          className="inline-flex items-center gap-2 px-4 py-2 rounded bg-[#2563EB] hover:bg-[#3B82F6] text-[#F4F4F6] text-xs font-mono font-medium transition-colors shadow-sm shadow-[#2563EB]/20"
+          className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#0E74E9] hover:bg-[#0256B4] text-white text-xs font-mono font-medium transition-all shadow-md shadow-[#0E74E9]/20"
         >
           <Plus className="w-3.5 h-3.5" />
           <span>TAMBAH KEAHLIAN BARU</span>
@@ -106,10 +106,10 @@ export default function AdminSkillsPage() {
             key={cat}
             type="button"
             onClick={() => setFilterCat(cat)}
-            className={`px-3 py-1.5 rounded text-xs font-mono transition-colors ${
+            className={`px-3.5 py-1.5 rounded-full text-xs font-mono transition-all ${
               filterCat === cat
-                ? 'bg-[#F4F4F6] text-[#070709] font-medium'
-                : 'bg-[#14161D] text-[#A1A1AA] border border-white/[0.06] hover:text-[#F4F4F6]'
+                ? 'bg-[#22D3EE] text-[#082F49] font-semibold shadow-sm'
+                : 'bg-[#082F49]/60 text-[#94A3B8] border border-[#22D3EE]/15 hover:text-[#F8FAFC] hover:border-[#22D3EE]/40'
             }`}
           >
             {cat}
@@ -119,11 +119,11 @@ export default function AdminSkillsPage() {
 
       {/* Editor Modal / Card */}
       {editingSkill && (
-        <div className="bg-[#0D0E12] border border-white/[0.15] rounded-xl p-6 sm:p-7 space-y-4">
-          <div className="flex items-center justify-between pb-3 border-b border-white/[0.08]">
-            <h3 className="text-sm font-mono font-medium text-[#F4F4F6] flex items-center gap-2">
-              <Sparkles className="w-4 h-4 text-[#38BDF8]" />
-              <span>{isCreating ? 'TAMBAH KEAHLIAN' : 'EDIT KEAHLIAN'}</span>
+        <div className="bg-[#082F49] border border-[#22D3EE]/30 rounded-2xl p-6 sm:p-7 space-y-4 shadow-xl">
+          <div className="flex items-center justify-between pb-3 border-b border-[#22D3EE]/15">
+            <h3 className="text-sm font-mono font-medium text-[#F8FAFC] flex items-center gap-2">
+              <Sparkles className="w-4 h-4 text-[#22D3EE]" />
+              <span>{isCreating ? 'TAMBAH KEAHLIAN BARU' : 'EDIT KEAHLIAN'}</span>
             </h3>
             <button
               onClick={() => {
@@ -131,7 +131,7 @@ export default function AdminSkillsPage() {
                 setIsCreating(false);
               }}
               type="button"
-              className="text-[#63636E] hover:text-[#F4F4F6]"
+              className="text-[#94A3B8] hover:text-[#F8FAFC] p-1 rounded-md"
             >
               <X className="w-4 h-4" />
             </button>
@@ -139,7 +139,7 @@ export default function AdminSkillsPage() {
 
           <form onSubmit={handleSave} className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             <div>
-              <label className="block text-xs font-mono text-[#A1A1AA] mb-1">
+              <label className="block text-xs font-mono text-[#94A3B8] mb-1">
                 Nama Keahlian / Teknologi *
               </label>
               <input
@@ -150,12 +150,12 @@ export default function AdminSkillsPage() {
                   setEditingSkill({ ...editingSkill, name: e.target.value })
                 }
                 placeholder="cth. React 19 / TypeScript"
-                className="w-full bg-[#14161D] border border-white/[0.08] rounded px-3 py-2 text-xs font-mono text-[#F4F4F6] outline-none"
+                className="w-full bg-[#041624] border border-[#22D3EE]/20 rounded-lg px-3.5 py-2 text-xs font-mono text-[#F8FAFC] focus:outline-none focus:border-[#22D3EE]"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-mono text-[#A1A1AA] mb-1">
+              <label className="block text-xs font-mono text-[#94A3B8] mb-1">
                 Kategori Domain *
               </label>
               <select
@@ -163,7 +163,7 @@ export default function AdminSkillsPage() {
                 onChange={(e) =>
                   setEditingSkill({ ...editingSkill, category: e.target.value })
                 }
-                className="w-full bg-[#14161D] border border-white/[0.08] rounded px-3 py-2 text-xs font-mono text-[#F4F4F6] outline-none"
+                className="w-full bg-[#041624] border border-[#22D3EE]/20 rounded-lg px-3.5 py-2 text-xs font-mono text-[#F8FAFC] focus:outline-none focus:border-[#22D3EE]"
               >
                 <option value="Web & Software">Web & Software</option>
                 <option value="Hardware & IoT">Hardware & IoT</option>
@@ -172,7 +172,7 @@ export default function AdminSkillsPage() {
             </div>
 
             <div>
-              <label className="block text-xs font-mono text-[#A1A1AA] mb-1">
+              <label className="block text-xs font-mono text-[#94A3B8] mb-1">
                 Tingkat Kemahiran ({editingSkill.proficiency || 85}%)
               </label>
               <input
@@ -186,26 +186,26 @@ export default function AdminSkillsPage() {
                     proficiency: Number(e.target.value),
                   })
                 }
-                className="w-full mt-2"
+                className="w-full mt-2 accent-[#22D3EE]"
               />
             </div>
 
-            <div className="sm:col-span-3 flex justify-end gap-2 pt-2 border-t border-white/[0.06]">
+            <div className="sm:col-span-3 flex justify-end gap-2 pt-3 border-t border-[#22D3EE]/15">
               <button
                 type="button"
                 onClick={() => {
                   setEditingSkill(null);
                   setIsCreating(false);
                 }}
-                className="px-3.5 py-1.5 rounded bg-[#14161D] text-xs font-mono text-[#A1A1AA]"
+                className="px-4 py-2 rounded-full bg-[#041624] text-xs font-mono text-[#94A3B8] hover:text-[#F8FAFC] border border-[#22D3EE]/15"
               >
                 Batal
               </button>
               <button
                 type="submit"
-                className="px-4 py-1.5 rounded bg-[#2563EB] text-[#F4F4F6] text-xs font-mono font-medium hover:bg-[#3B82F6]"
+                className="px-5 py-2 rounded-full bg-[#0E74E9] hover:bg-[#0256B4] text-white text-xs font-mono font-medium transition-colors"
               >
-                Simpan
+                Simpan Keahlian
               </button>
             </div>
           </form>
@@ -213,35 +213,35 @@ export default function AdminSkillsPage() {
       )}
 
       {/* Skills Table */}
-      <div className="bg-[#0D0E12] border border-white/[0.08] rounded-xl overflow-hidden">
+      <div className="bg-[#082F49] border border-[#22D3EE]/20 rounded-2xl overflow-hidden shadow-lg">
         <table className="w-full text-left border-collapse">
           <thead>
-            <tr className="border-b border-white/[0.08] bg-[#14161D]/50 text-[11px] font-mono text-[#63636E]">
-              <th className="py-3 px-4">NO</th>
-              <th className="py-3 px-4">NAMA KEAHLIAN</th>
-              <th className="py-3 px-4">KATEGORI</th>
-              <th className="py-3 px-4">KEMAHIRAN</th>
-              <th className="py-3 px-4 text-right">AKSI</th>
+            <tr className="border-b border-[#22D3EE]/15 bg-[#041624]/70 text-[11px] font-mono text-[#94A3B8] tracking-wider uppercase">
+              <th className="py-3.5 px-5">NO</th>
+              <th className="py-3.5 px-5">NAMA KEAHLIAN</th>
+              <th className="py-3.5 px-5">KATEGORI</th>
+              <th className="py-3.5 px-5">KEMAHIRAN</th>
+              <th className="py-3.5 px-5 text-right">AKSI</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-white/[0.04] text-xs font-mono">
+          <tbody className="divide-y divide-[#22D3EE]/10 text-xs font-mono">
             {visibleSkills.map((sk, idx) => (
-              <tr key={sk.id} className="hover:bg-[#14161D]/30 transition-colors">
-                <td className="py-3.5 px-4 text-[#63636E]">{idx + 1}</td>
-                <td className="py-3.5 px-4 font-medium text-[#F4F4F6]">{sk.name}</td>
-                <td className="py-3.5 px-4 text-[#A1A1AA]">{sk.category}</td>
-                <td className="py-3.5 px-4">
-                  <div className="flex items-center gap-2">
-                    <div className="w-20 bg-[#14161D] rounded-full h-1.5 overflow-hidden">
+              <tr key={sk.id} className="hover:bg-[#041624]/40 transition-colors">
+                <td className="py-3.5 px-5 text-[#94A3B8]">{idx + 1}</td>
+                <td className="py-3.5 px-5 font-medium text-[#F8FAFC]">{sk.name}</td>
+                <td className="py-3.5 px-5 text-[#94A3B8]">{sk.category}</td>
+                <td className="py-3.5 px-5">
+                  <div className="flex items-center gap-3">
+                    <div className="w-24 bg-[#041624] rounded-full h-2 overflow-hidden border border-[#22D3EE]/20">
                       <div
-                        className="bg-[#38BDF8] h-full rounded-full"
+                        className="bg-[#22D3EE] h-full rounded-full transition-all"
                         style={{ width: `${sk.proficiency}%` }}
                       />
                     </div>
-                    <span className="text-[11px] text-[#A1A1AA]">{sk.proficiency}%</span>
+                    <span className="text-[11px] text-[#22D3EE] font-mono">{sk.proficiency}%</span>
                   </div>
                 </td>
-                <td className="py-3.5 px-4 text-right">
+                <td className="py-3.5 px-5 text-right">
                   <div className="inline-flex items-center gap-2">
                     <button
                       onClick={() => {
@@ -249,7 +249,7 @@ export default function AdminSkillsPage() {
                         setEditingSkill(sk);
                       }}
                       type="button"
-                      className="p-1 text-[#A1A1AA] hover:text-[#F4F4F6]"
+                      className="p-1.5 text-[#94A3B8] hover:text-[#22D3EE] transition-colors"
                       title="Edit"
                     >
                       <Edit3 className="w-3.5 h-3.5" />
@@ -257,7 +257,7 @@ export default function AdminSkillsPage() {
                     <button
                       onClick={() => handleDelete(sk.id)}
                       type="button"
-                      className="p-1 text-red-400/70 hover:text-red-400"
+                      className="p-1.5 text-red-400/70 hover:text-red-400 transition-colors"
                       title="Hapus"
                     >
                       <Trash2 className="w-3.5 h-3.5" />

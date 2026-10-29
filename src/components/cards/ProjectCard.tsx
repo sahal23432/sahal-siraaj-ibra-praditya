@@ -2,15 +2,16 @@
 
 import { useState, useRef } from 'react';
 import Link from 'next/link';
-import { ArrowUpRight, CheckCircle2 } from 'lucide-react';
 import { Project } from '@/types/portfolio';
 import { usePerformanceMode } from '@/lib/hooks/usePerformanceMode';
+import { CheckCircle2, Cpu, Globe, Layers } from 'lucide-react';
 
 interface ProjectCardProps {
   project: Project;
+  isFeaturedSpan?: boolean;
 }
 
-export default function ProjectCard({ project }: ProjectCardProps) {
+export default function ProjectCard({ project, isFeaturedSpan = false }: ProjectCardProps) {
   const { isEcoMode } = usePerformanceMode();
   const cardRef = useRef<HTMLDivElement>(null);
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
@@ -24,23 +25,31 @@ export default function ProjectCard({ project }: ProjectCardProps) {
     const y = e.clientY - rect.top;
     setMousePos({ x, y });
 
-    // Subtle 3D tilt calculation (max 3 degrees)
+    // Subtle 3D tilt calculation (max 2.5 degrees)
     const centerX = rect.width / 2;
     const centerY = rect.height / 2;
-    const rotateX = ((y - centerY) / centerY) * -3;
-    const rotateY = ((x - centerX) / centerX) * 3;
+    const rotateX = ((y - centerY) / centerY) * -2.5;
+    const rotateY = ((x - centerX) / centerX) * 2.5;
     setTransformStyle(
       `perspective(1000px) rotateX(${rotateX.toFixed(2)}deg) rotateY(${rotateY.toFixed(2)}deg)`
     );
   };
 
-  const handleMouseEnter = () => {
-    setIsHovered(true);
-  };
-
+  const handleMouseEnter = () => setIsHovered(true);
   const handleMouseLeave = () => {
     setIsHovered(false);
     setTransformStyle('perspective(1000px) rotateX(0deg) rotateY(0deg)');
+  };
+
+  // Determine icon based on category
+  const renderCategoryIcon = () => {
+    if (project.category.includes('IoT') || project.category.includes('Hardware')) {
+      return <Cpu className="w-4 h-4 text-[#22D3EE]" />;
+    }
+    if (project.category.includes('Web 3D')) {
+      return <Layers className="w-4 h-4 text-[#22D3EE]" />;
+    }
+    return <Globe className="w-4 h-4 text-[#22D3EE]" />;
   };
 
   return (
@@ -51,102 +60,113 @@ export default function ProjectCard({ project }: ProjectCardProps) {
       onMouseLeave={handleMouseLeave}
       style={{
         transform: isEcoMode ? 'none' : transformStyle,
-        transition: isHovered ? 'border-color 0.15s ease' : 'transform 0.4s ease, border-color 0.2s ease',
+        transition: isHovered
+          ? 'border-color 0.15s ease'
+          : 'transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.2s ease',
       }}
-      className="relative group rounded-xl bg-[#0D0E12] border border-white/[0.08] hover:border-[#38BDF8]/40 p-6 sm:p-8 flex flex-col justify-between overflow-hidden active:scale-[0.99] transition-colors"
+      className={`relative group rounded-2xl bg-[#082F49] border border-[#22D3EE]/22 hover:border-[#22D3EE]/60 p-6 sm:p-8 flex flex-col justify-between overflow-hidden shadow-xl hover:-translate-y-1 transition-all duration-300 text-left ${
+        isFeaturedSpan ? 'lg:col-span-2' : 'col-span-1'
+      }`}
     >
-      {/* Radial Spotlight on Hover */}
+      {/* Radial Hover Spotlight */}
       {!isEcoMode && isHovered && (
         <div
-          className="pointer-events-none absolute -inset-px rounded-xl opacity-100 transition-opacity duration-300"
+          className="pointer-events-none absolute -inset-px rounded-2xl opacity-100 transition-opacity duration-300"
           style={{
-            background: `radial-gradient(400px circle at ${mousePos.x}px ${mousePos.y}px, rgba(255,255,255,0.06), transparent 80%)`,
+            background: `radial-gradient(550px circle at ${mousePos.x}px ${mousePos.y}px, rgba(34,211,238,0.12), transparent 75%)`,
           }}
         />
       )}
 
       <div>
-        {/* Top Metadata Row: Index + Year on left, Status Badge on right */}
-        <div className="flex items-center justify-between gap-4 mb-6">
-          <div className="flex items-center gap-2 font-mono text-xs text-[#63636E] tabular-nums">
-            <span className="text-[#A1A1AA] font-semibold">{project.index_code}</span>
+        {/* Top Header Row: Index + Year + Category on left, Live Status Pill on right */}
+        <div className="flex flex-wrap items-center justify-between gap-3 mb-6">
+          <div className="flex items-center gap-2 font-mono text-xs text-[#94A3B8]">
+            <span className="text-[#22D3EE] font-bold text-sm tracking-wider">{project.index_code}</span>
             <span>·</span>
             <span>{project.year}</span>
             <span>·</span>
-            <span className="uppercase text-[#A1A1AA]">{project.category}</span>
+            <span className="uppercase tracking-wider text-[#F8FAFC] flex items-center gap-1.5">
+              {renderCategoryIcon()}
+              <span>{project.category}</span>
+            </span>
           </div>
 
-          <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-[#14161D] border border-[#38BDF8]/20 text-[11px] font-mono text-[#38BDF8]">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#38BDF8]" />
-            <span className="uppercase tracking-wider">{project.status_badge}</span>
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#041624] border border-[#22D3EE]/30 text-[11px] font-mono text-[#22D3EE] shadow-xs">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#22D3EE] animate-pulse" />
+            <span className="uppercase font-semibold tracking-wider">{project.status_badge}</span>
           </div>
         </div>
 
         {/* Title and Summary */}
-        <h3 className="text-xl sm:text-2xl font-medium tracking-tight text-[#F4F4F6] group-hover:text-white transition-colors mb-2.5">
+        <h3 className="text-xl sm:text-2xl lg:text-3xl font-medium tracking-tight text-[#F8FAFC] group-hover:text-white transition-colors mb-3">
           <Link href={`/karya/${project.slug}`} className="hover:underline focus:outline-none">
             {project.title}
           </Link>
         </h3>
-        <p className="text-sm text-[#A1A1AA] leading-relaxed mb-6">
+        <p className="text-sm sm:text-base text-[#94A3B8] leading-relaxed mb-6 font-normal max-w-3xl">
           {project.summary}
         </p>
 
-        {/* 4-Step Pipeline Telemetry Block */}
+        {/* 4-Step Pipeline Telemetry Visualizer */}
         {project.pipeline_steps && project.pipeline_steps.length > 0 && (
-          <div className="bg-[#14161D]/90 rounded-lg p-4 mb-6 border border-white/[0.06]">
-            <div className="text-[10px] font-mono uppercase tracking-widest text-[#63636E] mb-3 flex items-center justify-between">
-              <span>ALUR SISTEM (TELEMETRY PIPELINE)</span>
-              <span>4 TAHAPAN</span>
+          <div className="bg-[#041624]/90 rounded-xl p-4 sm:p-5 mb-6 border border-[#22D3EE]/20 shadow-inner">
+            <div className="text-[11px] font-mono uppercase tracking-widest text-[#94A3B8] mb-3 flex items-center justify-between">
+              <span className="flex items-center gap-1.5 text-[#22D3EE] font-semibold">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#22D3EE]" />
+                ALUR SISTEM (TELEMETRY PIPELINE)
+              </span>
+              <span className="text-white/40">4 TAHAPAN KERJA</span>
             </div>
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+
+            <div className={`grid gap-2.5 ${isFeaturedSpan ? 'grid-cols-2 lg:grid-cols-4' : 'grid-cols-2'}`}>
               {project.pipeline_steps.map((st, i) => (
                 <div
                   key={i}
-                  className="bg-[#0D0E12] p-2.5 rounded border border-white/[0.04] flex flex-col justify-between"
+                  className="bg-[#082F49] p-3 rounded-lg border border-white/[0.08] flex flex-col justify-between hover:border-[#22D3EE]/40 transition-colors"
                 >
-                  <div className="flex items-center justify-between text-[10px] font-mono text-[#63636E] mb-1">
-                    <span>{st.step}</span>
-                    <CheckCircle2 className="w-3 h-3 text-[#38BDF8]" />
+                  <div className="flex items-center justify-between text-[11px] font-mono text-[#94A3B8] mb-1.5">
+                    <span className="font-bold text-[#22D3EE]">{st.step}</span>
+                    <CheckCircle2 className="w-3.5 h-3.5 text-[#22D3EE]" />
                   </div>
-                  <div className="text-xs font-mono font-medium text-[#F4F4F6] mb-0.5">
+                  <div className="text-xs font-mono font-semibold text-[#F8FAFC] mb-0.5">
                     {st.label}
                   </div>
-                  <div className="text-[10px] text-[#A1A1AA] line-clamp-1">{st.detail}</div>
+                  <div className="text-[11px] text-[#94A3B8] line-clamp-1">{st.detail}</div>
                 </div>
               ))}
             </div>
           </div>
         )}
 
-        {/* Explicit Role Row */}
-        <div className="text-xs font-mono text-[#A1A1AA] mb-4 pb-4 border-b border-white/[0.06]">
-          <span className="text-[#63636E]">Peran saya: </span>
-          <span className="text-[#F4F4F6] font-medium">{project.role}</span>
+        {/* Role Meta Row */}
+        <div className="text-xs font-mono text-[#94A3B8] mb-4 pb-4 border-b border-white/[0.08] flex flex-wrap items-baseline gap-1.5">
+          <span className="text-[#94A3B8]/70 uppercase tracking-wider">Peran saya:</span>
+          <span className="text-[#F8FAFC] font-medium">{project.role}</span>
         </div>
       </div>
 
       <div>
-        {/* Tools separated by middle dot */}
-        <div className="text-xs font-mono text-[#63636E] mb-6 flex flex-wrap gap-x-2 gap-y-1">
+        {/* Tools Badges (rounded: 8px control) */}
+        <div className="text-xs font-mono mb-6 flex flex-wrap gap-2">
           {project.tools.map((tool, idx) => (
-            <span key={idx} className="inline-flex items-center">
-              <span className="text-[#A1A1AA]">{tool}</span>
-              {idx < project.tools.length - 1 && (
-                <span className="ml-2 text-[#63636E]">·</span>
-              )}
+            <span
+              key={idx}
+              className="px-2.5 py-1 rounded-lg bg-[#041624] border border-white/[0.08] text-[#94A3B8] hover:text-[#F8FAFC] hover:border-[#22D3EE]/40 transition-colors text-[11px]"
+            >
+              {tool}
             </span>
           ))}
         </div>
 
-        {/* Bottom Actions */}
-        <div className="flex items-center justify-between pt-2">
+        {/* Bottom Unseen Arrow Actions */}
+        <div className="flex items-center justify-between pt-3 border-t border-white/[0.08]">
           <Link
             href={`/karya/${project.slug}`}
-            className="inline-flex items-center gap-1.5 text-xs font-mono text-[#F4F4F6] hover:text-white transition-colors py-1 group-hover:translate-x-0.5 duration-150"
+            className="inline-flex items-center gap-2 text-xs font-mono font-semibold text-[#22D3EE] hover:text-white transition-colors group-hover:translate-x-1 duration-200"
           >
             <span>Buka Detail Studi Kasus</span>
-            <ArrowUpRight className="w-3.5 h-3.5 text-[#A1A1AA] group-hover:text-white" />
+            <span>⮡</span>
           </Link>
 
           {project.live_url && (
@@ -154,10 +174,10 @@ export default function ProjectCard({ project }: ProjectCardProps) {
               href={project.live_url}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1 text-xs font-mono text-[#A1A1AA] hover:text-[#F4F4F6] transition-colors"
+              className="inline-flex items-center gap-1.5 text-xs font-mono text-[#F8FAFC] hover:text-[#22D3EE] transition-colors"
             >
-              <span>Kunjungi Web</span>
-              <ArrowUpRight className="w-3 h-3" />
+              <span>Kunjungi Website</span>
+              <span>⮡</span>
             </a>
           )}
         </div>

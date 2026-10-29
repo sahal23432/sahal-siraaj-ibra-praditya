@@ -133,19 +133,19 @@ export default function AdminKaryaPage() {
             });
           }}
           type="button"
-          className="inline-flex items-center gap-2 px-4 py-2 rounded bg-[#2563EB] hover:bg-[#3B82F6] text-[#F4F4F6] text-xs font-mono font-medium transition-colors shadow-sm shadow-[#2563EB]/20"
+          className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#0E74E9] hover:bg-[#0256B4] text-white text-xs font-mono font-semibold transition-all shadow-[0_4px_12px_rgba(14,116,233,0.3)]"
         >
           <Plus className="w-3.5 h-3.5" />
-          <span>TAMBAH KARYA BARU</span>
+          <span>TAMBAH KARYA BARU ⮡</span>
         </button>
       </div>
 
       {/* Editor Modal / Drawer */}
       {editingProject && (
-        <div className="bg-[#0D0E12] border border-white/[0.15] rounded-2xl p-6 sm:p-8 space-y-6">
+        <div className="bg-[#082F49] border border-[#22D3EE]/25 rounded-2xl p-6 sm:p-8 space-y-6 shadow-2xl">
           <div className="flex items-center justify-between pb-3 border-b border-white/[0.08]">
-            <h3 className="text-sm font-mono font-medium text-[#F4F4F6] flex items-center gap-2">
-              <Layers className="w-4 h-4 text-[#38BDF8]" />
+            <h3 className="text-sm font-mono font-medium text-[#F8FAFC] flex items-center gap-2">
+              <Layers className="w-4 h-4 text-[#22D3EE]" />
               <span>{isCreating ? 'TAMBAH KARYA BARU' : 'EDIT DETAIL KARYA'}</span>
             </h3>
             <button
@@ -307,8 +307,8 @@ export default function AdminKaryaPage() {
             </div>
 
             {/* 4 Steps Telemetry Pipeline Editor */}
-            <div className="md:col-span-2 p-4 rounded-xl bg-[#14161D]/50 border border-white/[0.06] space-y-3">
-              <div className="text-xs font-mono text-[#38BDF8] uppercase font-semibold">
+            <div className="md:col-span-2 p-4 rounded-xl bg-[#041624] border border-[#22D3EE]/20 space-y-3">
+              <div className="text-xs font-mono text-[#22D3EE] uppercase font-semibold">
                 ALUR SISTEM (4 TAHAPAN TELEMETRY PIPELINE)
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
@@ -318,21 +318,21 @@ export default function AdminKaryaPage() {
                   { step: '03', label: '', detail: '' },
                   { step: '04', label: '', detail: '' },
                 ]).map((st, i) => (
-                  <div key={i} className="space-y-1.5 p-3 rounded-lg bg-[#0D0E12] border border-white/[0.04]">
-                    <div className="text-[10px] font-mono text-[#63636E]">TAHAP {st.step || `0${i+1}`}</div>
+                  <div key={i} className="space-y-1.5 p-3 rounded-lg bg-[#082F49] border border-white/[0.06]">
+                    <div className="text-[10px] font-mono text-[#22D3EE] font-bold">TAHAP {st.step || `0${i+1}`}</div>
                     <input
                       type="text"
                       placeholder="Label (cth. INPUT)"
                       value={st.label}
                       onChange={(e) => handleStepChange(i, 'label', e.target.value)}
-                      className="w-full bg-[#14161D] border border-white/[0.06] rounded px-2 py-1 text-xs font-mono text-[#F4F4F6] outline-none"
+                      className="w-full bg-[#041624] border border-white/[0.08] focus:border-[#22D3EE] rounded px-2 py-1 text-xs font-mono text-[#F8FAFC] outline-none"
                     />
                     <input
                       type="text"
                       placeholder="Detail ringkas"
                       value={st.detail}
                       onChange={(e) => handleStepChange(i, 'detail', e.target.value)}
-                      className="w-full bg-[#14161D] border border-white/[0.06] rounded px-2 py-1 text-[11px] font-mono text-[#A1A1AA] outline-none"
+                      className="w-full bg-[#041624] border border-white/[0.08] focus:border-[#22D3EE] rounded px-2 py-1 text-[11px] font-mono text-[#94A3B8] outline-none"
                     />
                   </div>
                 ))}
@@ -341,7 +341,7 @@ export default function AdminKaryaPage() {
 
             {/* Story Behind Markdown */}
             <div className="md:col-span-2">
-              <label className="block text-xs font-mono text-[#A1A1AA] uppercase mb-1">
+              <label className="block text-xs font-mono text-[#94A3B8] uppercase mb-1">
                 Cerita di Balik Karya (Studi Kasus Naratif Markdown)
               </label>
               <textarea
@@ -350,19 +350,19 @@ export default function AdminKaryaPage() {
                 onChange={(e) =>
                   setEditingProject({ ...editingProject, story_behind: e.target.value })
                 }
-                className="w-full bg-[#14161D] border border-white/[0.08] rounded px-3 py-2 text-xs font-mono text-[#F4F4F6] outline-none resize-none"
+                className="w-full bg-[#041624] border border-white/[0.08] focus:border-[#22D3EE] rounded px-3 py-2 text-xs font-mono text-[#F8FAFC] outline-none resize-none"
               />
             </div>
 
             <div className="flex items-center gap-3">
-              <label className="flex items-center gap-2 text-xs font-mono text-[#A1A1AA] cursor-pointer">
+              <label className="flex items-center gap-2 text-xs font-mono text-[#94A3B8] cursor-pointer">
                 <input
                   type="checkbox"
                   checked={!!editingProject.is_featured}
                   onChange={(e) =>
                     setEditingProject({ ...editingProject, is_featured: e.target.checked })
                   }
-                  className="rounded bg-[#14161D] border-white/20"
+                  className="rounded bg-[#041624] border-white/20"
                 />
                 <span>Tandai sebagai Karya Unggulan</span>
               </label>
@@ -375,15 +375,15 @@ export default function AdminKaryaPage() {
                   setEditingProject(null);
                   setIsCreating(false);
                 }}
-                className="px-4 py-2 rounded bg-[#14161D] hover:bg-[#1a1c24] text-xs font-mono text-[#A1A1AA]"
+                className="px-4 py-2 rounded-lg bg-[#041624] hover:bg-[#062438] text-xs font-mono text-[#94A3B8]"
               >
                 Batal
               </button>
               <button
                 type="submit"
-                className="px-5 py-2 rounded bg-[#2563EB] hover:bg-[#3B82F6] text-[#F4F4F6] text-xs font-mono font-medium"
+                className="px-5 py-2 rounded-full bg-[#0E74E9] hover:bg-[#0256B4] text-white text-xs font-mono font-semibold shadow-md"
               >
-                Simpan Perubahan
+                Simpan Perubahan ⮡
               </button>
             </div>
           </form>
@@ -391,10 +391,10 @@ export default function AdminKaryaPage() {
       )}
 
       {/* Projects Table */}
-      <div className="bg-[#0D0E12] border border-white/[0.08] rounded-2xl overflow-hidden">
+      <div className="bg-[#082F49] border border-[#22D3EE]/25 rounded-2xl overflow-hidden shadow-xl">
         <table className="w-full text-left border-collapse">
           <thead>
-            <tr className="border-b border-white/[0.08] bg-[#14161D]/50 text-[11px] font-mono text-[#63636E]">
+            <tr className="border-b border-white/[0.08] bg-[#041624] text-[11px] font-mono text-[#94A3B8]">
               <th className="py-3 px-4">KODE</th>
               <th className="py-3 px-4">JUDUL KARYA</th>
               <th className="py-3 px-4">KATEGORI</th>
@@ -404,16 +404,16 @@ export default function AdminKaryaPage() {
           </thead>
           <tbody className="divide-y divide-white/[0.04] text-xs font-mono">
             {projects.map((proj) => (
-              <tr key={proj.id} className="hover:bg-[#14161D]/30 transition-colors">
-                <td className="py-3.5 px-4 text-[#A1A1AA]">{proj.index_code}</td>
+              <tr key={proj.id} className="hover:bg-[#041624]/50 transition-colors">
+                <td className="py-3.5 px-4 text-[#22D3EE] font-bold">{proj.index_code}</td>
                 <td className="py-3.5 px-4">
-                  <div className="font-medium text-[#F4F4F6]">{proj.title}</div>
-                  <div className="text-[11px] text-[#63636E] line-clamp-1">{proj.summary}</div>
+                  <div className="font-medium text-[#F8FAFC]">{proj.title}</div>
+                  <div className="text-[11px] text-[#94A3B8] line-clamp-1">{proj.summary}</div>
                 </td>
-                <td className="py-3.5 px-4 text-[#A1A1AA]">{proj.category}</td>
+                <td className="py-3.5 px-4 text-[#94A3B8]">{proj.category}</td>
                 <td className="py-3.5 px-4">
-                  <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded bg-[#38BDF8]/10 text-[#38BDF8] text-[10px]">
-                    <span className="w-1 h-1 rounded-full bg-[#38BDF8]" />
+                  <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#041624] border border-[#22D3EE]/30 text-[#22D3EE] text-[10px] font-semibold">
+                    <span className="w-1 h-1 rounded-full bg-[#22D3EE]" />
                     {proj.status_badge}
                   </span>
                 </td>

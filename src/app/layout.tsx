@@ -1,14 +1,14 @@
 import type { Metadata } from 'next';
-import { Geist, Geist_Mono } from 'next/font/google';
+import { Inter, JetBrains_Mono } from 'next/font/google';
 import './globals.css';
 import { PerformanceProvider } from '@/lib/hooks/usePerformanceMode';
 
-const geistSans = Geist({
+const inter = Inter({
   variable: '--font-sans',
   subsets: ['latin'],
 });
 
-const geistMono = Geist_Mono({
+const jetbrainsMono = JetBrains_Mono({
   variable: '--font-mono',
   subsets: ['latin'],
 });
@@ -134,14 +134,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="id" className={`${geistSans.variable} ${geistMono.variable} scroll-smooth`}>
+    <html lang="id" className={`${inter.variable} ${jetbrainsMono.variable} scroll-smooth`}>
       <head>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
-      <body className="bg-[#070709] text-[#F4F4F6] min-h-screen antialiased selection:bg-white/15">
+      <body className="bg-[#FFFFFF] text-[#111827] min-h-screen antialiased selection:bg-[#22D3EE]/25 selection:text-[#082F49]">
         <PerformanceProvider>{children}</PerformanceProvider>
       </body>
     </html>
