@@ -133,7 +133,7 @@ export default function AdminKaryaPage() {
             });
           }}
           type="button"
-          className="inline-flex items-center gap-2 px-4 py-2 rounded bg-[#EDEDEF] hover:bg-white text-[#070709] text-xs font-mono font-medium transition-colors"
+          className="inline-flex items-center gap-2 px-4 py-2 rounded bg-[#2563EB] hover:bg-[#3B82F6] text-[#F4F4F6] text-xs font-mono font-medium transition-colors shadow-sm shadow-[#2563EB]/20"
         >
           <Plus className="w-3.5 h-3.5" />
           <span>TAMBAH KARYA BARU</span>
@@ -145,7 +145,7 @@ export default function AdminKaryaPage() {
         <div className="bg-[#0D0E12] border border-white/[0.15] rounded-2xl p-6 sm:p-8 space-y-6">
           <div className="flex items-center justify-between pb-3 border-b border-white/[0.08]">
             <h3 className="text-sm font-mono font-medium text-[#F4F4F6] flex items-center gap-2">
-              <Layers className="w-4 h-4 text-[#10B981]" />
+              <Layers className="w-4 h-4 text-[#38BDF8]" />
               <span>{isCreating ? 'TAMBAH KARYA BARU' : 'EDIT DETAIL KARYA'}</span>
             </h3>
             <button
@@ -308,7 +308,7 @@ export default function AdminKaryaPage() {
 
             {/* 4 Steps Telemetry Pipeline Editor */}
             <div className="md:col-span-2 p-4 rounded-xl bg-[#14161D]/50 border border-white/[0.06] space-y-3">
-              <div className="text-xs font-mono text-[#10B981] uppercase font-semibold">
+              <div className="text-xs font-mono text-[#38BDF8] uppercase font-semibold">
                 ALUR SISTEM (4 TAHAPAN TELEMETRY PIPELINE)
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
@@ -381,7 +381,7 @@ export default function AdminKaryaPage() {
               </button>
               <button
                 type="submit"
-                className="px-5 py-2 rounded bg-[#EDEDEF] hover:bg-white text-[#070709] text-xs font-mono font-medium"
+                className="px-5 py-2 rounded bg-[#2563EB] hover:bg-[#3B82F6] text-[#F4F4F6] text-xs font-mono font-medium"
               >
                 Simpan Perubahan
               </button>
@@ -412,8 +412,8 @@ export default function AdminKaryaPage() {
                 </td>
                 <td className="py-3.5 px-4 text-[#A1A1AA]">{proj.category}</td>
                 <td className="py-3.5 px-4">
-                  <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded bg-[#10B981]/10 text-[#10B981] text-[10px]">
-                    <span className="w-1 h-1 rounded-full bg-[#10B981]" />
+                  <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded bg-[#38BDF8]/10 text-[#38BDF8] text-[10px]">
+                    <span className="w-1 h-1 rounded-full bg-[#38BDF8]" />
                     {proj.status_badge}
                   </span>
                 </td>

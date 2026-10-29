@@ -74,8 +74,8 @@ export default async function ProjectDetailPage({ params }: PageProps) {
           <span>·</span>
           <span className="uppercase text-[#A1A1AA]">{project.category}</span>
           <span>·</span>
-          <span className="text-[#10B981] inline-flex items-center gap-1">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#10B981]" />
+          <span className="text-[#38BDF8] inline-flex items-center gap-1">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#38BDF8]" />
             {project.status_badge}
           </span>
         </div>
@@ -94,7 +94,7 @@ export default async function ProjectDetailPage({ params }: PageProps) {
             href={project.live_url}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-4 py-2 rounded bg-[#EDEDEF] text-[#070709] text-xs font-mono font-medium hover:bg-white transition-colors"
+            className="inline-flex items-center gap-2 px-4 py-2 rounded bg-[#2563EB] text-[#F4F4F6] text-xs font-mono font-medium hover:bg-[#3B82F6] transition-colors"
           >
             <span>KUNJUNGI WEBSITE LANGSUNG</span>
             <ArrowUpRight className="w-3.5 h-3.5" />
@@ -108,7 +108,7 @@ export default async function ProjectDetailPage({ params }: PageProps) {
           <div className="bg-[#0D0E12] border border-white/[0.08] rounded-xl p-6 sm:p-8">
             <div className="flex items-center justify-between text-xs font-mono text-[#63636E] uppercase tracking-wider mb-6 pb-3 border-b border-white/[0.06]">
               <span className="flex items-center gap-2 text-[#F4F4F6]">
-                <Cpu className="w-4 h-4 text-[#10B981]" />
+                <Cpu className="w-4 h-4 text-[#38BDF8]" />
                 DIAGRAM ALUR SISTEM (TELEMETRY PIPELINE)
               </span>
               <span>4 TAHAPAN KERJA</span>
@@ -122,7 +122,7 @@ export default async function ProjectDetailPage({ params }: PageProps) {
                 >
                   <div className="flex items-center justify-between text-xs font-mono text-[#63636E] mb-2">
                     <span className="text-[#A1A1AA] font-semibold">{st.step}</span>
-                    <CheckCircle2 className="w-3.5 h-3.5 text-[#10B981]" />
+                    <CheckCircle2 className="w-3.5 h-3.5 text-[#38BDF8]" />
                   </div>
                   <div>
                     <h4 className="text-sm font-mono font-semibold text-[#F4F4F6] mb-1">
@@ -186,8 +186,8 @@ export default async function ProjectDetailPage({ params }: PageProps) {
           {/* Verification Badge */}
           <div className="bg-[#0D0E12] border border-white/[0.08] rounded-xl p-6">
             <div className="text-xs font-mono text-[#63636E] mb-1">STATUS VALIDASI</div>
-            <div className="text-xs font-mono text-[#10B981] flex items-center gap-1.5">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#10B981]" />
+            <div className="text-xs font-mono text-[#38BDF8] flex items-center gap-1.5">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#38BDF8]" />
               <span>TERVERIFIKASI & AKTIF</span>
             </div>
           </div>

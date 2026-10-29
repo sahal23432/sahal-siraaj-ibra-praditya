@@ -76,13 +76,13 @@ export default function InteractiveProfileCard({ profile }: InteractiveProfileCa
         className="flex items-center justify-between pb-4 border-b border-white/[0.06] mb-5 transition-transform duration-200"
       >
         <div className="flex items-center gap-2">
-          <Terminal className="w-3.5 h-3.5 text-[#10B981]" />
+          <Terminal className="w-3.5 h-3.5 text-[#38BDF8]" />
           <span className="text-[11px] font-mono tracking-wider text-[#A1A1AA] uppercase">
             ID: SAHAL-28
           </span>
         </div>
-        <div className="flex items-center gap-1.5 text-[10px] font-mono text-[#10B981] bg-[#14161D] px-2 py-0.5 rounded border border-white/[0.06]">
-          <span className="w-1.5 h-1.5 rounded-full bg-[#10B981]" />
+        <div className="flex items-center gap-1.5 text-[10px] font-mono text-[#38BDF8] bg-[#14161D] px-2 py-0.5 rounded border border-[#38BDF8]/20">
+          <span className="w-1.5 h-1.5 rounded-full bg-[#38BDF8]" />
           <span>VERIFIED ARCHITECT</span>
         </div>
       </div>
@@ -166,7 +166,7 @@ export default function InteractiveProfileCard({ profile }: InteractiveProfileCa
               <span className="font-mono text-2xl font-bold tracking-tight text-[#F4F4F6]">
                 SS
               </span>
-              <span className="text-[9px] font-mono text-[#10B981]">SMKN 9</span>
+              <span className="text-[9px] font-mono text-[#38BDF8]">SMKN 9</span>
             </div>
 
             {/* Title inside card */}
@@ -184,7 +184,7 @@ export default function InteractiveProfileCard({ profile }: InteractiveProfileCa
         {/* Bottom Tag inside photo frame */}
         <div className="absolute bottom-3 inset-x-3 bg-[#070709]/85 backdrop-blur-sm border border-white/[0.08] px-2.5 py-1.5 rounded flex items-center justify-between text-[10px] font-mono">
           <span className="text-[#A1A1AA]">WEB SYS</span>
-          <span className="text-[#10B981]">ONLINE</span>
+          <span className="text-[#38BDF8]">ONLINE</span>
         </div>
       </div>
 
@@ -204,7 +204,7 @@ export default function InteractiveProfileCard({ profile }: InteractiveProfileCa
         {/* Location Row */}
         <div className="p-2.5 rounded-lg bg-[#14161D]/60 border border-white/[0.04] flex flex-col gap-1">
           <div className="flex items-center gap-1.5 text-[11px] text-[#63636E] uppercase">
-            <MapPin className="w-3 h-3 text-[#10B981]" />
+            <MapPin className="w-3 h-3 text-[#38BDF8]" />
             <span>Alamat Rumah</span>
           </div>
           <p className="text-xs text-[#F4F4F6] font-medium leading-relaxed pl-4">
@@ -215,8 +215,8 @@ export default function InteractiveProfileCard({ profile }: InteractiveProfileCa
         {/* Status Row */}
         <div className="p-2.5 rounded-lg bg-[#14161D]/60 border border-white/[0.04] flex items-center justify-between">
           <span className="text-[#63636E] text-[11px] uppercase">STATUS</span>
-          <span className="text-[#10B981] font-medium text-[11px] flex items-center gap-1">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#10B981]" />
+          <span className="text-[#38BDF8] font-medium text-[11px] flex items-center gap-1">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#38BDF8]" />
             Terbuka Internship / PKL
           </span>
         </div>

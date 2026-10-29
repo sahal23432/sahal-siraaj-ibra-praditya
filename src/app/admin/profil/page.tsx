@@ -92,7 +92,7 @@ export default function AdminProfilPage() {
         </div>
 
         {savedSuccess && (
-          <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded bg-[#10B981]/10 text-[#10B981] border border-[#10B981]/30 text-xs font-mono">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded bg-[#38BDF8]/10 text-[#38BDF8] border border-[#38BDF8]/30 text-xs font-mono">
             <Check className="w-3.5 h-3.5" />
             <span>Seluruh Perubahan Berhasil Disimpan</span>
           </div>
@@ -103,7 +103,7 @@ export default function AdminProfilPage() {
         {/* Section 1: Identitas & Teks Beranda */}
         <div className="bg-[#0D0E12] border border-white/[0.08] rounded-2xl p-6 sm:p-8 space-y-5">
           <div className="flex items-center gap-2 pb-3 border-b border-white/[0.06] text-xs font-mono uppercase tracking-wider text-[#F4F4F6]">
-            <User className="w-4 h-4 text-[#10B981]" />
+            <User className="w-4 h-4 text-[#38BDF8]" />
             <span>1. IDENTITAS UTAMA & SAPAAN HERO</span>
           </div>
 
@@ -132,7 +132,7 @@ export default function AdminProfilPage() {
                 onChange={(e) =>
                   setProfile({ ...profile, availability_status: e.target.value })
                 }
-                className="w-full bg-[#14161D] border border-white/[0.08] rounded px-3.5 py-2 text-xs font-mono text-[#10B981] outline-none"
+                className="w-full bg-[#14161D] border border-white/[0.08] rounded px-3.5 py-2 text-xs font-mono text-[#38BDF8] outline-none"
               />
             </div>
 
@@ -284,7 +284,7 @@ export default function AdminProfilPage() {
                 key={pr.index || idx}
                 className="p-5 rounded-xl bg-[#14161D]/60 border border-white/[0.06] space-y-3"
               >
-                <div className="text-xs font-mono text-[#10B981] font-semibold">
+                <div className="text-xs font-mono text-[#38BDF8] font-semibold">
                   PRINSIP {pr.index}
                 </div>
 
@@ -398,7 +398,7 @@ export default function AdminProfilPage() {
         <div className="sticky bottom-6 flex justify-end p-4 rounded-xl bg-[#0D0E12]/90 backdrop-blur-md border border-white/[0.12] shadow-2xl">
           <button
             type="submit"
-            className="inline-flex items-center gap-2 px-6 py-2.5 rounded bg-[#EDEDEF] hover:bg-white text-[#070709] text-xs font-mono font-medium transition-colors"
+            className="inline-flex items-center gap-2 px-6 py-2.5 rounded bg-[#2563EB] hover:bg-[#3B82F6] text-[#F4F4F6] text-xs font-mono font-medium transition-colors"
           >
             <Save className="w-3.5 h-3.5" />
             <span>SIMPAN SEMUA PERUBAHAN PROFIL</span>

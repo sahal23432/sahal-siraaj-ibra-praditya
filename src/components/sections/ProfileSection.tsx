@@ -105,7 +105,7 @@ export default function ProfileSection({
             </div>
             <div className="p-4 rounded-xl bg-[#0D0E12] border border-white/[0.06]">
               <div className="text-[10px] font-mono text-[#63636E] uppercase">FOKUS UTAMA</div>
-              <div className="text-xs font-mono font-medium text-[#10B981] mt-1">WEB DEVELOPMENT</div>
+              <div className="text-xs font-mono font-medium text-[#38BDF8] mt-1">WEB DEVELOPMENT</div>
             </div>
           </div>
         </ScrollReveal>
@@ -131,7 +131,7 @@ export default function ProfileSection({
                   </div>
                   <p className="text-xs text-[#A1A1AA] leading-relaxed mb-6">{pr.body}</p>
                 </div>
-                <div className="pt-3 border-t border-white/[0.06] flex items-center gap-1.5 text-[11px] font-mono text-[#10B981]">
+                <div className="pt-3 border-t border-white/[0.06] flex items-center gap-1.5 text-[11px] font-mono text-[#38BDF8]">
                   <CheckCircle2 className="w-3.5 h-3.5" />
                   <span>{pr.proof}</span>
                 </div>
@@ -147,7 +147,7 @@ export default function ProfileSection({
         <ScrollReveal direction="left">
           <div>
             <div className="flex items-center gap-2 font-mono text-xs text-[#63636E] uppercase tracking-wider mb-6 pb-2 border-b border-white/[0.08]">
-              <Cpu className="w-3.5 h-3.5 text-[#10B981]" />
+              <Cpu className="w-3.5 h-3.5 text-[#38BDF8]" />
               <span>PENGALAMAN PROYEK REKAYASA</span>
             </div>
             <div className="space-y-6">
@@ -162,7 +162,7 @@ export default function ProfileSection({
                       {exp.start_date} {exp.end_date ? `· ${exp.end_date}` : ''}
                     </span>
                   </div>
-                  <div className="text-xs font-mono text-[#10B981] mb-3">
+                  <div className="text-xs font-mono text-[#38BDF8] mb-3">
                     {exp.organization} · {exp.location}
                   </div>
                   <p className="text-xs text-[#A1A1AA] leading-relaxed">{exp.description}</p>

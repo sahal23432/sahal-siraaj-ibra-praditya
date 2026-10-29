@@ -40,7 +40,7 @@ export default async function Image() {
                 width: '12px',
                 height: '12px',
                 borderRadius: '50%',
-                background: '#10B981',
+                background: '#38BDF8',
                 marginRight: '12px',
               }}
             />
@@ -53,7 +53,7 @@ export default async function Image() {
 
         {/* Center content */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-          <div style={{ fontSize: '22px', fontFamily: 'monospace', color: '#10B981' }}>
+          <div style={{ fontSize: '22px', fontFamily: 'monospace', color: '#38BDF8' }}>
             PENGEMBANGAN PERANGKAT LUNAK DAN GIM
           </div>
           <div style={{ fontSize: '56px', fontWeight: 600, letterSpacing: '-0.02em', lineHeight: 1.1 }}>

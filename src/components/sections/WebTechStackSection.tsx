@@ -220,7 +220,7 @@ export default function WebTechStackSection() {
           <div className="font-mono text-xs text-[#63636E]">
             <span>ARSITEKTUR LENGKAP</span>
             <span className="mx-2">·</span>
-            <span className="text-[#10B981]">17 TEKNOLOGI TERPADU</span>
+            <span className="text-[#38BDF8]">17 TEKNOLOGI TERPADU</span>
           </div>
         </div>
       </ScrollReveal>
@@ -233,8 +233,8 @@ export default function WebTechStackSection() {
             onClick={() => setActiveTab('semua')}
             className={`px-3.5 py-1.5 rounded text-xs font-mono transition-all ${
               activeTab === 'semua'
-                ? 'bg-[#F4F4F6] text-[#070709] font-medium'
-                : 'bg-[#14161D] text-[#A1A1AA] border border-white/[0.06] hover:text-[#F4F4F6] hover:border-white/20'
+                ? 'bg-[#2563EB] text-[#F4F4F6] font-medium shadow-[0_0_12px_rgba(37,99,235,0.35)]'
+                : 'bg-[#14161D] text-[#A1A1AA] border border-white/[0.06] hover:text-[#38BDF8] hover:border-[#38BDF8]/30'
             }`}
           >
             Semua Domain (17)
@@ -246,8 +246,8 @@ export default function WebTechStackSection() {
               onClick={() => setActiveTab(dom.id)}
               className={`px-3.5 py-1.5 rounded text-xs font-mono transition-all ${
                 activeTab === dom.id
-                  ? 'bg-[#F4F4F6] text-[#070709] font-medium'
-                  : 'bg-[#14161D] text-[#A1A1AA] border border-white/[0.06] hover:text-[#F4F4F6] hover:border-white/20'
+                  ? 'bg-[#2563EB] text-[#F4F4F6] font-medium shadow-[0_0_12px_rgba(37,99,235,0.35)]'
+                  : 'bg-[#14161D] text-[#A1A1AA] border border-white/[0.06] hover:text-[#38BDF8] hover:border-[#38BDF8]/30'
               }`}
             >
               {dom.label}
@@ -267,7 +267,7 @@ export default function WebTechStackSection() {
                 <div className="flex items-center justify-between pb-4 border-b border-white/[0.06] mb-6">
                   <div className="flex items-center gap-2.5">
                     <div className="w-8 h-8 rounded-lg bg-[#14161D] border border-white/[0.08] flex items-center justify-center text-[#F4F4F6]">
-                      <Icon className="w-4 h-4 text-[#10B981]" />
+                      <Icon className="w-4 h-4 text-[#38BDF8]" />
                     </div>
                     <div>
                       <h3 className="text-base font-medium text-[#F4F4F6]">
@@ -288,14 +288,14 @@ export default function WebTechStackSection() {
                   {dom.items.map((item, itemIdx) => (
                     <div
                       key={itemIdx}
-                      className="p-4 rounded-xl bg-[#14161D]/50 border border-white/[0.04] hover:border-white/[0.15] hover:bg-[#14161D] transition-colors flex flex-col justify-between"
+                      className="p-4 rounded-xl bg-[#14161D]/50 border border-white/[0.04] hover:border-[#38BDF8]/30 hover:bg-[#14161D] transition-colors flex flex-col justify-between"
                     >
                       <div>
                         <div className="flex items-center justify-between gap-2 mb-2">
                           <h4 className="text-sm font-mono font-semibold text-[#F4F4F6]">
                             {item.name}
                           </h4>
-                          <span className="text-[9px] font-mono text-[#10B981] bg-[#10B981]/10 px-2 py-0.5 rounded border border-[#10B981]/20">
+                          <span className="text-[9px] font-mono text-[#38BDF8] bg-[#38BDF8]/10 px-2 py-0.5 rounded border border-[#38BDF8]/20">
                             {item.badge}
                           </span>
                         </div>

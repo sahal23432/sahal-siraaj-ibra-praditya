@@ -76,7 +76,7 @@ function CircuitNodes() {
       {nodes.map((pos, i) => (
         <mesh key={i} position={pos}>
           <sphereGeometry args={[0.045, 10, 10]} />
-          <meshBasicMaterial color={0xf4f4f6} transparent opacity={0.45} />
+          <meshBasicMaterial color={0x38bdf8} transparent opacity={0.6} />
         </mesh>
       ))}
     </group>
@@ -113,7 +113,7 @@ function CenterConsoleCore() {
       {/* Inner Circuit Chip Node */}
       <mesh ref={innerRef}>
         <boxGeometry args={[0.16, 0.16, 0.16]} />
-        <meshBasicMaterial color={0x10b981} wireframe transparent opacity={0.8} />
+        <meshBasicMaterial color={0x38bdf8} wireframe transparent opacity={0.85} />
       </mesh>
     </group>
   );

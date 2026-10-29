@@ -53,7 +53,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
         transform: isEcoMode ? 'none' : transformStyle,
         transition: isHovered ? 'border-color 0.15s ease' : 'transform 0.4s ease, border-color 0.2s ease',
       }}
-      className="relative group rounded-xl bg-[#0D0E12] border border-white/[0.08] hover:border-white/[0.22] p-6 sm:p-8 flex flex-col justify-between overflow-hidden active:scale-[0.99]"
+      className="relative group rounded-xl bg-[#0D0E12] border border-white/[0.08] hover:border-[#38BDF8]/40 p-6 sm:p-8 flex flex-col justify-between overflow-hidden active:scale-[0.99] transition-colors"
     >
       {/* Radial Spotlight on Hover */}
       {!isEcoMode && isHovered && (
@@ -76,8 +76,8 @@ export default function ProjectCard({ project }: ProjectCardProps) {
             <span className="uppercase text-[#A1A1AA]">{project.category}</span>
           </div>
 
-          <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-[#14161D] border border-white/[0.06] text-[11px] font-mono text-[#10B981]">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#10B981]" />
+          <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-[#14161D] border border-[#38BDF8]/20 text-[11px] font-mono text-[#38BDF8]">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#38BDF8]" />
             <span className="uppercase tracking-wider">{project.status_badge}</span>
           </div>
         </div>
@@ -107,7 +107,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
                 >
                   <div className="flex items-center justify-between text-[10px] font-mono text-[#63636E] mb-1">
                     <span>{st.step}</span>
-                    <CheckCircle2 className="w-3 h-3 text-[#10B981]/70" />
+                    <CheckCircle2 className="w-3 h-3 text-[#38BDF8]" />
                   </div>
                   <div className="text-xs font-mono font-medium text-[#F4F4F6] mb-0.5">
                     {st.label}

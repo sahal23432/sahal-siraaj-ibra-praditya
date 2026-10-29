@@ -120,8 +120,8 @@ export default function AdminLoginPage() {
             <ArrowLeft className="w-3.5 h-3.5" />
             <span>Beranda</span>
           </Link>
-          <span className="text-[10px] font-mono text-[#10B981] flex items-center gap-1 bg-[#14161D] px-2 py-0.5 rounded border border-white/[0.06]">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#10B981]" />
+          <span className="text-[10px] font-mono text-[#38BDF8] flex items-center gap-1 bg-[#14161D] px-2 py-0.5 rounded border border-[#38BDF8]/20">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#38BDF8]" />
             SECURE PIN LOCK
           </span>
         </div>
@@ -129,7 +129,7 @@ export default function AdminLoginPage() {
         {/* Title and Icon */}
         <div className="text-center mb-6">
           <div className="w-12 h-12 rounded-xl bg-[#14161D] border border-white/[0.08] flex items-center justify-center mx-auto mb-3 text-[#EDEDEF]">
-            <Lock className="w-5 h-5 text-[#10B981]" />
+            <Lock className="w-5 h-5 text-[#38BDF8]" />
           </div>
           <h1 className="text-lg font-medium tracking-tight text-[#F4F4F6]">
             PIN Akses Cockpit Admin
@@ -146,7 +146,7 @@ export default function AdminLoginPage() {
               key={i}
               className={`w-3.5 h-3.5 rounded-full transition-all duration-150 border ${
                 i < pin.length
-                  ? 'bg-[#10B981] border-[#10B981] scale-110'
+                  ? 'bg-[#38BDF8] border-[#38BDF8] scale-110 shadow-sm shadow-[#38BDF8]/40'
                   : 'bg-[#14161D] border-white/[0.15]'
               }`}
             />
@@ -212,7 +212,7 @@ export default function AdminLoginPage() {
         {/* Development Hint (Only shown in development mode) */}
         {devPinHint && (
           <div className="pt-4 border-t border-white/[0.04] text-[11px] font-mono text-center text-[#63636E]">
-            PIN pengembangan: <span className="text-[#10B981] font-medium">{devPinHint}</span>
+            PIN pengembangan: <span className="text-[#38BDF8] font-medium">{devPinHint}</span>
           </div>
         )}
       </div>

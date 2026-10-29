@@ -71,8 +71,8 @@ export default function GallerySection({ projects }: GallerySectionProps) {
                 onClick={() => setActiveCategory(cat)}
                 className={`px-3.5 py-1.5 rounded text-xs font-mono transition-all ${
                   activeCategory === cat
-                    ? 'bg-[#F4F4F6] text-[#070709] font-medium'
-                    : 'bg-[#14161D] text-[#A1A1AA] border border-white/[0.06] hover:text-[#F4F4F6] hover:border-white/20'
+                    ? 'bg-[#2563EB] text-[#F4F4F6] font-medium shadow-[0_0_12px_rgba(37,99,235,0.35)]'
+                    : 'bg-[#14161D] text-[#A1A1AA] border border-white/[0.06] hover:text-[#38BDF8] hover:border-[#38BDF8]/30'
                 }`}
               >
                 {cat}
@@ -88,7 +88,7 @@ export default function GallerySection({ projects }: GallerySectionProps) {
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Cari alat, peran, atau kata kunci..."
-              className="w-full bg-[#0D0E12] border border-white/[0.08] focus:border-white/30 rounded pl-9 pr-8 py-1.5 text-xs font-mono text-[#F4F4F6] placeholder-[#63636E] outline-none transition-colors"
+              className="w-full bg-[#0D0E12] border border-white/[0.08] focus:border-[#38BDF8]/50 rounded pl-9 pr-8 py-1.5 text-xs font-mono text-[#F4F4F6] placeholder-[#63636E] outline-none transition-colors"
             />
             {searchQuery && (
               <button
@@ -124,7 +124,7 @@ export default function GallerySection({ projects }: GallerySectionProps) {
               setActiveCategory('Semua');
               setSearchQuery('');
             }}
-            className="text-xs font-mono text-[#EDEDEF] underline underline-offset-4 hover:text-white"
+            className="text-xs font-mono text-[#38BDF8] underline underline-offset-4 hover:text-[#60A5FA]"
           >
             Reset filter dan pencarian
           </button>

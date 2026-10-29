@@ -60,8 +60,8 @@ export default function Navbar() {
             <span className="hidden sm:inline-block text-[#63636E]">/</span>
             <div className="hidden sm:flex items-center gap-2 text-xs font-mono text-[#A1A1AA] bg-[#14161D] px-2.5 py-1 rounded border border-white/[0.06]">
               {/* Steady indicator dot per antislop-ui R-31 (no endless pulse) */}
-              <span className="w-1.5 h-1.5 rounded-full bg-[#10B981]" />
-              <span>SYS ONLINE</span>
+              <span className="w-1.5 h-1.5 rounded-full bg-[#38BDF8]" />
+              <span className="text-[#38BDF8]">SYS ONLINE</span>
               <span className="text-[#63636E]">·</span>
               <span className="tabular-nums">{uptimeSeconds}s</span>
             </div>
@@ -73,7 +73,7 @@ export default function Navbar() {
               <a
                 key={link.href}
                 href={link.href}
-                className="text-xs font-mono text-[#A1A1AA] hover:text-[#F4F4F6] transition-colors"
+                className="text-xs font-mono text-[#A1A1AA] hover:text-[#38BDF8] transition-colors"
               >
                 {link.label}
               </a>
@@ -89,8 +89,8 @@ export default function Navbar() {
               title={isEcoMode ? 'Beralih ke Mode 60 FPS' : 'Beralih ke Hemat Animasi'}
               className={`flex items-center gap-1.5 px-3 py-1.5 rounded text-xs font-mono border transition-all ${
                 isEcoMode
-                  ? 'bg-[#F59E0B]/10 border-[#F59E0B]/30 text-[#F59E0B]'
-                  : 'bg-[#14161D] border-white/[0.08] text-[#A1A1AA] hover:text-[#F4F4F6] hover:border-white/20'
+                  ? 'bg-[#38BDF8]/10 border-[#38BDF8]/30 text-[#38BDF8]'
+                  : 'bg-[#14161D] border-white/[0.08] text-[#A1A1AA] hover:text-[#38BDF8] hover:border-[#38BDF8]/20'
               }`}
             >
               {isEcoMode ? (
@@ -106,10 +106,10 @@ export default function Navbar() {
               )}
             </button>
 
-            {/* CTA Link with specific directional arrow for external action */}
+            {/* CTA Link with bright blue accent */}
             <a
               href="#kontak"
-              className="hidden sm:inline-flex items-center gap-1 bg-[#EDEDEF] text-[#070709] px-3.5 py-1.5 rounded text-xs font-mono font-medium hover:bg-white transition-colors"
+              className="hidden sm:inline-flex items-center gap-1.5 bg-[#2563EB] text-[#F4F4F6] px-3.5 py-1.5 rounded text-xs font-mono font-medium hover:bg-[#3B82F6] hover:shadow-[0_0_12px_rgba(59,130,246,0.35)] transition-all"
             >
               <span>Mari Bicara</span>
               <ArrowUpRight className="w-3.5 h-3.5" />
@@ -131,8 +131,8 @@ export default function Navbar() {
         {mobileMenuOpen && (
           <div className="md:hidden bg-[#0D0E12] border-b border-white/[0.08] px-6 py-5 flex flex-col gap-4">
             <div className="flex items-center gap-2 text-xs font-mono text-[#A1A1AA] pb-3 border-b border-white/[0.06]">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#10B981]" />
-              <span>SYS ONLINE</span>
+              <span className="w-1.5 h-1.5 rounded-full bg-[#38BDF8]" />
+              <span className="text-[#38BDF8]">SYS ONLINE</span>
               <span className="text-[#63636E]">·</span>
               <span>{isEcoMode ? 'MODE HEMAT ANIMASI' : '60 FPS AKTIF'}</span>
             </div>
@@ -149,7 +149,7 @@ export default function Navbar() {
             <a
               href="#kontak"
               onClick={() => setMobileMenuOpen(false)}
-              className="mt-2 inline-flex items-center justify-center gap-1.5 bg-[#EDEDEF] text-[#070709] py-2.5 rounded text-xs font-mono font-medium"
+              className="mt-2 inline-flex items-center justify-center gap-1.5 bg-[#2563EB] hover:bg-[#3B82F6] text-[#F4F4F6] py-2.5 rounded text-xs font-mono font-medium shadow-sm shadow-[#2563EB]/25"
             >
               <span>Mari Bicara</span>
               <ArrowUpRight className="w-4 h-4" />

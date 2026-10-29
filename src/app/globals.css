@@ -7,12 +7,13 @@
     --bg-surface-2: #14161D;
     --bg-glass: rgba(13, 14, 18, 0.72);
     --border-subtle: rgba(255, 255, 255, 0.08);
-    --border-hover: rgba(255, 255, 255, 0.22);
+    --border-hover: rgba(56, 189, 248, 0.25);
     --text-primary: #F4F4F6;
     --text-secondary: #A1A1AA;
     --text-muted: #63636E;
-    --accent-primary: #EDEDEF;
-    --status-live: #10B981;
+    --accent-primary: #60A5FA;
+    --accent-secondary: #38BDF8;
+    --status-live: #38BDF8;
     --status-beta: #F59E0B;
   }
 
@@ -35,11 +36,12 @@
   }
 
   ::selection {
-    background: rgba(244, 244, 246, 0.15);
+    background: rgba(56, 189, 248, 0.22);
+    color: #F4F4F6;
   }
 
   :focus-visible {
-    outline: 2px solid rgba(255, 255, 255, 0.5);
+    outline: 2px solid rgba(56, 189, 248, 0.6);
     outline-offset: 2px;
   }
 }

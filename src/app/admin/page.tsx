@@ -80,7 +80,7 @@ export default function AdminDashboardPage() {
           <div className="text-2xl font-mono font-semibold text-[#F4F4F6]">
             {projects.length.toString().padStart(2, '0')}
           </div>
-          <div className="mt-2 text-[10px] font-mono text-[#10B981]">
+          <div className="mt-2 text-[10px] font-mono text-[#38BDF8]">
             100% TERDOKUMENTASI
           </div>
         </div>
@@ -101,7 +101,7 @@ export default function AdminDashboardPage() {
           <div className="text-[11px] font-mono text-[#63636E] uppercase mb-1">
             STATUS KETERSEDIAAN
           </div>
-          <div className="text-xs font-mono text-[#10B981] truncate">
+          <div className="text-xs font-mono text-[#38BDF8] truncate">
             {profile?.availability_status || 'Aktif'}
           </div>
           <div className="mt-2 text-[10px] font-mono text-[#63636E]">
@@ -113,7 +113,7 @@ export default function AdminDashboardPage() {
           <div className="text-[11px] font-mono text-[#63636E] uppercase mb-1">
             KEAMANAN COCKPIT
           </div>
-          <div className="text-xs font-mono text-[#10B981] flex items-center gap-1.5">
+          <div className="text-xs font-mono text-[#38BDF8] flex items-center gap-1.5">
             <ShieldCheck className="w-3.5 h-3.5" />
             <span>PIN TERKUNCI AMAN</span>
           </div>
@@ -134,7 +134,7 @@ export default function AdminDashboardPage() {
             className="p-4 rounded-xl bg-[#14161D] border border-white/[0.06] hover:border-white/20 transition-colors flex flex-col justify-between group"
           >
             <div>
-              <div className="w-8 h-8 rounded-lg bg-[#0D0E12] border border-white/[0.08] flex items-center justify-center text-[#10B981] mb-3">
+              <div className="w-8 h-8 rounded-lg bg-[#0D0E12] border border-white/[0.08] flex items-center justify-center text-[#38BDF8] mb-3">
                 <Layers className="w-4 h-4" />
               </div>
               <h3 className="text-sm font-mono font-medium text-[#F4F4F6] group-hover:text-white mb-1">
@@ -144,7 +144,7 @@ export default function AdminDashboardPage() {
                 Tambah, edit judul, alur pipeline, cerita studi kasus, dan tautan live.
               </p>
             </div>
-            <span className="text-[10px] font-mono text-[#10B981] mt-3 block">
+            <span className="text-[10px] font-mono text-[#38BDF8] mt-3 block">
               BUKA KARYA →
             </span>
           </Link>
@@ -194,7 +194,7 @@ export default function AdminDashboardPage() {
             className="p-4 rounded-xl bg-[#14161D] border border-white/[0.06] hover:border-white/20 transition-colors flex flex-col justify-between group"
           >
             <div>
-              <div className="w-8 h-8 rounded-lg bg-[#0D0E12] border border-white/[0.08] flex items-center justify-center text-[#10B981] mb-3">
+              <div className="w-8 h-8 rounded-lg bg-[#0D0E12] border border-white/[0.08] flex items-center justify-center text-[#38BDF8] mb-3">
                 <Milestone className="w-4 h-4" />
               </div>
               <h3 className="text-sm font-mono font-medium text-[#F4F4F6] group-hover:text-white mb-1">
@@ -204,7 +204,7 @@ export default function AdminDashboardPage() {
                 Atur rekam jejak pengalaman proyek rekayasa dan riwayat akademik.
               </p>
             </div>
-            <span className="text-[10px] font-mono text-[#10B981] mt-3 block">
+            <span className="text-[10px] font-mono text-[#38BDF8] mt-3 block">
               BUKA LINI MASA →
             </span>
           </Link>
@@ -240,7 +240,7 @@ export default function AdminDashboardPage() {
                   <div className="flex items-center gap-2.5">
                     <span
                       className={`w-2 h-2 rounded-full ${
-                        msg.is_read ? 'bg-[#63636E]' : 'bg-[#10B981]'
+                        msg.is_read ? 'bg-[#63636E]' : 'bg-[#38BDF8]'
                       }`}
                     />
                     <span className="font-medium text-sm text-[#F4F4F6]">

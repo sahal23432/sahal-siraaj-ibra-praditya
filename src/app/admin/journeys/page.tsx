@@ -104,7 +104,7 @@ export default function AdminJourneysPage() {
             });
           }}
           type="button"
-          className="inline-flex items-center gap-2 px-4 py-2 rounded bg-[#EDEDEF] hover:bg-white text-[#070709] text-xs font-mono font-medium transition-colors"
+          className="inline-flex items-center gap-2 px-4 py-2 rounded bg-[#2563EB] hover:bg-[#3B82F6] text-[#F4F4F6] text-xs font-mono font-medium transition-colors shadow-sm shadow-[#2563EB]/20"
         >
           <Plus className="w-3.5 h-3.5" />
           <span>TAMBAH RIWAYAT BARU</span>
@@ -153,7 +153,7 @@ export default function AdminJourneysPage() {
         <div className="bg-[#0D0E12] border border-white/[0.15] rounded-xl p-6 sm:p-7 space-y-4">
           <div className="flex items-center justify-between pb-3 border-b border-white/[0.08]">
             <h3 className="text-sm font-mono font-medium text-[#F4F4F6] flex items-center gap-2">
-              <Milestone className="w-4 h-4 text-[#10B981]" />
+              <Milestone className="w-4 h-4 text-[#38BDF8]" />
               <span>{isCreating ? 'TAMBAH RIWAYAT' : 'EDIT RIWAYAT'}</span>
             </h3>
             <button
@@ -294,7 +294,7 @@ export default function AdminJourneysPage() {
               </button>
               <button
                 type="submit"
-                className="px-4 py-1.5 rounded bg-[#EDEDEF] text-[#070709] text-xs font-mono font-medium hover:bg-white"
+                className="px-4 py-1.5 rounded bg-[#2563EB] text-[#F4F4F6] text-xs font-mono font-medium hover:bg-[#3B82F6]"
               >
                 Simpan Riwayat
               </button>
@@ -311,9 +311,9 @@ export default function AdminJourneysPage() {
             className="p-5 rounded-xl bg-[#0D0E12] border border-white/[0.08] hover:border-white/[0.15] transition-colors flex flex-col sm:flex-row sm:items-start justify-between gap-4"
           >
             <div className="flex items-start gap-3">
-              <div className="w-9 h-9 rounded-lg bg-[#14161D] border border-white/[0.08] flex items-center justify-center shrink-0 text-[#10B981]">
+              <div className="w-9 h-9 rounded-lg bg-[#14161D] border border-white/[0.08] flex items-center justify-center shrink-0 text-[#38BDF8]">
                 {j.type === 'experience' ? (
-                  <Briefcase className="w-4 h-4 text-[#10B981]" />
+                  <Briefcase className="w-4 h-4 text-[#38BDF8]" />
                 ) : (
                   <GraduationCap className="w-4 h-4 text-[#F59E0B]" />
                 )}
@@ -325,7 +325,7 @@ export default function AdminJourneysPage() {
                     {j.type}
                   </span>
                 </div>
-                <div className="text-xs font-mono text-[#10B981] mt-0.5">
+                <div className="text-xs font-mono text-[#38BDF8] mt-0.5">
                   {j.organization} {j.location ? `· ${j.location}` : ''}
                 </div>
                 <div className="text-[11px] font-mono text-[#63636E] mt-0.5">

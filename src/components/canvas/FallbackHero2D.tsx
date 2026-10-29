@@ -47,13 +47,13 @@ export default function FallbackHero2D() {
           />
         ))}
         {/* RFID signal rings */}
-        <circle cx="400" cy="300" r="60" stroke="white" strokeWidth="1" fill="none" opacity="0.6" />
-        <circle cx="400" cy="300" r="100" stroke="white" strokeWidth="0.7" fill="none" opacity="0.4" />
-        <circle cx="400" cy="300" r="140" stroke="white" strokeWidth="0.5" fill="none" opacity="0.25" />
-        <circle cx="400" cy="300" r="180" stroke="white" strokeWidth="0.3" fill="none" opacity="0.15" />
+        <circle cx="400" cy="300" r="60" stroke="#38BDF8" strokeWidth="1" fill="none" opacity="0.4" />
+        <circle cx="400" cy="300" r="100" stroke="#38BDF8" strokeWidth="0.7" fill="none" opacity="0.25" />
+        <circle cx="400" cy="300" r="140" stroke="#38BDF8" strokeWidth="0.5" fill="none" opacity="0.15" />
+        <circle cx="400" cy="300" r="180" stroke="#38BDF8" strokeWidth="0.3" fill="none" opacity="0.08" />
         {/* Center node */}
-        <circle cx="400" cy="300" r="8" fill="white" opacity="0.4" />
-        <circle cx="400" cy="300" r="3" fill="white" opacity="0.8" />
+        <circle cx="400" cy="300" r="8" fill="#38BDF8" opacity="0.3" />
+        <circle cx="400" cy="300" r="3" fill="#60A5FA" opacity="0.8" />
         {/* Circuit traces */}
         <polyline points="400,300 450,300 450,250 550,250" stroke="white" strokeWidth="0.8" fill="none" opacity="0.3" />
         <polyline points="400,300 350,300 350,350 250,350" stroke="white" strokeWidth="0.8" fill="none" opacity="0.3" />

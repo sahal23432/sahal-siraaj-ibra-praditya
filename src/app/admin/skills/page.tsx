@@ -92,7 +92,7 @@ export default function AdminSkillsPage() {
             });
           }}
           type="button"
-          className="inline-flex items-center gap-2 px-4 py-2 rounded bg-[#EDEDEF] hover:bg-white text-[#070709] text-xs font-mono font-medium transition-colors"
+          className="inline-flex items-center gap-2 px-4 py-2 rounded bg-[#2563EB] hover:bg-[#3B82F6] text-[#F4F4F6] text-xs font-mono font-medium transition-colors shadow-sm shadow-[#2563EB]/20"
         >
           <Plus className="w-3.5 h-3.5" />
           <span>TAMBAH KEAHLIAN BARU</span>
@@ -122,7 +122,7 @@ export default function AdminSkillsPage() {
         <div className="bg-[#0D0E12] border border-white/[0.15] rounded-xl p-6 sm:p-7 space-y-4">
           <div className="flex items-center justify-between pb-3 border-b border-white/[0.08]">
             <h3 className="text-sm font-mono font-medium text-[#F4F4F6] flex items-center gap-2">
-              <Sparkles className="w-4 h-4 text-[#10B981]" />
+              <Sparkles className="w-4 h-4 text-[#38BDF8]" />
               <span>{isCreating ? 'TAMBAH KEAHLIAN' : 'EDIT KEAHLIAN'}</span>
             </h3>
             <button
@@ -203,7 +203,7 @@ export default function AdminSkillsPage() {
               </button>
               <button
                 type="submit"
-                className="px-4 py-1.5 rounded bg-[#EDEDEF] text-[#070709] text-xs font-mono font-medium hover:bg-white"
+                className="px-4 py-1.5 rounded bg-[#2563EB] text-[#F4F4F6] text-xs font-mono font-medium hover:bg-[#3B82F6]"
               >
                 Simpan
               </button>
@@ -234,7 +234,7 @@ export default function AdminSkillsPage() {
                   <div className="flex items-center gap-2">
                     <div className="w-20 bg-[#14161D] rounded-full h-1.5 overflow-hidden">
                       <div
-                        className="bg-[#10B981] h-full rounded-full"
+                        className="bg-[#38BDF8] h-full rounded-full"
                         style={{ width: `${sk.proficiency}%` }}
                       />
                     </div>

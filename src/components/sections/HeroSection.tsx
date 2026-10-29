@@ -33,8 +33,8 @@ export default function HeroSection({ profile }: HeroSectionProps) {
       <div className="relative z-10 max-w-5xl mx-auto px-5 sm:px-8 text-center flex flex-col items-center">
         {/* Monospace Pre-title Hook */}
         <ScrollReveal duration={0.4}>
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded bg-[#14161D]/80 border border-white/[0.08] text-xs font-mono tracking-wider text-[#A1A1AA] uppercase mb-8">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#10B981]" />
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded bg-[#14161D]/80 border border-[#38BDF8]/20 text-xs font-mono tracking-wider text-[#A1A1AA] uppercase mb-8">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#38BDF8]" />
             <span>{profile.headline_greeting}</span>
           </div>
         </ScrollReveal>
@@ -78,18 +78,18 @@ export default function HeroSection({ profile }: HeroSectionProps) {
           <div className="flex flex-wrap items-center justify-center gap-4 mb-16">
             <a
               href="#karya"
-              className="inline-flex items-center gap-2 px-5 py-3 rounded bg-[#EDEDEF] text-[#070709] text-xs font-mono font-medium hover:bg-white transition-transform active:scale-[0.98]"
+              className="inline-flex items-center gap-2 px-5 py-3 rounded bg-[#2563EB] text-[#F4F4F6] border border-[#3B82F6]/40 text-xs font-mono font-medium hover:bg-[#3B82F6] hover:shadow-[0_0_16px_rgba(59,130,246,0.35)] transition-all active:scale-[0.98]"
             >
               <span>Lihat Karya Sistem</span>
-              <span className="text-[#070709]/70">(03)</span>
+              <span className="text-[#93C5FD]">(03)</span>
             </a>
 
             <a
               href="#kontak"
-              className="inline-flex items-center gap-2 px-5 py-3 rounded bg-[#0D0E12] border border-white/[0.12] text-[#F4F4F6] text-xs font-mono font-medium hover:border-white/30 hover:bg-[#14161D] transition-all active:scale-[0.98]"
+              className="inline-flex items-center gap-2 px-5 py-3 rounded bg-[#0D0E12] border border-[#38BDF8]/20 text-[#F4F4F6] text-xs font-mono font-medium hover:border-[#38BDF8]/40 hover:text-[#38BDF8] hover:bg-[#14161D] transition-all active:scale-[0.98]"
             >
               <span>Mari Berkolaborasi</span>
-              <ArrowUpRight className="w-3.5 h-3.5 text-[#A1A1AA]" />
+              <ArrowUpRight className="w-3.5 h-3.5 text-[#38BDF8]" />
             </a>
           </div>
         </ScrollReveal>
@@ -99,7 +99,7 @@ export default function HeroSection({ profile }: HeroSectionProps) {
           <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-xs font-mono text-[#63636E]">
             <span>LOKASI: SEMARANG, ID</span>
             <span>·</span>
-            <span>STATUS: TERSEDIA</span>
+            <span>STATUS: <span className="text-[#38BDF8]">TERSEDIA</span></span>
           </div>
         </ScrollReveal>
       </div>

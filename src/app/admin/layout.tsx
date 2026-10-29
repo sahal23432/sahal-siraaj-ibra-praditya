@@ -128,7 +128,7 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
           </Link>
           <span className="text-[#63636E]">|</span>
           <div className="flex items-center gap-2 text-xs font-mono">
-            <span className="w-2 h-2 rounded-full bg-[#10B981]" />
+            <span className="w-2 h-2 rounded-full bg-[#38BDF8]" />
             <span className="font-semibold text-[#F4F4F6]">TELEMETRY COCKPIT</span>
             <span className="text-[#63636E] hidden md:inline">·</span>
             <span className="text-[#A1A1AA] hidden md:inline">SAHAL SIRAAJ</span>
@@ -209,7 +209,7 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
           <div className="w-full max-w-sm bg-[#0D0E12] border border-white/[0.12] rounded-2xl p-6">
             <div className="flex items-center justify-between pb-3 border-b border-white/[0.06] mb-4">
               <h3 className="text-sm font-mono font-medium text-[#F4F4F6] flex items-center gap-2">
-                <ShieldCheck className="w-4 h-4 text-[#10B981]" />
+                <ShieldCheck className="w-4 h-4 text-[#38BDF8]" />
                 <span>GANTI PIN KEAMANAN ADMIN</span>
               </h3>
               <button
@@ -228,7 +228,7 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
               <div
                 className={`p-2.5 rounded text-xs font-mono mb-4 ${
                   pinStatus.success
-                    ? 'bg-[#10B981]/10 text-[#10B981] border border-[#10B981]/20'
+                    ? 'bg-[#38BDF8]/10 text-[#38BDF8] border border-[#38BDF8]/20'
                     : 'bg-red-500/10 text-red-400 border border-red-500/20'
                 }`}
               >
@@ -282,7 +282,7 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
                 <button
                   type="submit"
                   disabled={isUpdatingPin}
-                  className="px-4 py-1.5 rounded bg-[#EDEDEF] text-[#070709] text-xs font-mono font-medium hover:bg-white disabled:opacity-50"
+                  className="px-4 py-1.5 rounded bg-[#2563EB] text-[#F4F4F6] text-xs font-mono font-medium hover:bg-[#3B82F6] disabled:opacity-50"
                 >
                   {isUpdatingPin ? 'Menyimpan...' : 'Perbarui PIN'}
                 </button>
